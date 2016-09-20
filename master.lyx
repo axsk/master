@@ -1,0 +1,512 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsart
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Nonparametric prior estimation from cohort data and its application to Systems
+ Biology
+\end_layout
+
+\begin_layout Abstract
+This thesis will cover the theory and application of Empirical Bayes Methods
+ for parameter estimation in a Bayesian setting for cohortdata in combination
+ with MCMC Sampling.
+\end_layout
+
+\begin_layout Abstract
+In the *basics* section we will introduce the Bayesian framework
+\end_layout
+
+\begin_layout Part
+Introduction
+\end_layout
+
+\begin_layout Standard
+Since the invention of the computer Bayesian methods, beforehand often untractab
+le to compute, have gained a great amount of importance in the field of
+ reverse problems.
+\end_layout
+
+\begin_layout Standard
+Now, with the Internet of things coming and the progressing digitalisation
+ of scienes, healthcare and *, ever greater amounts of data is beeing gathered,
+ coining the term big data.
+\end_layout
+
+\begin_layout Standard
+This poses new challenges for storage and performance, but also introduces
+ problems of errorneous, incomplete and diverse/cohort * data raising the
+ demand for adjusted analytical methods.
+\end_layout
+
+\begin_layout Standard
+By its nature the bayesian formalism is very well suited to handle uncertainty
+ and missing information and the here presented method fits (cohort parallelisat
+ion..*)
+\end_layout
+
+\begin_layout Standard
+Taking a nonparametric, sampling based approch allows the application of
+ this method to a wide class of problems.
+\end_layout
+
+\begin_layout Standard
+The Bayesians strength but also weakness is the need to incororate prior
+ belief/knowledge about the system in question.
+ Whilst the choice of the prior remains a question of debate, we will use
+ cohort data, e.g.
+ measurements of multiple persons, to improve our prior knowledge by incorporati
+ng the individual posteriors into a new, informed*, prior.
+\end_layout
+
+\begin_layout Part
+Theory
+\end_layout
+
+\begin_layout Section
+Mathematical Foundations
+\end_layout
+
+\begin_layout Subsection
+The standard Bayesian approach / Single person inference
+\end_layout
+
+\begin_layout Standard
+We model a single measurement 
+\begin_inset Formula $z\in Z=\mathbb{R}^{n}$
+\end_inset
+
+ based on the underlying and a priori unknown parameter 
+\begin_inset Formula $x\in X=\mathbb{R}^{d}$
+\end_inset
+
+ via the deterministic forward map 
+\begin_inset Formula $\Phi:X\rightarrow Z$
+\end_inset
+
+, perturbed by an measurement error 
+\begin_inset Formula $e\in\mathbb{R}^{n}$
+\end_inset
+
+ which is normally distributied with a known or estimated covariance 
+\begin_inset Formula $e\sim\mathcal{N}\left(0,\Sigma\right)$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+z=\Phi\left(x\right)+e
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Given this description it is straightforward to simulate measurements for
+ given parameters 
+\begin_inset Formula $x$
+\end_inset
+
+, the so called forward problem.
+\end_layout
+
+\begin_layout Standard
+In the following we will be interested in solving the inverse-problem in
+ a stochastic setting, that is given some probability distribution 
+\begin_inset Formula $\rho_{Z}\left(z\right)$
+\end_inset
+
+ on the measurements, what can we say about the distribution of the unknown
+ parameters.
+\end_layout
+
+\begin_layout Standard
+The main tool in this proceeding will be Bayes' Theorem, which is easily
+ derived in its distributional form from the definition of the conditional
+ probability distribution:
+\end_layout
+
+\begin_layout Definition
+The conditional probability density of 
+\begin_inset Formula $Y$
+\end_inset
+
+ given the occurence of the value 
+\begin_inset Formula $x$
+\end_inset
+
+ of 
+\begin_inset Formula $X$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\rho\left(y|X=x\right):=\frac{\rho\left(x,y\right)}{\rho\left(x\right)},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\rho\left(x,y\right)$
+\end_inset
+
+ is the joint density of 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho\left(x\right)$
+\end_inset
+
+ is the marginal density of 
+\begin_inset Formula $x$
+\end_inset
+
+, i.e.
+ the density of 
+\begin_inset Formula $x$
+\end_inset
+
+ marginalized over all possible 
+\begin_inset Formula $y$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\rho\left(x\right):=\int_{y}\rho\left(x,y\right)\mathrm{d}y.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Succesive insertion of these identities leads to the continious / density
+ form of Bayes' Rule
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+\rho\left(x|Y=y\right):=\frac{\rho\left(x,y\right)}{\rho\left(y\right)}=\frac{\rho\left(y|x\right)\rho\left(x\right)}{\rho\left(y\right)}=\frac{\rho\left(y|x\right)\rho\left(x\right)}{\int_{x}\rho\left(y|x\right)\rho\left(x\right)\mathrm{d}x}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+This formula, constituting the heart of Bayesian statistics, tells us how
+ to reconstruct the 
+\begin_inset Quotes eld
+\end_inset
+
+posterior distribution
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Formula $\rho\left(x|y\right)$
+\end_inset
+
+ of the unknown parameter x given data y, using the 
+\begin_inset Quotes eld
+\end_inset
+
+likelihood
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\rho\left(y|x\right)$
+\end_inset
+
+ of y given x as well as the 
+\begin_inset Quotes eld
+\end_inset
+
+prior
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\rho\left(x\right)$
+\end_inset
+
+ denoting our prior assumptions of the density of x.
+\end_layout
+
+\begin_layout Definition
+Note that for fixed 
+\begin_inset Formula $y$
+\end_inset
+
+ the prior and posterior both are probability distributions in 
+\begin_inset Formula $x$
+\end_inset
+
+, whilst the likelihood would be in 
+\begin_inset Formula $y$
+\end_inset
+
+ but is not in 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Hence the name 
+\begin_inset Quotes eld
+\end_inset
+
+Likelihood function
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+Note that the denominator, also called the 
+\begin_inset Quotes eld
+\end_inset
+
+evidence
+\begin_inset Quotes erd
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $x$
+\end_inset
+
+ and thus is merely a scaling constant, preserving the probability density
+ property of having total measure one.
+\end_layout
+
+\begin_layout Definition
+Whilst the model for our measurements directly tells us the likelihood 
+\begin_inset Formula 
+\[
+\rho\left(y|x\right)\sim\mathcal{N}\left(\Phi\left(x\right),\Sigma\right),
+\]
+
+\end_inset
+
+the choice of the prior still remains an open question.
+\end_layout
+
+\begin_layout Subsection
+Prior estimation based on cohort data
+\end_layout
+
+\begin_layout Standard
+Assume we have given not just one measurement, but a density of measurements
+ 
+\begin_inset Formula $\rho_{z}$
+\end_inset
+
+, e.g.
+ the sampling distribution of finitely many measurements 
+\begin_inset Formula $Z=\left(z_{1},\,z_{2},\,z_{3},\,...,\,z_{n}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Considering the prior itself as random variable we can now formulate the
+ likelihood function
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L\left(\pi|\rho_{z}\right)=\int_{z}\rho\left(z|\pi\right)\rho_{z}\left(z\right)\mathrm{dz}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+with 
+\begin_inset Formula 
+\[
+\rho\left(z|\pi\right)=\int\rho\left(z|x\right)\pi\left(x\right)\mathrm{d}x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Bayes Rule
+\end_layout
+
+\begin_layout Section
+Prior estimation
+\end_layout
+
+\begin_layout Standard
+Now that we know how to handle a single measurement let us raise the question
+ of how to handle multiple measurements.
+\end_layout
+
+\begin_layout Standard
+A naive approach would adapt the likelihood to represent the joint probability
+ of the measurements:
+\begin_inset Formula 
+\[
+L(x)=\Pi L(x_{i})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+While this indeed is correct assuming i.i.d.
+ measurements, a simple example shows the failure for non identically distribute
+d random variables:
+\begin_inset Newline newline
+\end_inset
+
+Bob Alice product 0
+\end_layout
+
+\begin_layout Standard
+Assuming non i.i.d.
+ measurements 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ we can model this epistemic uncertainty through a categorical distribution
+\end_layout
+
+\begin_layout Section
+Discretization
+\end_layout
+
+\begin_layout Part
+Application
+\end_layout
+
+\begin_layout Section
+The Bayesian Model
+\end_layout
+
+\begin_layout Section
+Sampling
+\end_layout
+
+\begin_layout Section
+Prior estimation
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout Standard
+Notes:
+\end_layout
+
+\begin_layout Standard
+Bernstein Mises Theorem 
+\end_layout
+
+\begin_layout Part
+Conclusion
+\end_layout
+
+\end_body
+\end_document
