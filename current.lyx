@@ -26,7 +26,7 @@ figs-within-sections
 \font_tt_scale 100
 \graphics default
 \default_output_format default
-\output_sync 0
+\output_sync 1
 \bibtex_command default
 \index_command default
 \paperfontsize default
@@ -96,7 +96,7 @@ Introduction
 \begin_layout Standard
 Since the invention of the computer Bayesian methods, beforehand often untractab
 le to compute, have gained a great amount of importance in the field of
- reverse problems.
+ inverse problems.
 \end_layout
 
 \begin_layout Standard
@@ -226,7 +226,7 @@ Bayes' theorem
 \begin_layout Definition
 \begin_inset Formula 
 \begin{equation}
-\rho\left(x|Y=y\right):=\frac{\rho\left(x,y\right)}{\rho\left(y\right)}=\frac{\rho\left(y|x\right)\rho\left(x\right)}{\rho\left(y\right)}=\frac{\rho\left(y|x\right)\rho\left(x\right)}{\int_{x}\rho\left(y|x\right)\rho\left(x\right)\mathrm{d}x}.\label{eq:bayes}
+\rho\left(x|Y=y\right):=\frac{\rho\left(x,y\right)}{\rho\left(y\right)}=\frac{\rho\left(y|x\right)\rho\left(x\right)}{\rho\left(y\right)}=\frac{\rho\left(y|x\right)\rho\left(x\right)}{\int_{x}\rho\left(y|x'\right)\rho\left(x'\right)\mathrm{d}x'}.\label{eq:bayes}
 \end{equation}
 
 \end_inset
@@ -304,7 +304,7 @@ likelihood function
 \end_layout
 
 \begin_layout Standard
-Also note that the denominator, called 
+Also note that the denominator, the 
 \emph on
 evidence,
 \emph default
@@ -339,15 +339,15 @@ Our inference bases on the combination of a deterministic physical model,
 \end_inset
 
 .
- We furthermore model the the data generating measurement process as a normal
- perturbation with known covariance 
+ We furthermore model the the data generating measurement process as an
+ independet Gaussian perturbation with known covariance 
 \begin_inset Formula $\Sigma$
 \end_inset
 
  of that state:
 \begin_inset Formula 
 \[
-Z\left(z\mid X=x\right)=\Phi\left(x\right)+E,\quad E\sim\mathcal{N}\left(0,\Sigma\right)
+Z\left(z\mid X=x\right)=\Phi\left(x\right)+E,\quad E\overset{indep.}{\sim}\mathcal{N}\left(0,\Sigma\right)
 \]
 
 \end_inset
@@ -439,7 +439,7 @@ In that context the prior
 \begin_inset Formula $\pi_{true}\in\mathcal{M}_{1}\left(\mathcal{X}\right)$
 \end_inset
 
-, giving rise our measurements, which we want to estimate.
+, giving rise to our measurements, which we want to estimate.
 \end_layout
 
 \begin_layout Standard
@@ -469,7 +469,7 @@ notation
 
 \end_inset
 
- or inifinite data in the form of 
+ or inifinite data in the form of a probability distribution 
 \begin_inset Formula 
 \[
 p_{Z}\sim Z|\pi_{true}.
@@ -481,7 +481,7 @@ p_{Z}\sim Z|\pi_{true}.
 \end_layout
 
 \begin_layout Standard
-The evidence corresponding to a given prior 
+The corresponding evidence to a given prior 
 \begin_inset Formula $\Pi=\pi$
 \end_inset
 
@@ -538,10 +538,11 @@ If this condition is not fulfilled, different priors can lead to the same
  measurements and therefore we cannot expect to reconstruct the correct
  one from the given data.
  The best we can hope for in this case is to recover a candidate of the
- equivalence class of priors with respect to the equivalence relation 
+ equivalence class of priors leading to the same measurements, specified
+ via the equivalence relation:
 \begin_inset Formula 
 \begin{equation}
-\pi\sim\pi'\iff\left\Vert p_{Z}\left(\cdot\mid\Pi=\pi\right)-p_{Z}\left(\cdot\mid\Pi=\pi'\right)\right\Vert _{L^{1}\left(\mathcal{Z}\right)}=0.\label{eq:equiv}
+\pi\sim\pi':\iff\left\Vert p_{Z}\left(\cdot\mid\Pi=\pi\right)-p_{Z}\left(\cdot\mid\Pi=\pi'\right)\right\Vert _{L^{1}\left(\mathcal{Z}\right)}=0.\label{eq:equiv}
 \end{equation}
 
 \end_inset
@@ -674,6 +675,10 @@ In other words, maximization of
 
 , which according to the identifiability considerations is all we can hope
  for.
+\end_layout
+
+\begin_layout Subsection
+Regularization
 \end_layout
 
 \begin_layout Subsection
