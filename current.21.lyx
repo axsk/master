@@ -1,4 +1,4 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
 \lyxformat 474
 \begin_document
 \begin_header
@@ -148,7 +148,7 @@ Let
 \end_inset
 
  denote continuous random variables and 
-\begin_inset Formula $\rho\left(x,y\right)$
+\begin_inset Formula $\rho_{X,Y}\left(x,y\right)$
 \end_inset
 
  their joint probability density.
@@ -160,24 +160,24 @@ conditional probability
 \begin_inset Formula $Y$
 \end_inset
 
- given the occurence of the value 
+ given the value 
 \begin_inset Formula $x$
 \end_inset
 
- of 
+ for 
 \begin_inset Formula $X$
 \end_inset
 
  is
 \begin_inset Formula 
 \[
-\rho\left(y|X=x\right):=\frac{\rho\left(x,y\right)}{\rho\left(x\right)},
+\rho_{Y\mid X}\left(y|x\right):=\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)},
 \]
 
 \end_inset
 
 where 
-\begin_inset Formula $\rho\left(x\right)$
+\begin_inset Formula $\rho_{X}\left(x\right)$
 \end_inset
 
  is the 
@@ -188,8 +188,7 @@ marginal density
 \begin_inset Formula $X$
 \end_inset
 
-, i.e.
- the joint density 
+ defined as the joint density 
 \begin_inset Formula $\rho\left(x,y\right)$
 \end_inset
 
@@ -200,7 +199,7 @@ marginal density
 :
 \begin_inset Formula 
 \[
-\rho\left(x\right):=\int_{y}\rho\left(x,y\right)\mathrm{d}y.
+\rho_{X}\left(x\right):=\int_{y}\rho\left(x,y\right)\mathrm{d}y.
 \]
 
 \end_inset
@@ -218,7 +217,7 @@ Bayes' theorem
 \begin_layout Definition
 \begin_inset Formula 
 \begin{equation}
-\rho\left(x|Y=y\right):=\frac{\rho\left(x,y\right)}{\rho\left(y\right)}=\frac{\rho\left(y|x\right)\rho\left(x\right)}{\rho\left(y\right)}=\frac{\rho\left(y|x\right)\rho\left(x\right)}{\int_{x}\rho\left(y|x'\right)\rho\left(x'\right)\mathrm{d}x'}.\label{eq:bayes}
+\rho_{X,Y}\left(x|y\right):=\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{Y}\left(y\right)}=\frac{\rho_{Y\mid X}\left(y|x\right)\rho_{X}\left(x\right)}{\rho_{Y}\left(y\right)}=\frac{\rho_{Y\mid X}\left(y|x\right)\rho_{X}\left(x\right)}{\int_{x}\rho_{Y\mid X}\left(y|x'\right)\rho_{X}\left(x'\right)\mathrm{d}x'}.\label{eq:bayes}
 \end{equation}
 
 \end_inset
@@ -229,7 +228,7 @@ This formula, constituting the heart of Bayesian statistics, tells us how
 posterior distribution
 \emph default
  
-\begin_inset Formula $\rho\left(x|y\right)$
+\begin_inset Formula $\rho_{X\mid Y}\left(x|y\right)$
 \end_inset
 
  of the unknown parameter 
@@ -245,7 +244,7 @@ posterior distribution
 likelihood
 \emph default
  
-\begin_inset Formula $\rho\left(y|x\right)$
+\begin_inset Formula $\rho_{Y\mid X}\left(y|x\right)$
 \end_inset
 
  of 
@@ -261,7 +260,7 @@ likelihood
 prior
 \emph default
  
-\begin_inset Formula $\rho\left(x\right)$
+\begin_inset Formula $\rho_{X}\left(x\right)$
 \end_inset
 
  reflecting our prior assumptions on the density of 
@@ -277,11 +276,11 @@ Note that for fixed
 \end_inset
 
  the prior 
-\begin_inset Formula $\rho\left(x\right)$
+\begin_inset Formula $\rho_{X}\left(x\right)$
 \end_inset
 
  and posterior 
-\begin_inset Formula $\rho\left(x|y\right)$
+\begin_inset Formula $\rho_{X|Y}\left(x|y\right)$
 \end_inset
 
  both are probability densities in 
@@ -289,7 +288,7 @@ Note that for fixed
 \end_inset
 
 , whilst the likelihood 
-\begin_inset Formula $\rho\left(y|x\right)$
+\begin_inset Formula $\rho_{Y\mid X}\left(y|x\right)$
 \end_inset
 
  would be in 
@@ -326,8 +325,22 @@ evidence,
  we will be able to omit it in crucial calculations.
 \end_layout
 
+\begin_layout Standard
+In the following we will omit the subscripts to the density functions 
+\begin_inset Formula $\rho_{X},\,\rho_{Y},\,\rho_{X,Y},\,...$
+\end_inset
+
+ where these are clear from the arguments.
+ Note however that this is merely an abuse of notation, the underlying density
+ functions, even though all denoted by 
+\begin_inset Formula $\rho$
+\end_inset
+
+, still differ.
+\end_layout
+
 \begin_layout Subsection
-The basic model
+The likelihood model
 \end_layout
 
 \begin_layout Standard
@@ -335,15 +348,15 @@ Our inference bases on the combination of a deterministic physical model,
  our description of the reality, with a stochastic measurement error and
  the formalism of Bayes'.
  The phyiscal model is represented as a map 
-\begin_inset Formula $\Phi:X\rightarrow Y$
+\begin_inset Formula $\Phi:\mathcal{X}\subseteq\mathbb{R}^{n}\rightarrow\mathcal{Y}\subseteq\mathbb{R}^{m}$
 \end_inset
 
 , mapping some parameter 
-\begin_inset Formula $x\in X\subseteq\mathbb{R}^{n}$
+\begin_inset Formula $x\in\mathcal{X}$
 \end_inset
 
  to a resulting state 
-\begin_inset Formula $y\in Y\subseteq\mathbb{R}^{m}$
+\begin_inset Formula $y\in\mathcal{Y}$
 \end_inset
 
 .
@@ -351,14 +364,14 @@ Our inference bases on the combination of a deterministic physical model,
 \begin_inset Formula $Z$
 \end_inset
 
- as an independet Gaussian perturbation with known covariance 
+ as an independent Gaussian perturbation with prescribed covariance 
 \begin_inset Formula $\Sigma$
 \end_inset
 
  of that state:
 \begin_inset Formula 
 \[
-\rho\left(z\mid X=x\right)=\Phi\left(x\right)+E,\quad E\overset{indep.}{\sim}\mathcal{N}\left(0,\Sigma\right)
+\rho_{Z\mid X}\left(z\mid x\right)=\Phi\left(x\right)+E,\quad E\overset{indep.}{\sim}\mathcal{N}\left(0,\Sigma\right)
 \]
 
 \end_inset
@@ -366,7 +379,7 @@ Our inference bases on the combination of a deterministic physical model,
 or shorthand
 \begin_inset Formula 
 \[
-Z\mid X\sim\mathcal{N}\left(\Phi\left(x\right),\Sigma\right).
+Z\mid X\sim\mathcal{N}\left(\Phi\left(X\right),\Sigma\right).
 \]
 
 \end_inset
@@ -437,7 +450,7 @@ Note also that whilst this model is extensible to multiple measurements
 \end_inset
 
  (the same subject), but is wrong assuming different measurements correspond
- to an independant draws from the prior 
+ to independant draws from the prior 
 \begin_inset Formula $X$
 \end_inset
 
@@ -468,7 +481,7 @@ In that context we extend the model by letting the prior
 \begin_inset Formula $p\left(x\right)$
 \end_inset
 
-be a parameter itself, conditioned on a hyperparater 
+ be a parameter itself, conditioned on a hyperparater 
 \begin_inset Formula $\Pi$
 \end_inset
 
@@ -476,11 +489,15 @@ be a parameter itself, conditioned on a hyperparater
 \begin_inset Formula $\Pi\rightarrow X\rightarrow Z$
 \end_inset
 
+, which we will refer to as the 
+\emph on
+hyperparametric model
+\emph default
 .
 \end_layout
 
 \begin_layout Standard
-The marginal likelihood of a prior
+The marginal likelihood of a prior 
 \begin_inset Formula $\Pi=\pi$
 \end_inset
 
@@ -491,7 +508,7 @@ The marginal likelihood of a prior
  is then given by 
 \begin_inset Formula 
 \[
-p_{Z}\left(z\mid\pi\right)=\int_{\mathcal{X}}p_{Z}\left(z\mid x\right)\pi\left(x\right)\mathrm{d}x.
+p_{Z\mid\pi}\left(z\right)=\int_{\mathcal{X}}p_{Z\mid x}\left(z\right)\pi\left(x\right)\mathrm{d}x.
 \]
 
 \end_inset
@@ -505,8 +522,8 @@ Since this likelihood, in contrast to the basic Bayesian model above, does
 \begin_inset Formula $X$
 \end_inset
 
- anymore, this allows us this allows us to handle multiple measurements
- coming from different samples of 
+ anymore, this allows us to handle multiple measurements coming from different
+ samples of 
 \begin_inset Formula $X$
 \end_inset
 
@@ -551,7 +568,7 @@ name: log-likelihood?
 
 \begin_inset Formula 
 \[
-L_{cd}\left(\pi\mid\bm{z}\right)=\frac{1}{M}\log p\left(\bm{z}|\pi\right)=\frac{1}{M}\sum_{m=1}^{M}\log p_{Z}\left(z_{m}\mid\pi\right).
+L_{cd}\left(\pi\mid\bm{z}\right):=\frac{1}{M}\log p\left(\bm{z}|\pi\right)=\frac{1}{M}\sum_{m=1}^{M}\log p_{Z}\left(z_{m}\mid\pi\right).
 \]
 
 \end_inset
@@ -575,16 +592,6 @@ infinite data/measurements
 , we define the corresponding 
 \emph on
 infinite data log-likelihood 
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-name: log-likelihood?
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -601,27 +608,44 @@ L_{cc}\left(\pi\mid p_{Z}\right):=\int p_{Z}\left(z\right)\log p_{Z}\left(z\mid\
 \end_layout
 
 \begin_layout Standard
-Since 
-\begin_inset Formula $L_{cd}$
+The latter definition follows from the former in the limit for 
+\begin_inset Formula $m\rightarrow\infty$
 \end_inset
 
- may be seen as a special case of 
-\begin_inset Formula $L_{cc}$
+ assuming that 
+\begin_inset Formula $p_{Z}$
 \end_inset
 
- with the 
-\emph on
-empirical distribution
-\emph default
-, let us first examine the continious problem and a later limit theorem
- will ...
- 
-\begin_inset Note Note
-status open
+ is indeed the data generating distribution 
+\begin_inset Formula $z_{m}\sim p_{Z}$
+\end_inset
 
-\begin_layout Plain Layout
-hmmm
+.
 \end_layout
+
+\begin_layout Standard
+Assuming that the model is well specified, i.e.
+ there exists a 
+\begin_inset Quotes eld
+\end_inset
+
+true prior
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\pi^{*}$
+\end_inset
+
+ such that the data-generating distribution 
+\begin_inset Formula $p_{Z}$
+\end_inset
+
+ is induced by that prior
+\begin_inset Formula 
+\[
+p_{Z}=p_{Z\mid\pi*},
+\]
 
 \end_inset
 
@@ -629,8 +653,31 @@ hmmm
 \end_layout
 
 \begin_layout Standard
-Before we continue with our initial goal of estimating the prior we first
- have to digress to the topic of identifiability.
+and that the model is furthermore identifiable 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "chapter 5"
+key "van2000asymptotic"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\rho_{Z\mid\pi^{'}}=\rho_{Z\mid\pi^{*}}\Rightarrow\pi'=\pi^{*}\quad\forall\pi'\in\mathcal{M}_{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+the following proposition will show us how to recover 
+\begin_inset Formula $\pi^{*}$
+\end_inset
+
+ in the (imaginary) infinite data scenario.
 \end_layout
 
 \begin_layout Subsection
@@ -940,6 +987,17 @@ Results
 
 \begin_layout Section
 Conclusion
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "refs"
+options "plain"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
