@@ -5,6 +5,9 @@
 \save_transient_properties true
 \origin unavailable
 \textclass amsart
+\begin_preamble
+\DeclareMathOperator{\Ima}{Im}
+\end_preamble
 \use_default_options true
 \begin_modules
 theorems-ams
@@ -126,6 +129,32 @@ The Bayesian's strength but also weakness is the need to incorporate prior
  cohort data, e.g.
  measurements of several persons, to improve our prior knowledge by incorporatin
 g the individual posteriors into a new, informative, prior.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+todos:
+\end_layout
+
+\begin_layout Plain Layout
+check p/
+\begin_inset Formula $\rho$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+check rand.
+ variable vs realization vs density
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -327,20 +356,6 @@ evidence,
  we will be able to omit it in crucial calculations.
 \end_layout
 
-\begin_layout Standard
-In the following we will omit the subscripts to the density functions 
-\begin_inset Formula $\rho_{X},\,\rho_{Y},\,\rho_{X,Y},\,...$
-\end_inset
-
- where these are clear from the arguments.
- Note however that this is merely an abuse of notation, the underlying density
- functions, even though all denoted by 
-\begin_inset Formula $\rho$
-\end_inset
-
-, still differ.
-\end_layout
-
 \begin_layout Subsection
 The likelihood model
 \end_layout
@@ -381,12 +396,28 @@ Our inference bases on the combination of a deterministic physical model,
 or shorthand
 \begin_inset Formula 
 \[
-Z\mid X\sim\mathcal{N}\left(\Phi\left(X\right),\Sigma\right).
+Z\mid X\sim\mathcal{N}\left(\Phi\left(X\right),\Sigma\right),
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\mathcal{\mathcal{N}}\left(y,\,\Sigma\right)$
+\end_inset
+
+ denotes the Normal distribution with mean 
+\begin_inset Formula $y$
+\end_inset
+
+ and covariance matrix 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -498,21 +529,52 @@ hyperparametric model
 \emph default
 .
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+list characterizing equations here?
 \end_layout
 
-\begin_layout Standard
-Most literature so far admits only parametrized families of distributions
- for the prior, e.g.
- 
-\begin_inset Formula $\rho_{X|\pi}=$
 \end_inset
 
- we aim at a more general solution to the inference problem by treating
- is parametrized over 
+
 \end_layout
 
 \begin_layout Standard
-Aiming at a black-box estimator 
+Most literature confines itself to (finite dimensional) parametric empirical
+ Bayes methods, characterized by considering parametrized families of distributi
+ons for the priors, e.g.
+ 
+\begin_inset Formula 
+\[
+\rho_{X|\pi}=\mathcal{N}\left(\pi,\,I\right),\,\pi\in\text{Im}\left(\Pi\right)=\mathbb{R}^{n},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+since these may admit explicit formulas for prior point estimates if the
+ likelihood model and prior families admit simple forms, as well as these
+ usually regularization issues.
+ We aim at a more general solution to the inference problem by allowing
+ arbitrary distributions as priors, i.e.
+ 
+\begin_inset Formula 
+\[
+\rho_{X\mid\pi}=\pi,\,\pi\in\text{Im}\left(\Pi\right)=\mathcal{M}_{1}\left(\mathcal{X}\right):=\left\{ \rho\in L^{1}\left(\mathcal{X}\right)\mid\rho\ge0,\,\left\Vert \rho\right\Vert _{L^{1}}=1\right\} ,
+\]
+
+\end_inset
+
+resulting in a 
+\emph on
+nonparametric empirical Bayes 
+\emph default
+method.
 \end_layout
 
 \begin_layout Standard
@@ -527,7 +589,7 @@ The marginal likelihood of a prior
  is then given by 
 \begin_inset Formula 
 \[
-L\left(\pi\mid z\right)=p_{Z\mid\pi}\left(z\right)=\int_{\mathcal{X}}p_{Z\mid x}\left(z\right)\pi\left(x\right)\mathrm{d}x.
+L\left(\pi\mid z\right)=\rho_{Z\mid\pi}\left(z\right)=\int_{\mathcal{X}}\rho_{Z\mid x}\left(z\right)\pi\left(x\right)\mathrm{d}x.
 \]
 
 \end_inset
@@ -561,7 +623,7 @@ For finite data/measurements
  as
 \begin_inset Formula 
 \[
-p\left(\bm{z}^{M}|\pi\right):=\prod_{m=1}^{M}p_{Z}\left(z_{m}\mid\Pi=\pi\right)
+\rho\left(\bm{z}^{M}|\pi\right):=\prod_{m=1}^{M}\rho_{Z}\left(z_{m}\mid\Pi=\pi\right)
 \]
 
 \end_inset
@@ -587,7 +649,7 @@ name: log-likelihood?
 
 \begin_inset Formula 
 \[
-L_{cd}\left(\pi\mid\bm{z}^{M}\right):=\frac{1}{M}\log p\left(\bm{z}|\pi\right)=\frac{1}{M}\sum_{m=1}^{M}\log p_{Z}\left(z_{m}\mid\pi\right).
+L_{cd}\left(\pi\mid\bm{z}^{M}\right):=\frac{1}{M}\log\rho\left(\bm{z}|\pi\right)=\frac{1}{M}\sum_{m=1}^{M}\log\rho_{Z}\left(z_{m}\mid\pi\right).
 \]
 
 \end_inset
@@ -618,7 +680,7 @@ infinite data log-likelihood
 \emph on
 \begin_inset Formula 
 \[
-L_{cc}\left(\pi\mid p_{Z}\right):=\int p_{Z}\left(z\right)\log p_{Z}\left(z\mid\pi\right)\mathrm{d}z.
+L_{cc}\left(\pi\mid\rho_{Z}\right):=\int\rho_{Z}\left(z\right)\log\rho_{Z}\left(z\mid\pi\right)\mathrm{d}z.
 \]
 
 \end_inset
@@ -654,23 +716,6 @@ convergence in which sense?
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-The following proposition demonstrates how we can recover a data-underlying
- 
-\begin_inset Quotes eld
-\end_inset
-
-true prior
-\begin_inset Quotes erd
-\end_inset
-
- 
-\begin_inset Formula $\pi^{*}$
-\end_inset
-
- in the (in practice imaginary) infinite-data scenario:
 \end_layout
 
 \begin_layout Standard
@@ -721,7 +766,7 @@ key "van2000asymptotic"
 
 \end_inset
 
-We than have that
+We then have that
 \begin_inset Formula 
 \[
 \pi^{*}=\underset{\pi'\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}L_{cc}\left(\pi'\right).
@@ -761,8 +806,8 @@ Both of the assumptions arise nather naturally; if the model is not well
 \begin_inset Formula $\pi'\ne\pi^{*}$
 \end_inset
 
- inducing the same measurements, we hence cannot hope to recover the right
- prior candidate from the data.
+ inducing the same measurements so we cannot hope to recover the right prior
+ candidate from the data.
 \end_layout
 
 \begin_layout Standard
@@ -845,6 +890,19 @@ prove this!
 Regularization
 \end_layout
 
+\begin_layout Standard
+To adress this problem we will introduce two different regularization schemes,
+ the Maximum Penalized Likelihood Estimation (MPLE), introducing a penaliztion
+ term to the former optimization problem, and the Doubly Smoothed Maximum
+ Likelihood Estimation (DSMLE), lifting the problem from the finite to the
+ infinite data regime by smoothing the measurements and thus approximating
+ the continious data-generating distribution 
+\begin_inset Formula $\rho_{Z}.$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Numerical realization
 \end_layout
@@ -908,12 +966,21 @@ For the integration over the potentially high-dimensional parameter space
 
 \end_layout
 
+\begin_layout Standard
+resulting monte carlo approximations of the likelihoods, entropies and derivativ
+es
+\end_layout
+
+\begin_layout Standard
+gradient ascent in the simplex
+\end_layout
+
 \begin_layout Subsection
 Markov Chain Monte Carlo
 \end_layout
 
 \begin_layout Standard
-The numerical scheme depends on the choice of the importance samplingg 
+The numerical scheme depends on the choice of the importance sampling 
 \begin_inset Formula $\bm{x}$
 \end_inset
 
@@ -987,6 +1054,14 @@ In the following we wiwe consider a model for the human menstrual cycle,
 .
 \end_layout
 
+\begin_layout Standard
+Mention Data
+\end_layout
+
+\begin_layout Standard
+likelihood model, modeling of period, special care considering nans
+\end_layout
+
 \begin_layout Subsection
 Sampling
 \end_layout
@@ -1017,12 +1092,24 @@ Note that this transformation also transforms the corresponding likelihoods
  according to ...
 \end_layout
 
+\begin_layout Standard
+burnin, convergence tests
+\end_layout
+
 \begin_layout Subsection
 Prior estimation
 \end_layout
 
 \begin_layout Subsection
 Results
+\end_layout
+
+\begin_layout Standard
+plot mcmc chain
+\end_layout
+
+\begin_layout Standard
+paperplot
 \end_layout
 
 \begin_layout Section
