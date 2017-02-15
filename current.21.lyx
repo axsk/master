@@ -1,7 +1,9 @@
-#LyX 2.1 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass amsart
 \use_default_options true
 \begin_modules
@@ -14,16 +16,16 @@ figs-within-sections
 \language_package default
 \inputencoding auto
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics default
 \default_output_format default
 \output_sync 1
@@ -443,7 +445,7 @@ Note also that whilst this model is extensible to multiple measurements
 \begin_inset Formula $x$
 \end_inset
 
- is beeing responsible for the different measurements.
+ is underlying the different measurements.
  This would be the right model if all measurements result from the same
  realization of 
 \begin_inset Formula $X$
@@ -464,7 +466,7 @@ The empirical Bayes model
 \begin_layout Standard
 Since in general the 
 \emph on
-prior of 
+prior 
 \emph default
 
 \begin_inset Formula $X$
@@ -477,15 +479,16 @@ ed for estimating this prior based on empirical cohort data, giving rise
 empirical Bayes methods.
  
 \emph default
-In that context we extend the model by letting the prior 
-\begin_inset Formula $p\left(x\right)$
+In that context we extend the model by conditioning the prior 
+\begin_inset Formula $\rho_{X}$
 \end_inset
 
- be a parameter itself, conditioned on a hyperparater 
+ on a hyperparater 
 \begin_inset Formula $\Pi$
 \end_inset
 
-, the prior of priors, resulting in the hierarchical model 
+, the prior of priors if one likes, resulting in the hierarchical model
+ 
 \begin_inset Formula $\Pi\rightarrow X\rightarrow Z$
 \end_inset
 
@@ -494,6 +497,22 @@ In that context we extend the model by letting the prior
 hyperparametric model
 \emph default
 .
+ 
+\end_layout
+
+\begin_layout Standard
+Most literature so far admits only parametrized families of distributions
+ for the prior, e.g.
+ 
+\begin_inset Formula $\rho_{X|\pi}=$
+\end_inset
+
+ we aim at a more general solution to the inference problem by treating
+ is parametrized over 
+\end_layout
+
+\begin_layout Standard
+Aiming at a black-box estimator 
 \end_layout
 
 \begin_layout Standard
@@ -508,7 +527,7 @@ The marginal likelihood of a prior
  is then given by 
 \begin_inset Formula 
 \[
-p_{Z\mid\pi}\left(z\right)=\int_{\mathcal{X}}p_{Z\mid x}\left(z\right)\pi\left(x\right)\mathrm{d}x.
+L\left(\pi\mid z\right)=p_{Z\mid\pi}\left(z\right)=\int_{\mathcal{X}}p_{Z\mid x}\left(z\right)\pi\left(x\right)\mathrm{d}x.
 \]
 
 \end_inset
@@ -532,7 +551,7 @@ Since this likelihood, in contrast to the basic Bayesian model above, does
 
 \begin_layout Definition
 For finite data/measurements 
-\begin_inset Formula $\bm{z}=\left(z_{m}\in\mathcal{Z}\right)_{m=1,...,M}$
+\begin_inset Formula $\bm{z}^{M}=\left(z_{m}\in\mathcal{Z}\right)_{m=1,...,M}$
 \end_inset
 
  we define the likelihood of a prior 
@@ -542,7 +561,7 @@ For finite data/measurements
  as
 \begin_inset Formula 
 \[
-p\left(\bm{z}|\pi\right):=\prod_{m=1}^{M}p_{Z}\left(z_{m}\mid\Pi=\pi\right)
+p\left(\bm{z}^{M}|\pi\right):=\prod_{m=1}^{M}p_{Z}\left(z_{m}\mid\Pi=\pi\right)
 \]
 
 \end_inset
@@ -568,7 +587,7 @@ name: log-likelihood?
 
 \begin_inset Formula 
 \[
-L_{cd}\left(\pi\mid\bm{z}\right):=\frac{1}{M}\log p\left(\bm{z}|\pi\right)=\frac{1}{M}\sum_{m=1}^{M}\log p_{Z}\left(z_{m}\mid\pi\right).
+L_{cd}\left(\pi\mid\bm{z}^{M}\right):=\frac{1}{M}\log p\left(\bm{z}|\pi\right)=\frac{1}{M}\sum_{m=1}^{M}\log p_{Z}\left(z_{m}\mid\pi\right).
 \]
 
 \end_inset
@@ -585,7 +604,7 @@ infinite data/measurements
 \begin_inset Quotes erd
 \end_inset
 
-, represented in the form of a probabilty distribution 
+, represented in the form of a data-generating probabilty distribution 
 \begin_inset Formula $p_{Z}$
 \end_inset
 
@@ -616,16 +635,30 @@ The latter definition follows from the former in the limit for
 \begin_inset Formula $p_{Z}$
 \end_inset
 
- is indeed the data generating distribution 
-\begin_inset Formula $z_{m}\sim p_{Z}$
+ is indeed the data generating distribution:
+\begin_inset Formula 
+\[
+z_{m}\overset{i.i.d.}{\sim}\rho_{Z}\Rightarrow L_{cd}\left(\pi\mid\bm{z}^{M}\right)\overset{M\rightarrow\infty}{\longrightarrow}L_{cc}\left(\pi\mid\rho_{Z}\right)
+\]
+
 \end_inset
 
-.
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+convergence in which sense?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Assuming that the model is well specified, i.e.
- there exists a 
+The following proposition demonstrates how we can recover a data-underlying
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -637,23 +670,42 @@ true prior
 \begin_inset Formula $\pi^{*}$
 \end_inset
 
- such that the data-generating distribution 
-\begin_inset Formula $p_{Z}$
+ in the (in practice imaginary) infinite-data scenario:
+\end_layout
+
+\begin_layout Standard
+The following proposition demonstrates how we can recover the data underlying
+ 
+\begin_inset Quotes eld
 \end_inset
 
- is induced by that prior
-\begin_inset Formula 
-\[
-p_{Z}=p_{Z\mid\pi*},
-\]
+true prior
+\begin_inset Quotes erd
+\end_inset
 
+ 
+\begin_inset Formula $\pi^{*}$
+\end_inset
+
+ in the infinite data regime by maximizing the corresponding likelihood
+ functional 
+\begin_inset Formula $L_{cc}.$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-and that the model is furthermore identifiable 
+\begin_layout Proposition
+Let the hyperparametric model be well specified, i.e.
+ 
+\begin_inset Formula 
+\[
+\exists\pi^{*}\in\mathcal{M}_{1}\left(\mathcal{X}\right):\,\rho_{Z}=\rho_{Z\mid\pi^{*}}
+\]
+
+\end_inset
+
+and identifiable 
 \begin_inset CommandInset citation
 LatexCommand cite
 after "chapter 5"
@@ -664,7 +716,15 @@ key "van2000asymptotic"
 
 \begin_inset Formula 
 \[
-\rho_{Z\mid\pi^{'}}=\rho_{Z\mid\pi^{*}}\Rightarrow\pi'=\pi^{*}\quad\forall\pi'\in\mathcal{M}_{1}
+\rho_{Z\mid\pi^{'}}=\rho_{Z\mid\pi^{*}}\Rightarrow\pi'=\pi^{*}\quad\forall\pi'\in\mathcal{M}_{1}.
+\]
+
+\end_inset
+
+We than have that
+\begin_inset Formula 
+\[
+\pi^{*}=\underset{\pi'\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}L_{cc}\left(\pi'\right).
 \]
 
 \end_inset
@@ -672,103 +732,100 @@ key "van2000asymptotic"
 
 \end_layout
 
+\begin_layout Proof
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+todo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-the following proposition will show us how to recover 
+Both of the assumptions arise nather naturally; if the model is not well
+ specified this merely means the measured data 
+\begin_inset Formula $\rho_{Z}$
+\end_inset
+
+ cannot be explained by any prior, thus resulting in an ill-posed problem.
+ If on the other hand the model is not identifiable, which by definition
+ corresponds to the injectivity of the marginal likelihood function 
+\begin_inset Formula $\rho_{Z}$
+\end_inset
+
+, there exists another 
+\begin_inset Formula $\pi'\ne\pi^{*}$
+\end_inset
+
+ inducing the same measurements, we hence cannot hope to recover the right
+ prior candidate from the data.
+\end_layout
+
+\begin_layout Standard
+This can be retracted though by lifting the inference problem to equivalence
+ classes of priors leading to the same measurements,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\pi\sim\pi':\iff\left\Vert \rho_{Z\mid\pi}-\rho_{Z\mid\pi'}\right\Vert _{L^{1}\left(\mathcal{Z}\right)}=0.\label{eq:equiv}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is all we can hope for.
+\end_layout
+
+\begin_layout Standard
+In practice though usually only finite data is available, and even though
+ the limiting property might give hope that maximization of 
+\begin_inset Formula $L_{cd}$
+\end_inset
+
+ might approximate 
 \begin_inset Formula $\pi^{*}$
 \end_inset
 
- in the (imaginary) infinite data scenario.
+ properly, experiments 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+ref to npmle plots
 \end_layout
 
-\begin_layout Subsection
-Identifiability
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Identifiability"
-
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-We call a likelihood model 
-\begin_inset Formula $p_{Z}\left(\cdot\mid\pi\right)$
+ show that these maxima exhibit what we will describe as peaked behaviour,
+ the estimated prior consists of a mixture of delta distributions.
+ I furthermore conjecture that for 
+\begin_inset Formula $M$
 \end_inset
 
- identifiable, if
-\begin_inset Formula 
-\begin{equation}
-p_{Z}\left(\cdot\mid\pi\right)=p_{Z}\left(\cdot\mid\pi'\right)\Rightarrow\pi=\pi'.\label{eq:ident}
-\end{equation}
-
+ data points 
+\begin_inset Formula $\bm{z}^{M}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-If this condition is not fulfilled, different priors can lead to the same
- measurements and therefore we cannot expect to reconstruct the correct
- one from the given data.
- The best we can hope for in this case is to recover a candidate of the
- equivalence class of priors leading to the same measurements, specified
- via the equivalence relation:
-\begin_inset Formula 
-\begin{equation}
-\pi\sim\pi':\iff\left\Vert p_{Z}\left(\cdot\mid\Pi=\pi\right)-p_{Z}\left(\cdot\mid\Pi=\pi'\right)\right\Vert _{L^{1}\left(\mathcal{Z}\right)}=0.\label{eq:equiv}
-\end{equation}
-
+ the maximizer of 
+\begin_inset Formula $L_{cd}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Subsection
-Prior estimation
-\end_layout
-
-\begin_layout Standard
-The following proposition shows that optimizing the 
-\emph on
-infinite data likelihood
-\emph default
- criterion indeed leads to restoration of the desired true prior up to the
- equivalence considerations from 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sub:Identifiability"
-
+ consists of maximally 
+\begin_inset Formula $M$
 \end_inset
 
-.
-\end_layout
-
-\begin_layout Proposition
-Let 
-\begin_inset Formula $\pi\in\mathcal{M}_{1}\left(\mathcal{X}\right)$
-\end_inset
-
- be a globally supported probability density function.
- Then 
-\begin_inset Formula $p_{Z}\left(\cdot\mid\Pi=\pi\right)=p_{Z}$
-\end_inset
-
- if and only if 
-\begin_inset Formula $\pi$
-\end_inset
-
- maximizes 
-\begin_inset Formula $L_{cc}\left(\pi\right)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-The cross entropy of the two densities is minimal if and only if the two
- densities agree modulo 
-\begin_inset Formula $\sim$
+ such peaks located at the individual maximum likelihoods estimates of the
+ individual datapoints 
+\begin_inset Formula $z_{m}$
 \end_inset
 
 .
@@ -776,33 +833,16 @@ The cross entropy of the two densities is minimal if and only if the two
 status open
 
 \begin_layout Plain Layout
-Ausfuehrlicher
+prove this!
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Proof
-In other words, maximization of 
-\begin_inset Formula $L_{cc}$
-\end_inset
-
- gives us the prior that reconstructs the true evidence 
-\begin_inset Formula $p_{Z}$
-\end_inset
-
-, which according to the identifiability considerations is all we can hope
- for.
 \end_layout
 
 \begin_layout Subsection
 Regularization
-\end_layout
-
-\begin_layout Standard
-NPMLE
 \end_layout
 
 \begin_layout Subsection
