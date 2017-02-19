@@ -1,4 +1,4 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
 \lyxformat 474
 \begin_document
 \begin_header
@@ -597,7 +597,7 @@ L\left(\pi\mid z\right)=\rho_{Z\mid\pi}\left(z\right)=\int_{\mathcal{X}}\rho_{Z\
 
 \begin_layout Standard
 Since this likelihood, in contrast to the basic Bayesian model above, does
- not depend on a specific realization of 
+ not depend on a specific realization of the latent variable 
 \begin_inset Formula $X$
 \end_inset
 
@@ -647,7 +647,7 @@ name: log-likelihood?
 
 \begin_inset Formula 
 \[
-L_{cd}\left(\pi\mid\bm{z}^{M}\right):=\frac{1}{M}\log\rho\left(\bm{z}|\pi\right)=\frac{1}{M}\sum_{m=1}^{M}\log\rho_{Z}\left(z_{m}\mid\pi\right).
+\mathcal{L}_{cd}\left(\pi\mid\bm{z}^{M}\right):=\frac{1}{M}\log\rho\left(\bm{z}^{M}|\pi\right)=\frac{1}{M}\sum_{m=1}^{M}\log\rho_{Z}\left(z_{m}\mid\pi\right).
 \]
 
 \end_inset
@@ -678,7 +678,7 @@ infinite data log-likelihood
 \emph on
 \begin_inset Formula 
 \[
-L_{cc}\left(\pi\mid\rho_{Z}\right):=\int\rho_{Z}\left(z\right)\log\rho_{Z}\left(z\mid\pi\right)\mathrm{d}z.
+\mathcal{L}_{cc}\left(\pi\mid\rho_{Z}\right):=\int\rho_{Z}\left(z\right)\log\rho_{Z}\left(z\mid\pi\right)\mathrm{d}z.
 \]
 
 \end_inset
@@ -698,7 +698,7 @@ The latter definition follows from the former in the limit for
  is indeed the data generating distribution:
 \begin_inset Formula 
 \[
-z_{m}\overset{i.i.d.}{\sim}\rho_{Z}\Rightarrow L_{cd}\left(\pi\mid\bm{z}^{M}\right)\overset{M\rightarrow\infty}{\longrightarrow}L_{cc}\left(\pi\mid\rho_{Z}\right)
+z_{m}\overset{i.i.d.}{\sim}\rho_{Z}\Rightarrow\mathcal{L}_{cd}\left(\pi\mid\bm{z}^{M}\right)\overset{M\rightarrow\infty}{\longrightarrow}\mathcal{L}_{cc}\left(\pi\mid\rho_{Z}\right)
 \]
 
 \end_inset
@@ -816,7 +816,7 @@ This can be retracted though by lifting the inference problem to equivalence
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\pi\sim\pi':\iff\left\Vert \rho_{Z\mid\pi}-\rho_{Z\mid\pi'}\right\Vert _{L^{1}\left(\mathcal{Z}\right)}=0.\label{eq:equiv}
+\pi\sim\pi':\iff\left\Vert \rho_{Z\mid\pi}-\rho_{Z\mid\pi'}\right\Vert _{L^{1}\left(\mathcal{Z}\right)}=0,\label{eq:equiv}
 \end{equation}
 
 \end_inset
@@ -830,7 +830,17 @@ which is all we can hope for.
 
 \begin_layout Standard
 In practice though usually only finite data is available, and even though
- the limiting property might give hope that maximization of 
+ the limiting property 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ref
+\end_layout
+
+\end_inset
+
+ might give hope that maximization of 
 \begin_inset Formula $L_{cd}$
 \end_inset
 
@@ -838,50 +848,33 @@ In practice though usually only finite data is available, and even though
 \begin_inset Formula $\pi^{*}$
 \end_inset
 
- properly, experiments 
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-ref to npmle plots
-\end_layout
+ properly, one can prove 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 21"
+key "lindsay1995mixture"
 
 \end_inset
 
- show that these maxima exhibit what we will describe as peaked behaviour,
- the estimated prior consists of a mixture of delta distributions.
- I furthermore conjecture that for 
-\begin_inset Formula $M$
-\end_inset
-
- data points 
-\begin_inset Formula $\bm{z}^{M}$
-\end_inset
-
- the maximizer of 
+ that the maximizer of 
 \begin_inset Formula $L_{cd}$
 \end_inset
 
- consists of maximally 
+ is a discrete distribution with at most 
 \begin_inset Formula $M$
 \end_inset
 
- such peaks located at the individual maximum likelihoods estimates of the
- individual datapoints 
-\begin_inset Formula $z_{m}$
-\end_inset
-
-.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-prove this!
+ nodes.
 \end_layout
 
-\end_inset
-
-
+\begin_layout Standard
+In the field of machine learning this phenomenom, commonly occuring for
+ insufficient data, is referred to as 
+\emph on
+overfitting
+\emph default
+ and usually approached by regularization techniques, methods to enforce
+ more regular and smooth solutions.
 \end_layout
 
 \begin_layout Subsection
@@ -889,16 +882,111 @@ Regularization
 \end_layout
 
 \begin_layout Standard
-To adress this problem we will introduce two different regularization schemes,
- the Maximum Penalized Likelihood Estimation (MPLE), introducing a penaliztion
- term to the former optimization problem, and the Doubly Smoothed Maximum
- Likelihood Estimation (DSMLE), lifting the problem from the finite to the
- infinite data regime by smoothing the measurements and thus approximating
- the continious data-generating distribution 
+To adress this problem we will introduce two such regularization methods,
+ the 
+\emph on
+maximum penalized likelihood estimation
+\emph default
+ (MPLE), introducing a penaliztion term to the former optimization problem,
+ and the 
+\emph on
+doubly smoothed maximum likelihood estimation 
+\emph default
+(DSMLE), lifting the problem from the finite to the infinite data regime
+ by smoothing the measurements and thus approximating the continious data-genera
+ting distribution 
 \begin_inset Formula $\rho_{Z}.$
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+For a given likelihood function 
+\begin_inset Formula $L$
+\end_inset
+
+ and a 
+\emph on
+roughness penalty 
+\emph default
+(or 
+\emph on
+regularization term
+\emph default
+) 
+\begin_inset Formula $\Phi:\mathcal{M}_{1}\rightarrow\mathbb{R}$
+\end_inset
+
+, responsible for penalizing unsmooth or unwanted solutions with high values,
+ the MPLE estimator admits the form 
+\begin_inset Formula 
+\[
+\pi_{MPLE}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We note that this approach also allows for an interpretation in the context
+ of the Bayesian hyperparametric model by identifying the penalty 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ with the hyperprior 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ via 
+\begin_inset Formula $\rho_{\Pi}\propto e^{-\Phi}$
+\end_inset
+
+.
+ The posterior then is
+\begin_inset Formula 
+\[
+\rho_{\Pi\mid Z}\propto L\left(\pi\right)e^{-\Phi\left(\pi\right)}
+\]
+
+\end_inset
+
+and thus the 
+\emph on
+maximum a posteriori 
+\emph default
+estimate 
+\begin_inset Formula $\pi_{MAP}$
+\end_inset
+
+ for the hyperparametric model corresponds to the MPLE estimate:
+\begin_inset Formula 
+\[
+\pi_{MAP}=\underset{\pi}{\arg\max}L\left(\pi\right)e^{-\Phi\left(\pi\right)}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right)=\pi_{MPLE}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One now might might argue that we started with the question of finding the
+ correct prior and just complicated the situation by transferring this problem
+ to the question of the correct hyperprior.
+ While this may be true we arge that the latter can be tackled from a rather
+ abstract, problem independent standpoint, hence leading to a more general
+ answer.
+\end_layout
+
+\begin_layout Subsection
+Choice of the penalty
+\end_layout
+
+\begin_layout Standard
+Whilst many of the common penalty functions are often rather ad-hoc
 \end_layout
 
 \begin_layout Subsection
@@ -978,7 +1066,8 @@ Markov Chain Monte Carlo
 \end_layout
 
 \begin_layout Standard
-The numerical scheme depends on the choice of the importance sampling 
+The quality of the numerical approximation greatly depends on the choice
+ of the importance samples 
 \begin_inset Formula $\bm{x}$
 \end_inset
 
@@ -1032,6 +1121,10 @@ The probably most common MCMC scheme is the Metropolis–Hastings (MH) algorithm
 \begin_layout Standard
 Since the quality/speed of the approximation depends on the chosen proposal
  distribution, we will make use of the AMM algorithm...
+\end_layout
+
+\begin_layout Standard
+convergence tests
 \end_layout
 
 \begin_layout Section
