@@ -1,4 +1,4 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
 \lyxformat 474
 \begin_document
 \begin_header
@@ -906,6 +906,16 @@ For a given likelihood function
 \begin_inset Formula $L$
 \end_inset
 
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+specify
+\end_layout
+
+\end_inset
+
  and a 
 \emph on
 roughness penalty 
@@ -921,9 +931,9 @@ regularization term
 , responsible for penalizing unsmooth or unwanted solutions with high values,
  the MPLE estimate admits the form 
 \begin_inset Formula 
-\[
-\pi_{MPLE}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right).
-\]
+\begin{equation}
+\pi_{MPLE}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right).\label{eq:mple}
+\end{equation}
 
 \end_inset
 
@@ -1017,7 +1027,7 @@ key "good1963maximum"
 
 \end_inset
 
- suggested the use of the entropy for the penalty
+ suggested the use of the differential entropy for the penalty
 \begin_inset Formula 
 \[
 \Phi\left(\pi\right):=-\gamma H_{X}\left(\pi\right):=\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\log\rho_{X\mid\pi}\left(x\right)\mathrm{d}x,
@@ -1038,8 +1048,8 @@ key "good1963maximum"
  This means that if two scientists estimate the prior using equivalent models,
  e.g.
  by using different systems of units, they would end up with different estimates.
- Therefore this penalty does not rectify the problem of subjectivity in
- the Bayesian method.
+ Hence this penalty does not rectify the problem of subjectivity in the
+ Bayesian method.
  We therefore look for a penalty which is invariant under coordinate transformat
 ions.
 \end_layout
@@ -1062,20 +1072,43 @@ Let
 \begin_inset Formula $Y:\,\Omega\rightarrow\mathcal{Y}$
 \end_inset
 
- be two continious random variables, 
-\begin_inset Formula $\rho_{X,Y}\left(x,y\right)$
+ be two continuous random variables, 
+\begin_inset Formula $\rho_{X,Y}$
 \end_inset
 
  their joint probability density and 
-\begin_inset Formula $\rho_{X}\left(x\right),\,\rho_{Y}\left(y\right)$
+\begin_inset Formula $\rho_{X},\,\rho_{Y}$
 \end_inset
 
  their respective marginal densities.
  Their mutual information is defined as
 \begin_inset Formula 
 \begin{align*}
-\mathcal{I}\left(X;Y\right): & =\int_{\mathcal{Y}}\int_{\mathcal{X}}\rho_{X,Y}\left(x,y\right)\log\left(\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)\rho_{Y}\left(y\right)}\right)\mathrm{d}x\mathrm{dy}.\\
+\mathcal{I}\left(X;Y\right): & =\int_{\mathcal{Y}}\int_{\mathcal{X}}\rho_{X,Y}\left(x,y\right)\log\left(\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)\rho_{Y}\left(y\right)}\right)\mathrm{d}x\mathrm{dy}\\
+ & =\mathbb{E}_{y\sim Y}\left[D_{KL}\left(\rho_{X\mid Y}\left(\cdot\mid y\right)\parallel\rho_{X}\left(\cdot\right)\right)\right]\\
+ & =H\left(Y\right)-H\left(Y\mid X\right)
 \end{align*}
+
+\end_inset
+
+with 
+\begin_inset Formula $D_{KL}$
+\end_inset
+
+ denoting the Kullback-Leibler divergence 
+\begin_inset Formula 
+\[
+D_{KL}\left(\rho_{A}\parallel\rho_{B}\right):=\int_{E}\rho_{A}\left(x\right)\log\frac{\rho_{A}\left(x\right)}{\rho_{B}\left(x\right)}\mathrm{d}x,\quad\rho_{A},\rho_{B}\,\text{probability densities on }E
+\]
+
+\end_inset
+
+ and 
+\begin_inset Formula 
+\begin{eqnarray*}
+H\left(Y\right) & := & -\int_{Z}\\
+H\left(Y\mid X\right) & := & -\int\int
+\end{eqnarray*}
 
 \end_inset
 
@@ -1083,6 +1116,12 @@ Let
 \end_layout
 
 \begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:invariance"
+
+\end_inset
+
 Let 
 \begin_inset Formula $X$
 \end_inset
@@ -1099,11 +1138,15 @@ Let
 \begin_inset Formula $\psi^{-1}:\,\mathcal{Y}\rightarrow\tilde{\mathcal{Y}}$
 \end_inset
 
- be diffeomorphisms defining the coordinate transformations with corresponding
- densities
+ be diffeomorphisms defining the coordinate transformations and corresponding
+ transformed random variables 
+\begin_inset Formula $\tilde{X},\,\tilde{Y}$
+\end_inset
+
+ with their densities
 \begin_inset Formula 
 \[
-\rho_{\tilde{\mathcal{X}},\mathcal{\tilde{Y}}}\left(\tilde{x},\tilde{y}\right):=\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|
+\rho_{\tilde{X},\tilde{Y}}\left(\tilde{x},\tilde{y}\right):=\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|
 \]
 
 \end_inset
@@ -1111,7 +1154,7 @@ Let
 
 \begin_inset Formula 
 \[
-\rho_{\tilde{\mathcal{X}}}\left(\tilde{x}\right):=\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|,\,\quad\rho_{\tilde{\mathcal{Y}}}\left(\tilde{y}\right):=\rho_{Y}\left(\psi\left(\tilde{y}\right)\right)\left|D\psi\left(\tilde{x}\right)\right|
+\rho_{\tilde{X}}\left(\tilde{x}\right):=\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|,\,\quad\rho_{\tilde{Y}}\left(\tilde{y}\right):=\rho_{Y}\left(\psi\left(\tilde{y}\right)\right)\left|D\psi\left(\tilde{x}\right)\right|
 \]
 
 \end_inset
@@ -1139,71 +1182,78 @@ The mutual information
 According to the change of variables formula 
 \begin_inset Formula 
 \begin{align*}
-\mathcal{I}\left(X;Y\right): & =\int_{\mathcal{Y}}\int_{X}\rho_{X,Y}\left(x,y\right)\log\left(\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)\rho_{Y}\left(y\right)}\right)\mathrm{d}x\mathrm{dy}.\\
- & =\int_{\mathcal{\tilde{Y}}}\int_{\tilde{\mathcal{X}}}\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\log\left(\frac{\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)}{\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\rho_{Y}\left(\psi\left(\tilde{y}\right)\right)}\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|\mathrm{d}\tilde{x}\mathrm{d\tilde{y}}\\
- & =\int_{\mathcal{\tilde{Y}}}\int_{\tilde{\mathcal{X}}}\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|\log\left(\frac{\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|}{\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\rho_{Y}\left(\psi\left(\tilde{y}\right)\right)\left|D\psi\left(\tilde{y}\right)\right|}\right)\mathrm{d}\tilde{x}\mathrm{d\tilde{y}}\\
- & =\int_{\mathcal{\tilde{Y}}}\int_{\tilde{\mathcal{X}}}\rho_{\tilde{X},\tilde{Y}}\left(\tilde{x},\tilde{y}\right)\log\left(\frac{\rho_{\tilde{X},\tilde{Y}}\left(\tilde{x},\tilde{y}\right)}{\rho_{\tilde{X}}\left(\tilde{x}\right)\rho_{\tilde{Y}}\left(\tilde{y}\right)}\right)\mathrm{d}\tilde{x}\mathrm{d\tilde{y}}
+ & \ \mathcal{I}\left(X;Y\right)\\
+= & \int_{\mathcal{Y}}\int_{X}\rho_{X,Y}\left(x,y\right)\log\left(\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)\rho_{Y}\left(y\right)}\right)\mathrm{d}x\mathrm{dy}.\\
+= & \int_{\mathcal{\tilde{Y}}}\int_{\tilde{\mathcal{X}}}\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\log\left(\frac{\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)}{\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\rho_{Y}\left(\psi\left(\tilde{y}\right)\right)}\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|\mathrm{d}\tilde{x}\mathrm{d\tilde{y}}\\
+= & \int_{\mathcal{\tilde{Y}}}\int_{\tilde{\mathcal{X}}}\rho_{\tilde{X},\tilde{Y}}\left(\tilde{x},\tilde{y}\right)\log\left(\frac{\rho_{\tilde{X},\tilde{Y}}\left(\tilde{x},\tilde{y}\right)}{\rho_{\tilde{X}}\left(\tilde{x}\right)\rho_{\tilde{Y}}\left(\tilde{y}\right)}\right)\mathrm{d}\tilde{x}\mathrm{d\tilde{y}}\\
+= & \ \mathcal{I}(\tilde{X};\tilde{Y})
 \end{align*}
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-remove 3rd line?
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\mathcal{}
-\]
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Proof
-Note that since 
-\begin_inset Formula $\rho_{X,Y}\left(x,y\right)/\rho_{Y}\left(y\right)=\rho\left(x\mid y\right),$
+\begin_layout Standard
+The mutual information quantifies the 
+\begin_inset Quotes eld
 \end_inset
 
- the mutual information also allows the formulation on forms of the Kullback-Lei
-bler divergence
-\begin_inset Formula 
-\[
-D_{KL}\left(A\bigparallel B\right):=\int\rho_{A}\left(x\right)\log\frac{\rho_{A}\left(x\right)}{\rho_{B}\left(x\right)}\mathrm{d}x.
-\]
-
+amount of information
+\begin_inset Quotes erd
 \end_inset
 
-as
-\begin_inset Formula 
-\begin{align*}
-\mathcal{I}\left(X;Y\right) & =\int_{Y}\rho_{Y}\left(y\right)\int_{X}\rho_{X\mid Y}\left(x\mid y\right)\log\left(\frac{\rho_{X\mid Y}\left(x\mid y\right)}{\rho_{X}\left(x\right)}\right)\mathrm{d}x\mathrm{dy}\\
- & =\mathbb{E}_{y\sim Y}\left[D_{KL}\left(\rho_{X\mid Y}\left(\cdot\mid y\right)\bigparallel\rho_{X}\left(\cdot\right)\right)\right]
-\end{align*}
-
+ that one random variable shares with the respective other, expressed by
+ the weighted information content of the their joint distribution (
+\begin_inset Formula $\rho_{X,Y}$
 \end_inset
 
+) relative to their joint distribution if they were independent (
+\begin_inset Formula $\rho_{X}\rho_{Y})$
+\end_inset
 
+.
+\end_layout
+
+\begin_layout Standard
+We can gain further insights into its meaning by expressing it in terms
+ of another fundamental information-theoretic quantity, the Kullback-Leibler
+ divergence.
 \end_layout
 
 \begin_layout Definition
 Let 
-\begin_inset Formula $\gamma>0$
+\begin_inset Formula $A,\,B:\,\Omega\rightarrow E$
+\end_inset
+
+ be two continuous random variables with respective density functions 
+\begin_inset Formula $\rho_{A}$
+\end_inset
+
+, 
+\begin_inset Formula $\rho_{B}$
 \end_inset
 
 .
- Then 
+ The
+\emph on
+ Kullback-Leibler divergence 
+\emph default
+from 
+\begin_inset Formula $B$
+\end_inset
+
+ to 
+\begin_inset Formula $A$
+\end_inset
+
+ is defined to be
+\end_layout
+
+\begin_layout Definition
 \begin_inset Formula 
 \[
-\Phi_{I}=-\gamma\mathcal{I}\left(X;Z\right)
+D_{KL}\left(A\parallel B\right):=\int_{E}\rho_{A}\left(x\right)\log\frac{\rho_{A}\left(x\right)}{\rho_{B}\left(x\right)}\mathrm{d}x.
 \]
 
 \end_inset
@@ -1211,8 +1261,170 @@ Let
 
 \end_layout
 
+\begin_layout Standard
+The Kullbach-Leibler divergence (also called 
+\emph on
+information gain 
+\emph default
+or 
+\emph on
+relative entropy
+\emph default
+) is a measure for the loss of information when considering 
+\begin_inset Formula $B$
+\end_inset
+
+ as a approximation to 
+\begin_inset Formula $A$
+\end_inset
+
+, or consequently in the Bayesian context it is the gain of information
+ revising one's beliefs from the prior 
+\begin_inset Formula $B$
+\end_inset
+
+ to the posterior 
+\begin_inset Formula $A$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+quelle
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then, since 
+\begin_inset Formula $\rho_{X,Y}\left(x,y\right)/\rho_{Y}\left(y\right)=\rho_{X\mid Y}\left(x\mid y\right),$
+\end_inset
+
+ we have 
+\begin_inset Formula 
+\begin{align*}
+\mathcal{I}\left(X;Y\right) & =\int_{\mathcal{Y}}\rho_{Y}\left(y\right)\int_{\mathcal{X}}\rho_{X\mid Y}\left(x\mid y\right)\log\left(\frac{\rho_{X\mid Y}\left(x\mid y\right)}{\rho_{X}\left(x\right)}\right)\mathrm{d}x\mathrm{dy}\\
+ & =\mathbb{E}_{y\sim Y}\left[D_{KL}\left(\rho_{X\mid Y}\left(\cdot\mid y\right)\parallel\rho_{X}\left(\cdot\right)\right)\right],
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+that is the mutual information of 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ corresponds to the expected information gain from the prior to the posterior
+ over 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+ when the measurements are 
+\begin_inset Formula $Y$
+\end_inset
+
+-distributed.
+\end_layout
+
 \begin_layout Definition
-is the entropy penalty with
+For 
+\begin_inset Formula $\gamma>0$
+\end_inset
+
+ constant we define the 
+\emph on
+information penalty
+\emph default
+ 
+\begin_inset Formula 
+\begin{eqnarray}
+\Phi_{I}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\mid\pi\right)\nonumber \\
+ & = & -\gamma\int_{\mathcal{Z}}\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\rho_{Z\mid x}\left(z\right)\log\left(\frac{\rho_{Z\mid x}\left(z\right)}{\rho_{Z\mid\pi}\left(z\right)}\right)\mathrm{d}x\mathrm{dz}.\label{eq:ipen}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Minimizing this penalty then corresponds to maximizing the amount of shared
+ information between the prior-predictive distribution 
+\begin_inset Formula $\rho_{Z\mid\pi}$
+\end_inset
+
+ and the prior 
+\begin_inset Formula $\rho_{X\mid\pi}$
+\end_inset
+
+ itself.
+ In terms of the Kullback-Leibler formulation this means priors 
+\begin_inset Formula $\pi$
+\end_inset
+
+ are rewarded by the amount of information gain expected from their induced
+ measurements hence leading to non-informativity.
+\end_layout
+
+\begin_layout Corollary
+The maximum penalized likelihood estimator 
+\begin_inset Formula $\pi_{MPLE}$
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mple"
+
+\end_inset
+
+ with the information penalty 
+\begin_inset Formula $\Phi_{I}$
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ipen"
+
+\end_inset
+
+ is invariant under transformations of 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{Y}$
+\end_inset
+
+ as in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:invariance"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The 
+\end_layout
+
+\begin_layout Standard
+In the case of an additive measurement error we can simplify the 
 \end_layout
 
 \begin_layout Subsection
