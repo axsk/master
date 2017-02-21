@@ -1,7 +1,9 @@
-#LyX 2.1 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass amsart
 \begin_preamble
 \DeclareMathOperator{\Ima}{Im}
@@ -17,16 +19,16 @@ figs-within-sections
 \language_package default
 \inputencoding auto
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics default
 \default_output_format default
 \output_sync 1
@@ -919,7 +921,7 @@ regularization term
 \end_inset
 
 , responsible for penalizing unsmooth or unwanted solutions with high values,
- the MPLE estimator admits the form 
+ the MPLE estimate admits the form 
 \begin_inset Formula 
 \[
 \pi_{MPLE}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right).
@@ -931,8 +933,8 @@ regularization term
 \end_layout
 
 \begin_layout Standard
-We note that this approach also allows for an interpretation in the context
- of the Bayesian hyperparametric model by identifying the penalty 
+This approach also allows for an interpretation in the context of the Bayesian
+ hyperparametric model by identifying the penalty 
 \begin_inset Formula $\Phi$
 \end_inset
 
@@ -976,7 +978,7 @@ estimate
 One now might might argue that we started with the question of finding the
  correct prior and just complicated the situation by transferring this problem
  to the question of the correct hyperprior.
- While this may be true we arge that the latter can be tackled from a rather
+ While this may be true we argue that the latter can be tackled from a rather
  abstract, problem independent standpoint, hence leading to a more general
  answer.
 \end_layout
@@ -986,7 +988,233 @@ Choice of the penalty
 \end_layout
 
 \begin_layout Standard
-Whilst many of the common penalty functions are often rather ad-hoc
+Many of the common penalty functions currently in use, penalizing either
+ large amplitudes (e.g.
+ ridge regression 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "section 1.6"
+key "mclachlan2007algorithm"
+
+\end_inset
+
+) or derivatives (c.f.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "good1971nonparametric"
+
+\end_inset
+
+) of the prior, are not invariant under reparemerizations of the parameter
+ space 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+ and are rather ad-hoc without a natural derivation.
+ Following a more information-theoretic view Good 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "good1963maximum"
+
+\end_inset
+
+ suggested the use of the entropy for the penalty
+\begin_inset Formula 
+\[
+\Phi\left(\pi\right):=-\gamma H_{X}\left(\pi\right):=\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\log\rho_{X\mid\pi}\left(x\right)\mathrm{d}x,
+\]
+
+\end_inset
+
+ with 
+\begin_inset Formula $\gamma\in\mathbb{R}^{+}$
+\end_inset
+
+ beeing a parameter determining the degree of smoothing due to this penalty.
+ This prior however is still variant under reparametrizations of 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+ due to the log-nonlinearity.
+ This means that if two scientists estimate the prior using equivalent models,
+ e.g.
+ by using different systems of units, they would end up with different estimates.
+ Therefore this penalty does not rectify the problem of subjectivity in
+ the Bayesian method.
+ We therefore look for a penalty which is invariant under coordinate transformat
+ions.
+\end_layout
+
+\begin_layout Standard
+Embracing the information theoretic approach we therefore propose the use
+ of the 
+\emph on
+mutual information 
+\emph default
+instead of the entropy for the penalty:
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $X:\,\Omega\rightarrow\mathcal{X}$
+\end_inset
+
+ and 
+\begin_inset Formula $Y:\,\Omega\rightarrow\mathcal{Y}$
+\end_inset
+
+ be two continious random variables, 
+\begin_inset Formula $\rho_{X,Y}\left(x,y\right)$
+\end_inset
+
+ their joint probability density and 
+\begin_inset Formula $\rho_{X}\left(x\right),\,\rho_{Y}\left(y\right)$
+\end_inset
+
+ their respective marginal densities.
+ Their mutual information is defined as
+\begin_inset Formula 
+\begin{align*}
+\mathcal{I}\left(X;Y\right): & =\int_{\mathcal{Y}}\int_{\mathcal{X}}\rho_{X,Y}\left(x,y\right)\log\left(\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)\rho_{Y}\left(y\right)}\right)\mathrm{d}x\mathrm{dy}.\\
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $X$
+\end_inset
+
+, 
+\begin_inset Formula $Y$
+\end_inset
+
+ as above, and 
+\begin_inset Formula $\varphi^{-1}:\,\mathcal{X}\rightarrow\tilde{\mathcal{X}}$
+\end_inset
+
+, 
+\begin_inset Formula $\psi^{-1}:\,\mathcal{Y}\rightarrow\tilde{\mathcal{Y}}$
+\end_inset
+
+ be diffeomorphisms defining the coordinate transformations with corresponding
+ densities
+\begin_inset Formula 
+\[
+\rho_{\tilde{\mathcal{X}},\mathcal{\tilde{Y}}}\left(\tilde{x},\tilde{y}\right):=\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\rho_{\tilde{\mathcal{X}}}\left(\tilde{x}\right):=\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|,\,\quad\rho_{\tilde{\mathcal{Y}}}\left(\tilde{y}\right):=\rho_{Y}\left(\psi\left(\tilde{y}\right)\right)\left|D\psi\left(\tilde{x}\right)\right|
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+The mutual information 
+\begin_inset Formula $\mathcal{I}\left(X;Y\right)$
+\end_inset
+
+ is invariant under these coordinate transformations of 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{Y}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+According to the change of variables formula 
+\begin_inset Formula 
+\begin{align*}
+\mathcal{I}\left(X;Y\right): & =\int_{\mathcal{Y}}\int_{X}\rho_{X,Y}\left(x,y\right)\log\left(\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)\rho_{Y}\left(y\right)}\right)\mathrm{d}x\mathrm{dy}.\\
+ & =\int_{\mathcal{\tilde{Y}}}\int_{\tilde{\mathcal{X}}}\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\log\left(\frac{\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)}{\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\rho_{Y}\left(\psi\left(\tilde{y}\right)\right)}\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|\mathrm{d}\tilde{x}\mathrm{d\tilde{y}}\\
+ & =\int_{\mathcal{\tilde{Y}}}\int_{\tilde{\mathcal{X}}}\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|\log\left(\frac{\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|}{\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\rho_{Y}\left(\psi\left(\tilde{y}\right)\right)\left|D\psi\left(\tilde{y}\right)\right|}\right)\mathrm{d}\tilde{x}\mathrm{d\tilde{y}}\\
+ & =\int_{\mathcal{\tilde{Y}}}\int_{\tilde{\mathcal{X}}}\rho_{\tilde{X},\tilde{Y}}\left(\tilde{x},\tilde{y}\right)\log\left(\frac{\rho_{\tilde{X},\tilde{Y}}\left(\tilde{x},\tilde{y}\right)}{\rho_{\tilde{X}}\left(\tilde{x}\right)\rho_{\tilde{Y}}\left(\tilde{y}\right)}\right)\mathrm{d}\tilde{x}\mathrm{d\tilde{y}}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+remove 3rd line?
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Note that since 
+\begin_inset Formula $\rho_{X,Y}\left(x,y\right)/\rho_{Y}\left(y\right)=\rho\left(x\mid y\right),$
+\end_inset
+
+ the mutual information also allows the formulation on forms of the Kullback-Lei
+bler divergence
+\begin_inset Formula 
+\[
+D_{KL}\left(A\bigparallel B\right):=\int\rho_{A}\left(x\right)\log\frac{\rho_{A}\left(x\right)}{\rho_{B}\left(x\right)}\mathrm{d}x.
+\]
+
+\end_inset
+
+as
+\begin_inset Formula 
+\begin{align*}
+\mathcal{I}\left(X;Y\right) & =\int_{Y}\rho_{Y}\left(y\right)\int_{X}\rho_{X\mid Y}\left(x\mid y\right)\log\left(\frac{\rho_{X\mid Y}\left(x\mid y\right)}{\rho_{X}\left(x\right)}\right)\mathrm{d}x\mathrm{dy}\\
+ & =\mathbb{E}_{y\sim Y}\left[D_{KL}\left(\rho_{X\mid Y}\left(\cdot\mid y\right)\bigparallel\rho_{X}\left(\cdot\right)\right)\right]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $\gamma>0$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula 
+\[
+\Phi_{I}=-\gamma\mathcal{I}\left(X;Z\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+is the entropy penalty with
 \end_layout
 
 \begin_layout Subsection
