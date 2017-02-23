@@ -1,4 +1,4 @@
-#LyX 2.1 created this file. For more info see http://www.lyx.org/
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 474
 \begin_document
 \begin_header
@@ -156,7 +156,7 @@ check rand.
 \end_layout
 
 \begin_layout Section
-Theory
+Empirical Bayes Methods
 \end_layout
 
 \begin_layout Subsection
@@ -743,7 +743,17 @@ true prior
 \end_layout
 
 \begin_layout Proposition
-Let the hyperparametric model be well specified, i.e.
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:identifiable"
+
+\end_inset
+
+Let the hyperparametric model be 
+\emph on
+well specified
+\emph default
+, i.e.
  
 \begin_inset Formula 
 \[
@@ -752,7 +762,11 @@ Let the hyperparametric model be well specified, i.e.
 
 \end_inset
 
-and identifiable 
+and 
+\emph on
+identifiable
+\emph default
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 after "chapter 5"
@@ -832,6 +846,10 @@ This can be retracted though by lifting the inference problem to equivalence
 which is all we can hope for.
 \end_layout
 
+\begin_layout Section
+Regularization
+\end_layout
+
 \begin_layout Standard
 In practice though usually only finite data is available, and even though
  the limiting property 
@@ -882,7 +900,7 @@ overfitting
 \end_layout
 
 \begin_layout Subsection
-Regularization
+Regularization via a penalization term
 \end_layout
 
 \begin_layout Standard
@@ -936,7 +954,7 @@ regularization term
  the MPLE estimate admits the form 
 \begin_inset Formula 
 \begin{equation}
-\pi_{MPLE}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right).\label{eq:mple}
+\pi_{MPLE,\Phi}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right).\label{eq:mple}
 \end{equation}
 
 \end_inset
@@ -1069,28 +1087,28 @@ instead of the entropy for the penalty:
 
 \begin_layout Definition
 Let 
-\begin_inset Formula $X:\,\Omega\rightarrow\mathcal{X}$
+\begin_inset Formula $A:\,\Omega\rightarrow\mathcal{A}$
 \end_inset
 
  and 
-\begin_inset Formula $Y:\,\Omega\rightarrow\mathcal{Y}$
+\begin_inset Formula $B:\,\Omega\rightarrow\mathcal{B}$
 \end_inset
 
  be two continuous random variables, 
-\begin_inset Formula $\rho_{X,Y}$
+\begin_inset Formula $\rho_{A,B}$
 \end_inset
 
  their joint probability density and 
-\begin_inset Formula $\rho_{X},\,\rho_{Y}$
+\begin_inset Formula $\rho_{A},\,\rho_{B}$
 \end_inset
 
  their respective marginal densities.
  Their mutual information is defined as
 \begin_inset Formula 
 \begin{align*}
-\mathcal{I}\left(X;Y\right): & =\int_{\mathcal{Y}}\int_{\mathcal{X}}\rho_{X,Y}\left(x,y\right)\log\left(\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)\rho_{Y}\left(y\right)}\right)\mathrm{d}x\mathrm{dy}\\
- & =\mathbb{E}_{y\sim Y}\left[D_{KL}\left(\rho_{X\mid Y}\left(\cdot\mid y\right)\parallel\rho_{X}\left(\cdot\right)\right)\right]\\
- & =H\left(Y\right)-H\left(Y\mid X\right)
+\mathcal{I}\left(A;B\right): & =\int_{\mathcal{A}}\int_{\mathcal{B}}\rho_{A,B}\left(a,b\right)\log\left(\frac{\rho_{A,B}\left(a,b\right)}{\rho_{A}\left(a\right)\rho_{B}\left(b\right)}\right)\mathrm{d}a\mathrm{d}b\\
+ & =\mathbb{E}_{b\sim B}\left[D_{KL}\left(\rho_{A\mid b}\parallel\rho_{A}\right)\right]\\
+ & =H\left(B\right)-H\left(B;A\right)
 \end{align*}
 
 \end_inset
@@ -1099,20 +1117,75 @@ with
 \begin_inset Formula $D_{KL}$
 \end_inset
 
- denoting the Kullback-Leibler divergence 
+ beeing the Kullback-Leibler divergence from 
+\begin_inset Formula $\rho_{A}$
+\end_inset
+
+ to 
+\begin_inset Formula $\rho_{A\mid b}$
+\end_inset
+
+ 
 \begin_inset Formula 
 \[
-D_{KL}\left(\rho_{A}\parallel\rho_{B}\right):=\int_{E}\rho_{A}\left(x\right)\log\frac{\rho_{A}\left(x\right)}{\rho_{B}\left(x\right)}\mathrm{d}x,\quad\rho_{A},\rho_{B}\,\text{probability densities on }E
+D_{KL}\left(\rho_{A\mid b}\parallel\rho_{A}\right):=\int_{\mathcal{A}}\rho_{A\mid b}\left(a\right)\log\frac{\rho_{A\mid b}\left(a\right)}{\rho_{A}\left(a\right)}\mathrm{d}a
 \]
 
 \end_inset
 
- and 
+
+\end_layout
+
+\begin_layout Definition
+and 
+\begin_inset Formula $H\left(B\right)$
+\end_inset
+
+, 
+\series bold
+
+\begin_inset Formula $H\left(B;A\right)$
+\end_inset
+
+ 
+\series default
+beeing the differential entropy of 
+\begin_inset Formula $B$
+\end_inset
+
+ and the conditional differential entropy of 
+\begin_inset Formula $B$
+\end_inset
+
+ given 
+\begin_inset Formula $A$
+\end_inset
+
+
 \begin_inset Formula 
 \begin{eqnarray*}
-H\left(Y\right) & := & -\int_{Z}\\
-H\left(Y\mid X\right) & := & -\int\int
+H\left(B\right) & := & -\int_{\mathcal{B}}\rho_{B}\left(b\right)\log\left(\rho_{B}\right)\mathrm{d}b\\
+H\left(B;A\right) & := & \int_{\mathcal{A}}\rho_{A}\left(a\right)H\left(B\mid a\right)\mathrm{d}a\\
+ & = & -\int_{\mathcal{A}}\rho_{A}\left(a\right)\int_{\mathcal{B}}\rho_{B\mid a}\left(b\right)\log\left(\rho_{B\mid a}\right)\mathrm{d}b\mathrm{d}a.
 \end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Notation: H
+\begin_inset Formula $\left(;\right)$
+\end_inset
+
+ vs H
+\begin_inset Formula $\left(\parallel\right)$
+\end_inset
+
+?
+\end_layout
 
 \end_inset
 
@@ -1127,30 +1200,30 @@ name "lem:invariance"
 \end_inset
 
 Let 
-\begin_inset Formula $X$
+\begin_inset Formula $A$
 \end_inset
 
 , 
-\begin_inset Formula $Y$
+\begin_inset Formula $B$
 \end_inset
 
  as above, and 
-\begin_inset Formula $\varphi^{-1}:\,\mathcal{X}\rightarrow\tilde{\mathcal{X}}$
+\begin_inset Formula $\varphi^{-1}:\,\mathcal{A}\rightarrow\tilde{\mathcal{A}}$
 \end_inset
 
 , 
-\begin_inset Formula $\psi^{-1}:\,\mathcal{Y}\rightarrow\tilde{\mathcal{Y}}$
+\begin_inset Formula $\psi^{-1}:\,\mathcal{B}\rightarrow\tilde{\mathcal{B}}$
 \end_inset
 
  be diffeomorphisms defining the coordinate transformations and corresponding
  transformed random variables 
-\begin_inset Formula $\tilde{X},\,\tilde{Y}$
+\begin_inset Formula $\tilde{A},\,\tilde{B}$
 \end_inset
 
- with their densities
+ with the densities
 \begin_inset Formula 
 \[
-\rho_{\tilde{X},\tilde{Y}}\left(\tilde{x},\tilde{y}\right):=\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|
+\rho_{\tilde{A},\tilde{B}}\left(\tilde{a},\tilde{b}\right):=\rho_{A,B}\left(\varphi\left(\tilde{a}\right),\psi\left(\tilde{b}\right)\right)\left|D\varphi\left(\tilde{a}\right)\right|\left|D\psi\left(\tilde{b}\right)\right|
 \]
 
 \end_inset
@@ -1158,7 +1231,7 @@ Let
 
 \begin_inset Formula 
 \[
-\rho_{\tilde{X}}\left(\tilde{x}\right):=\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|,\,\quad\rho_{\tilde{Y}}\left(\tilde{y}\right):=\rho_{Y}\left(\psi\left(\tilde{y}\right)\right)\left|D\psi\left(\tilde{x}\right)\right|
+\rho_{\tilde{A}}\left(\tilde{a}\right):=\rho_{A}\left(\varphi\left(\tilde{a}\right)\right)\left|D\varphi\left(\tilde{a}\right)\right|,\,\quad\rho_{\tilde{B}}\left(\tilde{b}\right):=\rho_{B}\left(\psi\left(\tilde{b}\right)\right)\left|D\psi\left(\tilde{b}\right)\right|.
 \]
 
 \end_inset
@@ -1168,15 +1241,23 @@ Let
 
 \begin_layout Lemma
 The mutual information 
-\begin_inset Formula $\mathcal{I}\left(X;Y\right)$
+\begin_inset Formula $\mathcal{I}\left(A;B\right)$
 \end_inset
 
- is invariant under these coordinate transformations of 
-\begin_inset Formula $\mathcal{X}$
+ is then invariant under these coordinate transformations of 
+\begin_inset Formula $\mathcal{A}$
 \end_inset
 
  and 
-\begin_inset Formula $\mathcal{Y}.$
+\begin_inset Formula $\mathcal{B}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\mathcal{I}\left(A;B\right)=\mathcal{I}(\tilde{A};\tilde{B}).
+\]
+
 \end_inset
 
 
@@ -1186,11 +1267,11 @@ The mutual information
 According to the change of variables formula 
 \begin_inset Formula 
 \begin{align*}
- & \ \mathcal{I}\left(X;Y\right)\\
-= & \int_{\mathcal{Y}}\int_{X}\rho_{X,Y}\left(x,y\right)\log\left(\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)\rho_{Y}\left(y\right)}\right)\mathrm{d}x\mathrm{dy}.\\
-= & \int_{\mathcal{\tilde{Y}}}\int_{\tilde{\mathcal{X}}}\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)\log\left(\frac{\rho_{X,Y}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{y}\right)\right)}{\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\rho_{Y}\left(\psi\left(\tilde{y}\right)\right)}\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{y}\right)\right|\mathrm{d}\tilde{x}\mathrm{d\tilde{y}}\\
-= & \int_{\mathcal{\tilde{Y}}}\int_{\tilde{\mathcal{X}}}\rho_{\tilde{X},\tilde{Y}}\left(\tilde{x},\tilde{y}\right)\log\left(\frac{\rho_{\tilde{X},\tilde{Y}}\left(\tilde{x},\tilde{y}\right)}{\rho_{\tilde{X}}\left(\tilde{x}\right)\rho_{\tilde{Y}}\left(\tilde{y}\right)}\right)\mathrm{d}\tilde{x}\mathrm{d\tilde{y}}\\
-= & \ \mathcal{I}(\tilde{X};\tilde{Y})
+ & \ \mathcal{I}\left(A;B\right)\\
+= & \int_{\mathcal{B}}\int_{\mathcal{A}}\rho_{A,B}\left(a,b\right)\log\left(\frac{\rho_{A,B}\left(a,b\right)}{\rho_{A}\left(a\right)\rho_{B}\left(b\right)}\right)\mathrm{d}a\mathrm{d}b.\\
+= & \int_{\mathcal{\tilde{B}}}\int_{\tilde{A}}\rho_{A,B}\left(\varphi\left(\tilde{a}\right),\psi\left(\tilde{b}\right)\right)\log\left(\frac{\rho_{A,B}\left(\varphi\left(\tilde{a}\right),\psi\left(\tilde{b}\right)\right)}{\rho_{A}\left(\varphi\left(\tilde{a}\right)\right)\rho_{B}\left(\psi\left(\tilde{b}\right)\right)}\right)\left|D\varphi\left(\tilde{a}\right)\right|\left|D\psi\left(\tilde{b}\right)\right|\mathrm{d}\tilde{a}\mathrm{d}\tilde{b}\\
+= & \int_{\mathcal{\tilde{B}}}\int_{\tilde{A}}\rho_{\tilde{A},\tilde{B}}\left(\tilde{a},\tilde{b}\right)\log\left(\frac{\rho_{\tilde{A},\tilde{B}}\left(\tilde{a},\tilde{b}\right)}{\rho_{\tilde{A}}\left(\tilde{a}\right)\rho_{\tilde{B}}\left(\tilde{b}\right)}\right)\mathrm{d}\tilde{a}\mathrm{d}\tilde{b}\\
+= & \ \mathcal{I}(\tilde{A};\tilde{B})
 \end{align*}
 
 \end_inset
@@ -1223,46 +1304,6 @@ amount of information
 We can gain further insights into its meaning by expressing it in terms
  of another fundamental information-theoretic quantity, the Kullback-Leibler
  divergence.
-\end_layout
-
-\begin_layout Definition
-Let 
-\begin_inset Formula $A,\,B:\,\Omega\rightarrow E$
-\end_inset
-
- be two continuous random variables with respective density functions 
-\begin_inset Formula $\rho_{A}$
-\end_inset
-
-, 
-\begin_inset Formula $\rho_{B}$
-\end_inset
-
-.
- The
-\emph on
- Kullback-Leibler divergence 
-\emph default
-from 
-\begin_inset Formula $B$
-\end_inset
-
- to 
-\begin_inset Formula $A$
-\end_inset
-
- is defined to be
-\end_layout
-
-\begin_layout Definition
-\begin_inset Formula 
-\[
-D_{KL}\left(A\parallel B\right):=\int_{E}\rho_{A}\left(x\right)\log\frac{\rho_{A}\left(x\right)}{\rho_{B}\left(x\right)}\mathrm{d}x.
-\]
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1305,23 +1346,6 @@ quelle
 \end_layout
 
 \begin_layout Standard
-Then, since 
-\begin_inset Formula $\rho_{X,Y}\left(x,y\right)/\rho_{Y}\left(y\right)=\rho_{X\mid Y}\left(x\mid y\right),$
-\end_inset
-
- we have 
-\begin_inset Formula 
-\begin{align*}
-\mathcal{I}\left(X;Y\right) & =\int_{\mathcal{Y}}\rho_{Y}\left(y\right)\int_{\mathcal{X}}\rho_{X\mid Y}\left(x\mid y\right)\log\left(\frac{\rho_{X\mid Y}\left(x\mid y\right)}{\rho_{X}\left(x\right)}\right)\mathrm{d}x\mathrm{dy}\\
- & =\mathbb{E}_{y\sim Y}\left[D_{KL}\left(\rho_{X\mid Y}\left(\cdot\mid y\right)\parallel\rho_{X}\left(\cdot\right)\right)\right],
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 that is the mutual information of 
 \begin_inset Formula $X$
 \end_inset
@@ -1354,8 +1378,8 @@ information penalty
  
 \begin_inset Formula 
 \begin{eqnarray}
-\Phi_{I}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\mid\pi\right)\nonumber \\
- & = & -\gamma\int_{\mathcal{Z}}\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\rho_{Z\mid x}\left(z\right)\log\left(\frac{\rho_{Z\mid x}\left(z\right)}{\rho_{Z\mid\pi}\left(z\right)}\right)\mathrm{d}x\mathrm{dz}.\label{eq:ipen}
+\Phi_{I}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\right)\nonumber \\
+ & = & -\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\int_{\mathcal{Z}}\rho_{Z\mid x}\left(z\right)\log\left(\frac{\rho_{Z\mid x}\left(z\right)}{\rho_{Z\mid\pi}\left(z\right)}\right)\mathrm{d}z\mathrm{dx}.\label{eq:ipen}
 \end{eqnarray}
 
 \end_inset
@@ -1428,11 +1452,275 @@ The
 \end_layout
 
 \begin_layout Standard
-In the case of an additive measurement error we can simplify the 
+In the case of an additive measurement error we can simplify the MPLE estimator
+ using its formulation in the entropy form
+\end_layout
+
+\begin_layout Theorem
+For models with additive measurement error 
+\begin_inset Formula $E\sim\rho_{E}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Z=G\left(X\right)+E
+\]
+
+\end_inset
+
+the MPLE estimates with the 
+\emph on
+Z-entropy penalty
+\emph default
+
+\begin_inset Formula 
+\[
+\Phi_{E_{Z}}\left(\pi\right):=-\gamma H\left(Z\mid\pi\right)
+\]
+
+\end_inset
+
+ and the information penalty coincide:
+\begin_inset Formula 
+\[
+\pi_{\Phi_{I}}=\pi_{\Phi_{E_{Z}}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+In the case of additive measurement error 
+\begin_inset Formula $\rho_{Z\mid x}$
+\end_inset
+
+ consists of shifts of 
+\begin_inset Formula $\rho_{E}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\rho_{Z\mid x}\left(z\right)=\rho_{E}\left(z-G\left(x\right)\right)
+\]
+
+\end_inset
+
+and thus 
+\begin_inset Formula 
+\begin{align*}
+H\left(Z\mid x\right) & =\int_{\mathcal{Z}}\rho_{Z\mid x}\left(z\right)\log\left(\rho_{Z\mid x}\left(z\right)\right)\mathrm{d}z\\
+ & =\int_{\mathcal{Z}}\rho_{E}\left(z\right)\log\left(\rho_{E}\left(z\right)\right)\mathrm{d}z\\
+ & =H\left(E\right).
+\end{align*}
+
+\end_inset
+
+Hence the conditional entropy part is constant and both penalties agree
+ up to an additive constant
+\begin_inset Formula 
+\begin{align*}
+\Phi_{I}\left(\pi\right) & =-\gamma\left(H\left(Z\right)-H\left(Z;X\mid\pi\right)\right)\\
+ & =-\gamma\left(H\left(Z\right)-\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)H\left(Z\mid x\right)\mathrm{d}x\right)\\
+ & =-\gamma H\left(Z\right)+H\left(E\right)\\
+ & =\Phi_{H_{Z}}+H\left(E\right).
+\end{align*}
+
+\end_inset
+
+Therefore their maxima agree and the estimates are the same.
+\end_layout
+
+\begin_layout Remark
+For the mentioned additive error model and discrete parameter space 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "3.1"
+key "theo1"
+
+\end_inset
+
+ show that the hyperprior 
+\begin_inset Formula $\rho_{\Pi}\left(\pi\right):\propto\exp H\left(Z\mid\pi\right)$
+\end_inset
+
+ maximizes the total entropy 
+\begin_inset Formula $H\left(Z,\Pi\right)$
+\end_inset
+
+ of the whole model.
+ This derivation from a maximum entropy principle, which they conjecture
+ to hold as well in the more general setting with continious 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+, back the choice of 
+\begin_inset Formula $\Phi_{H_{Z}}$
+\end_inset
+
+ and hence its generalization 
+\begin_inset Formula $\Phi_{\mathcal{I}}$
+\end_inset
+
+ as a meaningful penalty.
 \end_layout
 
 \begin_layout Subsection
-Numerical realization
+Regularization by smoothing of the data
+\end_layout
+
+\begin_layout Standard
+Instead of relying on the coarse approximation of the data generating distributi
+on by the empiricial distribution 
+\begin_inset Formula $\rho_{\bm{z}^{M}}\approx\rho_{Z}$
+\end_inset
+
+ and then penalizing overconfident priors, we may as well adress the issue
+ of overfitting by providing a smooth approximation 
+\begin_inset Formula $\rho_{Z}^{appr}$
+\end_inset
+
+ to 
+\begin_inset Formula $\rho_{Z}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Seo and Lindsay 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "seo2013universally"
+
+\end_inset
+
+ introduced the 
+\emph on
+doubly-smoothed maximum likelihood estimator 
+\emph default
+(DS-MLE) based on a kernel density estimate of 
+\begin_inset Formula $\rho_{Z}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $K:\mathcal{Z}\rightarrow\mathbb{R}$
+\end_inset
+
+ be a kernel density function and 
+\begin_inset Formula $z_{m}\overset{i.i.d.}{\sim}\rho_{Z},\,m=1,...,M$
+\end_inset
+
+ be 
+\begin_inset Formula $M$
+\end_inset
+
+ measurements.
+ The 
+\emph on
+smoothed data density
+\emph default
+ is then defined as
+\begin_inset Formula 
+\[
+\tilde{\rho}_{\bm{z}^{M}}\left(z\right)=\left(\rho_{\bm{z}^{M}}*K\right)\left(z\right):=\frac{1}{M}\sum_{m=1}^{M}K\left(z-z_{m}\right).
+\]
+
+\end_inset
+
+The corresponding 
+\emph on
+smoothed likelihood model
+\emph default
+ is given by
+\begin_inset Formula 
+\[
+\tilde{\rho}_{Z\mid x}=\rho_{Z,x}*K,\,\tilde{\rho}_{Z\mid\pi}=\rho_{Z\mid\pi}*K.
+\]
+
+\end_inset
+
+Note that when smoothing the data we also have to smooth the model (hence
+ 
+\emph on
+doubly smoothed
+\emph default
+) to amount for the additional uncertainty in the data and stay consistent:
+\begin_inset Formula 
+\[
+\tilde{\rho}_{\bm{z}^{M}}\overset{M\rightarrow\infty}{\longrightarrow}\rho_{Z}*K=\tilde{\rho}_{Z\mid\pi^{*}}\ne\rho_{Z\mid\pi^{*}},
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $\pi^{*}$
+\end_inset
+
+ is the data-generating prior as in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:identifiable"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+The resulting DS-MLE then takes the form
+\begin_inset Formula 
+\[
+\pi_{DS}:=\underset{\pi\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}L_{cc}\left(\pi\mid\tilde{\rho}_{\bm{z}^{M}}\right)
+\]
+
+\end_inset
+
+ and is proved to be consistent under weak assumptions on the kernel and
+ likelihood model (c.f.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "seo2013universally"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Definition
+Note however that the choice of a kernel 
+\begin_inset Formula $K$
+\end_inset
+
+ leaves space for debate and furthermore for fixed kernels this procedure
+ is not invariant under reparametrizations of the meaurement space 
+\begin_inset Formula $\mathcal{Z}$
+\end_inset
+
+.
+ Hence this approach, although rather natural and simple does not remedy
+ the problem of subjectivity of the Bayes' method.
+\end_layout
+
+\begin_layout Section
+Numerical schemes
+\end_layout
+
+\begin_layout Subsection
+Monte Carlo approximations
 \end_layout
 
 \begin_layout Standard
@@ -1501,6 +1789,10 @@ es
 
 \begin_layout Standard
 gradient ascent in the simplex
+\end_layout
+
+\begin_layout Subsection
+The EM algorithm
 \end_layout
 
 \begin_layout Subsection
@@ -1643,6 +1935,10 @@ plot mcmc chain
 
 \begin_layout Standard
 paperplot
+\end_layout
+
+\begin_layout Standard
+2d marginals?
 \end_layout
 
 \begin_layout Section
