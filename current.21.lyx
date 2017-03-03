@@ -35,7 +35,7 @@ figs-within-sections
 \bibtex_command default
 \index_command default
 \paperfontsize default
-\spacing single
+\spacing other 1.5
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -64,8 +64,8 @@ figs-within-sections
 \end_index
 \secnumdepth 3
 \tocdepth 3
-\paragraph_separation indent
-\paragraph_indentation default
+\paragraph_separation skip
+\defskip smallskip
 \quotes_language english
 \papercolumns 1
 \papersides 1
@@ -1523,6 +1523,16 @@ H\left(Z\mid x\right) & =\int_{\mathcal{Z}}\rho_{Z\mid x}\left(z\right)\log\left
 
 Hence the conditional entropy part is constant and both penalties agree
  up to an additive constant
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+think again: realy H(Z), not H(Z/pi)?
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{align*}
 \Phi_{I}\left(\pi\right) & =-\gamma\left(H\left(Z\right)-H\left(Z;X\mid\pi\right)\right)\\
@@ -1726,31 +1736,41 @@ Monte Carlo approximations
 \end_layout
 
 \begin_layout Standard
-Since we cannot compute the occuring integrals exactly in general, we propose
- the following approximations to discretize the spaces 
+Since the arising integrals are in general not tractable analytically, we
+ will make use of sample based discretization of the continious spaces 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
- and 
+, 
 \begin_inset Formula $\mathcal{Z}$
 \end_inset
 
-:
+ and use Monte Carlo integration for the corresponding integrals.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Enumerate
-Seeing that in reality only finitely many measurements 
-\begin_inset Formula $\bm{z}$
+Given 
+\begin_inset Formula $M$
 \end_inset
 
- are available, we approximate the density 
-\begin_inset Formula $p_{Z}$
+ measurements 
+\begin_inset Formula $\bm{z}=\left(z_{i}\right)_{i=1}^{M}$
 \end_inset
 
- by
+ sampled across the population, these are distributed across the marginal
+ measurement distribution 
+\begin_inset Formula $z_{i}\sim\rho_{Z}$
+\end_inset
+
+ by construction of the model.
+ We can hence approximate
 \begin_inset Formula 
 \[
-p_{Z}\approx\frac{1}{\#\bm{z}}\sum_{z\in\bm{z}}\delta_{z}.
+\rho_{Z}\approx\frac{1}{\#\bm{z}}\sum_{z\in\bm{z}}\delta_{z}.
 \]
 
 \end_inset
@@ -1759,24 +1779,39 @@ p_{Z}\approx\frac{1}{\#\bm{z}}\sum_{z\in\bm{z}}\delta_{z}.
 \end_layout
 
 \begin_layout Enumerate
-For the integration over the potentially high-dimensional parameter space
- 
+In the case of the parameter space 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
- we choose another Monte-Carlo approximation, corresponding to an importance
- sampling 
+ we start with an arbitrary sampling 
 \begin_inset Formula $\bm{x=}\left(x_{k}\in\mathcal{X}\right)_{k=1}^{K}$
 \end_inset
 
- with weights 
+ distributed according to a density 
+\begin_inset Formula $x_{i}\sim\rho_{X}$
+\end_inset
+
+.
+ We can now approximate any other density distribution 
+\begin_inset Formula $\rho_{Y}$
+\end_inset
+
+ on 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+ as an importance sampling with weights 
 \begin_inset Formula $\bm{w}=\left(w_{k}\right)_{k=1}^{K},\quad w_{k}\ge0,\quad\sum_{k=1}^{K}w_{k}=1$
 \end_inset
 
-:
+ such that 
+\begin_inset Formula $w_{i}\propto\frac{\rho_{Y}\left(x_{i}\right)}{\rho_{X}\left(x_{i}\right)}.$
+\end_inset
+
+ We then have
 \begin_inset Formula 
 \[
-\pi\approx\sum_{k=1}^{K}w_{k}\delta_{x_{k}}.
+\rho_{Y}\approx\sum_{k=1}^{K}w_{k}\delta_{x_{k}}.
 \]
 
 \end_inset
@@ -1785,16 +1820,357 @@ For the integration over the potentially high-dimensional parameter space
 \end_layout
 
 \begin_layout Standard
-resulting monte carlo approximations of the likelihoods, entropies and derivativ
-es
+Inserting these approximations into above integrals of interest we end up
+ with the following Monte Carlo approximations.
 \end_layout
 
 \begin_layout Standard
-gradient ascent in the simplex
+Let 
+\begin_inset Formula 
+\[
+\pi\approx\rho_{X\mid w}:=\sum_{k=1}^{K}w_{k}\delta_{x_{k}}.
+\]
+
+\end_inset
+
+The prior predictive distribution can be approximated by
+\begin_inset Formula 
+\[
+\rho_{Z\mid\pi}\left(z\right)=\int_{\mathcal{X}}\rho_{Z\mid x}\left(z\right)\pi\left(x\right)\mathrm{d}x\approx\rho_{Z\mid w}\left(z\right):=\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Inserting this into the marginal likelihood leads to
+\begin_inset Formula 
+\[
+L\left(\pi\mid\bm{z}^{M}\right)\approx L\left(w\mid\bm{z}^{M}\right):=\prod_{m=1}^{M}\sum_{k=1}^{K}w_{k}L_{mk}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to integrate over the density 
+\begin_inset Formula $\rho_{Z\mid\pi}$
+\end_inset
+
+ for the entropy hyperprior, we approximate its density by an additional
+ weighted sampling consisting of 
+\begin_inset Formula $\bar{K}>K$
+\end_inset
+
+ 
+\begin_inset Formula $\mathcal{Z}$
+\end_inset
+
+-samples generated from the given 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+-sampling by
+\begin_inset Formula 
+\[
+\bar{\bm{z}}:=\left(\bar{z}_{j}\sim\rho_{Z\mid x_{J\left(j\right)}}\right)_{j=1}^{\bar{K}}
+\]
+
+\end_inset
+
+with corresponding weights
+\begin_inset Formula 
+\[
+\bar{w_{j}}:=\frac{w_{J\left(j\right)}}{\#J^{-1}\left(J\left(j\right)\right)}.
+\]
+
+\end_inset
+
+Here 
+\begin_inset Formula $J:\{1,2,...,\bar{K}\}\rightarrow\left\{ 1,2,...,K\right\} $
+\end_inset
+
+ denotes a surjective index mapping function, mapping from the 
+\begin_inset Formula $\mathcal{Z}$
+\end_inset
+
+- to the corresponding 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+-samples indices.
+ The normalizing factor in the weights amounts for the inflation by multiple
+ 
+\begin_inset Formula $\mathcal{Z}$
+\end_inset
+
+-samples 
+\begin_inset Formula $\bar{z}_{i},\,\bar{z}_{j}$
+\end_inset
+
+ from a single 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+-sample in the case of 
+\begin_inset Formula $J\left(i\right)=J\left(j\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The Monte Carlo approximation to the 
+\begin_inset Formula $\mathcal{Z}$
+\end_inset
+
+-entropy then takes the form
+\begin_inset Formula 
+\begin{align*}
+H\left(\rho_{Z\mid\pi}\right) & \approx H\left(\bm{w}\right):=-\gamma\sum_{j=1}^{\bar{K}}\bar{w}_{j}\log\left(\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)\right).
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-The EM algorithm
+EM algorithm for NPMLE and DS-MLE
+\end_layout
+
+\begin_layout Standard
+Equipped with these formulas we can now tackle the problem of the Maximum
+ Likelihood estimation.
+\end_layout
+
+\begin_layout Standard
+Herefore we introduce the 
+\emph on
+Expectation Maximization 
+\emph default
+(EM) algorithm following the classic paper of Dempster, Laird and Rubin
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dempster1977maximum"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We start by defining the 
+\emph on
+complete data likelihood function
+\emph default
+
+\begin_inset Formula 
+\begin{align*}
+L^{c}\left(\bm{x},\bm{z}\mid w\right): & =\prod_{m=1}^{M}\rho_{X\mid w}\left(x_{m}\right)\rho_{Z\mid w}\left(z_{m}\right)\\
+ & =\prod_{m=1}^{M}w_{m}\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z_{m}\right)
+\end{align*}
+
+\end_inset
+
+the likelihood of a specific prior represented by 
+\begin_inset Formula $w$
+\end_inset
+
+ given the measurements 
+\begin_inset Formula $\bm{z}=\left(z_{m}\right)_{m=1}^{M}$
+\end_inset
+
+ as well as the parameters 
+\begin_inset Formula $\bm{x}=\left(x_{m}\right)_{m=1}^{M}$
+\end_inset
+
+, where the completeness is meant in the context of knowing all involved
+ variables, including 
+\begin_inset Formula $\bm{x}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Based on this we define the 
+\emph on
+expected complete data log-likelihood 
+\emph default
+of 
+\begin_inset Formula $\pi$
+\end_inset
+
+ with respect to the estimate 
+\begin_inset Formula $\pi_{n}$
+\end_inset
+
+, the expectation over the 
+\begin_inset Formula $\log$
+\end_inset
+
+ of the compete data likelihood conditioned on the current estimate 
+\begin_inset Formula $\pi$
+\end_inset
+
+, i.e.
+\emph on
+
+\begin_inset Formula 
+\begin{align*}
+Q\left(w\mid w_{n}\right): & =\mathbb{E}_{\bm{X}_{n}}\left[\log\left(L^{c}\left(\bm{X},\bm{z}\mid w\right)\right)\right],\\
+ & =\mathbb{E}_{\bm{X}_{n}}\left[\sum_{m=1}^{m}\log\left(\rho_{X\mid w}\left(x_{m}\right)\rho_{Z\mid w}\left(z_{m}\right)\right)\right]\\
+ & =\sum_{m=1}^{M}\mathbb{E}_{x\sim\rho_{X\mid w_{n},z_{m}}}\left[\log\left(\rho_{X\mid w}\left(x\right)\rho_{Z\mid w}\left(z_{m}\right)\right)\right]\\
+ & =\sum_{m=1}^{M}\sum_{k=1}^{K}\frac{w_{n,k}\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid w_{n}}\left(z_{m}\right)}\log\left(w_{k}\rho_{Z\mid x_{k}}\left(z_{m}\right)\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\bm{X}_{n}=\left(x_{m}\overset{\text{i.i.d.}}{\sim}\rho_{X\mid w_{n},z_{m}}\right)_{m=1}^{M}$
+\end_inset
+
+.
+ The second step follows from the insight that after exchanging integration
+ and summation each 
+\begin_inset Formula $\log$
+\end_inset
+
+ term depends only on a single 
+\begin_inset Formula $x_{m}$
+\end_inset
+
+ and hence the other 
+\begin_inset Formula $x_{m}$
+\end_inset
+
+'s get marginalized out.
+\end_layout
+
+\begin_layout Standard
+The EM algorithm works by iteratively maximizing the expected complete-data
+ log-likelihood under the current estimate 
+\begin_inset Formula $w_{n}$
+\end_inset
+
+ over the space of admissible weightings 
+\begin_inset Formula $\mathcal{W}:=w^{*}\in\mathcal{M}_{1}\left(\left\{ x_{1},...,x_{K}\right\} \right)$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+w_{n+1}:=\underset{w^{*}\in\mathcal{W}}{\arg\max\,}Q\left(w^{*}\mid w_{n}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Proof of convergence and uniqueness.
+\end_layout
+
+\begin_layout Standard
+We can furthermore explicitly compute the maximizer 
+\begin_inset Formula $w^{*}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+A necessary condition is that the gradient at 
+\begin_inset Formula $w^{*}$
+\end_inset
+
+ is orthogonal to the tangent space of 
+\begin_inset Formula $\mathcal{W}$
+\end_inset
+
+, which means that all components of the gradient are the same:
+\begin_inset Formula 
+\begin{align*}
+ & \frac{\mathrm{d}Q\left(w^{*}\mid w\right)}{\mathrm{d}w^{*}}\perp T_{w^{*}}\mathcal{W}\\
+\Rightarrow\, & \exists c\in\mathbb{R}\:\forall k=1,...,K:\\
+ & \frac{\mathrm{d}Q\left(w^{*}\mid w\right)}{\mathrm{d}w_{k}^{*}}=\sum_{m=1}^{M}\frac{w_{n,k}}{w_{k}^{*}}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid w_{n}}\left(z_{m}\right)}=c\\
+\Rightarrow\, & w_{k}^{*}=\frac{w_{n,k}}{c}\sum_{m=1}^{M}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid w_{n}}\left(z_{m}\right)}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since 
+\begin_inset Formula $\sum_{k}w_{k}^{*}=1$
+\end_inset
+
+ we conclude 
+\begin_inset Formula $c=1/M$
+\end_inset
+
+ and hence end up with the explicit EM step:
+\begin_inset Formula 
+\[
+w_{n+1,k}=\frac{w_{n,k}}{M}\sum_{m=1}^{M}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid w_{n}}\left(z_{m}\right)}.
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Remark self consistency.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Remark reapeated Bayesian inference.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+DSMLE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Optimization for MPLE
 \end_layout
 
 \begin_layout Subsection
@@ -1802,7 +2178,7 @@ Markov Chain Monte Carlo
 \end_layout
 
 \begin_layout Standard
-The quality of the numerical approximation greatly depends on the choice
+The quality of the Monte Carlo approximations greatly depends on the choice
  of the importance samples 
 \begin_inset Formula $\bm{x}$
 \end_inset
@@ -1813,7 +2189,7 @@ The quality of the numerical approximation greatly depends on the choice
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
-, the number of samples/gridpoints increases exponentially with the dimension
+, its number of samples/gridpoints increases exponentially with the dimension
  of 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
@@ -2249,8 +2625,15 @@ Subsuming the latent parameters (
 \begin_inset Formula $i=1,...,82)$
 \end_inset
 
-, the initial conditions and the period length we end up with 116 parameters
- 
+, the initial conditions 
+\begin_inset Formula $(i=83,...,115)$
+\end_inset
+
+ and the period length 
+\begin_inset Formula $(i=116)$
+\end_inset
+
+ we end up with 116 parameters 
 \begin_inset Formula $\theta=\left(\theta_{i}\right)_{i=1}^{116}$
 \end_inset
 
@@ -2321,8 +2704,8 @@ The prior for the period length
 \begin_inset Formula $\theta_{116}$
 \end_inset
 
- was chosen to be Gaussian according to Gaussian with mean 28.9 days and
- a standard deviation of 3.4 days (c.f.
+ was chosen to be Gaussian with mean 28.9 days and a standard deviation of
+ 3.4 days (c.f.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2427,7 +2810,7 @@ L\left(\theta\mid z\right)=\left(\prod_{\left(t,i\right)\in I_{z}}\frac{1}{\sigm
 \begin_layout Standard
 Note that this likelihood correctly reflects the amount of information available
  dependent on the number of measurements.
- A higher number of measurements results in sharper specified liklelihood
+ A higher number of measurements results in sharper specified likelihood
  function.
  This will allow us to correctly treat different patients/measurements in
  the upcomming empirical Bayes analysis.
@@ -2446,7 +2829,7 @@ Since all sampled parameters
 \begin_inset Formula $\mathbb{R}^{+}$
 \end_inset
 
- but the used AMM sampler uses normal proposal densities, we first rescale
+ but the used AM sampler uses normal proposal densities, we first rescale
  the original parameters using 
 \begin_inset Formula $\log:\mathbb{R}^{+}\rightarrow\mathbb{R}$
 \end_inset
@@ -2472,7 +2855,7 @@ Undergoing this transformation however we also have to adjust the likelihood
  function according to the change of variables formula:
 \begin_inset Formula 
 \[
-\tilde{L}\left(\tilde{\theta}\mid z\right)=L\left(\exp\left(\tilde{\theta}\right)\mid z\right)
+\tilde{L}\left(\tilde{\theta}\mid z\right)=L\left(\exp\left(\tilde{\theta}\right)\mid z\right)\prod_{i=1}^{116}\tilde{\theta}_{i}
 \]
 
 \end_inset
@@ -2493,20 +2876,15 @@ find correct transformation
 \begin_layout Standard
 Chosing the initial value for the Markov chain according to our nominal
  values 
-\begin_inset Formula 
-\[
-x_{0,i}:=\exp\theta_{i}^{\text{nom }},i=1,..,82x_{0,i+82}:=\exp y_{0,i}^{\text{nom}},i=1,..,33x_{0,116}:=\exp28.9
-\]
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
-\end{align*}
+\begin{alignat*}{2}
+x_{0,i} & :=\log\theta_{i}^{\text{nom }}, &  & \quad i=1,..,82\\
+x_{0,82+i} & :=\log y_{0,i}^{\text{nom}}, &  & \quad i=1,..,33\\
+x_{0,116} & :=\log28.9,
+\end{alignat*}
 
 \end_inset
 
@@ -2519,8 +2897,33 @@ we may hope to start in a region of high density which henceforth is already
  burnin phase.
 \end_layout
 
+\begin_layout Standard
+In the first runs the initial covariance 
+\begin_inset Formula $\Sigma_{0}$
+\end_inset
+
+ of the proposal density for the AM sampler was chosen to be uniform.
+ Upon later runs we reused the covariance structure 
+\begin_inset Formula $\Sigma_{N}$
+\end_inset
+
+ of present samplings according to
+\begin_inset Formula 
+\[
+\Sigma_{0}:=\frac{2.38^{2}}{d}\Sigma_{n},
+\]
+
+\end_inset
+
+to speed up the adaption process.
+\end_layout
+
 \begin_layout Subsection
 Prior estimation
+\end_layout
+
+\begin_layout Standard
+Given the individual samplings 
 \end_layout
 
 \begin_layout Subsection
