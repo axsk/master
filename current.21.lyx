@@ -1,7 +1,9 @@
 #LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass amsart
 \begin_preamble
 \DeclareMathOperator{\Ima}{Im}
@@ -17,16 +19,16 @@ figs-within-sections
 \language_package default
 \inputencoding auto
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics default
 \default_output_format default
 \output_sync 1
@@ -904,18 +906,18 @@ Regularization via a penalization term
 \end_layout
 
 \begin_layout Standard
-To adress this problem we will introduce two such regularization methods,
+To address this problem we will introduce two such regularization methods,
  the 
 \emph on
 maximum penalized likelihood estimation
 \emph default
- (MPLE), introducing a penaliztion term to the former optimization problem,
+ (MPLE), introducing a penalization term to the former optimization problem,
  and the 
 \emph on
 doubly smoothed maximum likelihood estimation 
 \emph default
 (DSMLE), lifting the problem from the finite to the infinite data regime
- by smoothing the measurements and thus approximating the continious data-genera
+ by smoothing the measurements and thus approximating the continuous data-genera
 ting distribution 
 \begin_inset Formula $\rho_{Z}.$
 \end_inset
@@ -1036,7 +1038,7 @@ key "good1971nonparametric"
 
 \end_inset
 
-) of the prior, are not invariant under reparemerizations of the parameter
+) of the prior, are not invariant under reparametrizations of the parameter
  space 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
@@ -1061,7 +1063,7 @@ key "good1963maximum"
 \begin_inset Formula $\gamma\in\mathbb{R}^{+}$
 \end_inset
 
- beeing a parameter determining the degree of smoothing due to this penalty.
+ being a parameter determining the degree of smoothing due to this penalty.
  This prior however is still variant under reparametrizations of 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
@@ -1829,14 +1831,14 @@ The quality of the numerical approximation greatly depends on the choice
 \begin_layout Standard
 The basic idea of MCMC methods revolves around constructing an ergodic Markov
  Chain, a stochastic process whose conditional probability for future states
- depends only on the current state, which has the desired taget-density
+ depends only on the current state, which has the desired taget density
  
 \begin_inset Formula $f$
 \end_inset
 
  as stationary density.
- In the limit of high sample sizes the samples from the Markov Chain then
- are distributed according to 
+ In the limit of infinite sample sizes the samples from the Markov Chain
+ then are distributed according to 
 \begin_inset Formula $f$
 \end_inset
 
@@ -1845,66 +1847,95 @@ The basic idea of MCMC methods revolves around constructing an ergodic Markov
 
 \begin_layout Standard
 The probably most common MCMC scheme is the Metropolis–Hastings (MH) algorithm.
+ It works by iteratively sampling a proposal 
+\begin_inset Formula $x_{n}^{'}\in\mathcal{X}$
+\end_inset
+
+ around the last MCMC sample 
+\begin_inset Formula $x_{n-1}$
+\end_inset
+
+ according to a prescribed p
+\emph on
+roposal density 
+\begin_inset Formula $Q\left(x_{n}^{'}\mid x_{n-1}\right)$
+\end_inset
+
+ 
+\emph default
+and accepting or rejecting that proposal in such a way that the resulting
+ MCMCs stationary distribution is 
+\begin_inset Formula $f.$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-..
- proposal/acceptance/...
+Let us define the corresponding Markoc process in terms of its 
+\emph on
+transition probabilities 
+\begin_inset Formula $P\left(x_{n+1}\mid x_{n}\right)$
+\end_inset
+
+
+\emph default
+, starting from the detailed balance condition 
+\begin_inset Formula 
+\begin{align*}
+ & P\left(x'\mid x\right)P\left(x\right)= &  & P\left(x\mid x'\right)P\left(x'\right)\\
+\Leftrightarrow & \frac{P\left(x\right)}{P\left(x'\right)}= &  & \frac{P\left(x\mid x'\right)}{P\left(x'\mid x\right)},
+\end{align*}
+
+\end_inset
+
+which ensures the existence of a stationary distribution 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ref
 \end_layout
 
-\begin_layout Standard
-Since the quality/speed of the approximation depends on the chosen proposal
- distribution, we will make use of the AMM algorithm...
-\end_layout
+\end_inset
 
-\begin_layout Standard
-convergence tests
-\end_layout
 
-\begin_layout Section
-Application
-\end_layout
-
-\begin_layout Subsection
-The problem
-\end_layout
-
-\begin_layout Standard
-In the following we wiwe consider a model for the human menstrual cycle,
- named GynCycle (roeblitz), a system of 33 ordinary differential equations
- with 82 parameters 
-\begin_inset Formula $\Theta\in\mathbb{R}_{+}^{82}$
+\begin_inset Formula $\pi=P\pi$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-Mention Data
-\end_layout
-
-\begin_layout Standard
-likelihood model, modeling of period, special care considering nans
-\end_layout
-
-\begin_layout Subsection
-Sampling
-\end_layout
-
-\begin_layout Standard
-Since the parameters are restricted to 
-\begin_inset Formula $\mathbb{R}^{+}$
+Taking the Ansatz of splitting the transition probability into a proposal
+ distribution 
+\begin_inset Formula $g$
 \end_inset
 
- but the used AMM sampler uses Normal proposal densities, we first rescale
- the original parameters using 
-\begin_inset Formula $\log:\mathbb{R}^{+}\rightarrow\mathbb{R}$
+ and an acceptance distribution 
+\begin_inset Formula $A$
 \end_inset
 
-:
+
 \begin_inset Formula 
 \[
-\tilde{\Theta_{i}}=\log\left(\Theta_{i}\right),\quad i=1,...,82
+P\left(x'\mid x\right)=g\left(x'\mid x\right)A\left(x'\mid x\right),
+\]
+
+\end_inset
+
+we end up with 
+\begin_inset Formula 
+\begin{equation}
+\frac{A\left(x'\mid x\right)}{A\left(x\mid x'\right)}=\frac{P\left(x'\right)}{P\left(x\right)}\frac{g\left(x\mid x'\right)}{g\left(x'\mid x\right)}.\label{eq:mhacceptance}
+\end{equation}
+
+\end_inset
+
+The Metropolis-Hastings choice for the acceptance distribution 
+\begin_inset Formula 
+\[
+A\left(x'\mid x\right):=\min\left(1,\frac{P\left(x'\right)}{P\left(x\right)}\frac{g\left(x\mid x'\right)}{g\left(x'\mid x\right)}\right)
 \]
 
 \end_inset
@@ -1913,12 +1944,579 @@ Since the parameters are restricted to
 \end_layout
 
 \begin_layout Standard
-Note that this transformation also transforms the corresponding likelihoods
- according to ...
+satisfies this equation, since either 
+\begin_inset Formula $A\left(x'\mid x\right)$
+\end_inset
+
+ or 
+\begin_inset Formula $A\left(x\mid x'\right)$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+, while the other equals the desired right hand side of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mhacceptance"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-burnin, convergence tests
+This choice allows for the formulation of the following theorem.
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $f,g\in\mathcal{M}_{1}\left(\mathcal{X}\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $f\left(x\right)>0,\,g\left(x\right)>0\,\forall x\in\mathcal{X}$
+\end_inset
+
+.
+ Then the Markov Process defined by 
+\begin_inset Formula 
+\[
+P\left(x'\mid x\right)=g\left(x'\mid x\right)\min\left(1,\frac{f\left(x'\right)}{f\left(x\right)}\frac{g\left(x\mid x'\right)}{g\left(x'\mid x\right)}\right)
+\]
+
+\end_inset
+
+admits 
+\begin_inset Formula $f$
+\end_inset
+
+ as unique stationary distribution 
+\begin_inset Formula 
+\[
+f=Pf.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+That 
+\begin_inset Formula $f$
+\end_inset
+
+ indeed is a stationary distribution follows by construction, uniqueness
+ follows from irreducibility which is given due to positivity of 
+\begin_inset Formula $P$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We hence can use this Markov Process to sample a Markov Chain according
+ to the MH-MCMC algorithm:
+\end_layout
+
+\begin_layout Enumerate
+Start from an arbitrary point 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Sample a proposal state 
+\begin_inset Formula $x_{n+1}'\sim g\left(x_{n+1}\mid x_{n}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+With probability 
+\begin_inset Formula $A\left(x_{n+1}'\mid x_{n}\right)$
+\end_inset
+
+ set 
+\begin_inset Formula $x_{n+1}:=x_{n+1}'$
+\end_inset
+
+, otherwise set 
+\begin_inset Formula $x_{n+1}:=x_{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Resume with 2 until sufficient states were generated
+\end_layout
+
+\begin_layout Standard
+The speed of convergence to the stationary distribution is strongly influenced
+ by the choice of the proposal distribution.
+ While sampling proposals according to the target distribution would lead
+ to the best results, this was not possible firsthand which is why we resorted
+ to MCMC.
+ A common choice for the proposal distribution is the normal distribution,
+ but even here the choice of the covariance is vital for rapid mixing of
+ the resulting Markov Chain.
+\end_layout
+
+\begin_layout Standard
+To circument the obstacle of choosing a proper proposal covariance we decided
+ to use the adaptive Metropolis (AM) algorithm by Haario et.
+ al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "haario2001adaptive"
+
+\end_inset
+
+ which tunes the proposal covariance online based on the current samples.
+\end_layout
+
+\begin_layout Standard
+Specifically we chose the version by Roberts and Rosenthal 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Roberts2009"
+
+\end_inset
+
+ defining the proposal density as
+\begin_inset Formula 
+\begin{align*}
+g_{n}(\text{·} & \mid x_{n})=\mathcal{N}(x,\,\Sigma_{0}) & \text{if }n\le2d,\\
+g_{n}(\text{·} & \mid x_{n})=(1\text{−}β)\mathcal{N}\left(x,\,\frac{2.38^{2}}{d}\Sigma_{n}\right)+β\mathcal{N}(x,\,\Sigma_{0}) & \text{if }n>2d.
+\end{align*}
+
+\end_inset
+
+with 
+\begin_inset Formula $d$
+\end_inset
+
+ beeing the dimensionality of the sampling space 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{2.38^{2}}{d}$
+\end_inset
+
+ a scaling constant considered to be optimal for large dimensions 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "roberts1997weak"
+
+\end_inset
+
+.
+ 
+\begin_inset Formula $\Sigma_{n}$
+\end_inset
+
+ is the covariance estimate based on the previous samples 
+\begin_inset Formula $\left(x_{i}\right)_{i=0}^{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Sigma_{0}$
+\end_inset
+
+ an initially chosen positive definite covariance.
+ The mixture of the nonrandom normal by 
+\begin_inset Formula $\beta>0$
+\end_inset
+
+ ensures that the resulting proposal covariance stays positive definite
+ even in the case of singular 
+\begin_inset Formula $\Sigma_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The acceptance step remains the same as with the standard MH-MCMC.
+ This Markov Chain still admits the desired target density as stationary
+ distribution, assuming it is log-concave outside of some arbitrary region
+ (for a proof see 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Roberts2009"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Section
+Application
+\end_layout
+
+\begin_layout Standard
+We will now discuss the application of the developed empirical Bayes method
+ on the basis of a large-dimensional ordinary differential model accompanied
+ by real-life measurements.
+ We will hence introduce the model, discuss the MCMC sampling procedure,
+ compute the MLE, MPLE and DS-MLE prior estimates and discuss the results.
+\end_layout
+
+\begin_layout Subsection
+The problem
+\end_layout
+
+\begin_layout Standard
+Our physical model, consisting of a system of 33 ordinary differential equations
+, models the feedback mechanisms of the prevalent hormones in the female
+ menstrual cycle with a focus on GnRH-receptor binding and was derived by
+ Röblitz et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "roblitz2013"
+
+\end_inset
+
+.
+ For the equations we refer to the original paper.
+\end_layout
+
+\begin_layout Standard
+This system is parametrized by 114 parameters, out of which 21 (the Hill
+ parameters) are considered fixed for the following survey.
+ In 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "roblitz2013"
+
+\end_inset
+
+ the authors furthermore give a point estimate of parameters and initial
+ conditions, which we will denote as 
+\emph on
+nominal parameters 
+\begin_inset Formula $\theta^{\text{nom}}$
+\end_inset
+
+ 
+\emph default
+and 
+\emph on
+initial conditions
+\emph default
+ 
+\begin_inset Formula $y_{0}^{nom}$
+\end_inset
+
+, fitting the model on average to a dataset of 13 women.
+\end_layout
+
+\begin_layout Standard
+Our data consists of blood concentrations of follicle-stimulating hormone
+ (FSH), luteinizing hormone (LH), estradiol (E2) and progesterone (P4) measured
+ from 45 healthy women over thirty days, roughly every second day.
+ This data was collected in the context of PAEON, a collaborative European
+ research project on eHealth.
+\end_layout
+
+\begin_layout Standard
+Since we know that the healthy menstrual cycle is periodic, we impose this
+ condition onto our inference process by introducing a further latent parameter
+ 
+\begin_inset Formula $p$
+\end_inset
+
+ for the period length in days, augmenting the data by a copy of itself
+ after that time.
+\end_layout
+
+\begin_layout Standard
+Since furthermore only 4 of the involved 33 species are measured we cannot
+ assume a specific initial condidition and are thus estimating the initial
+ conditions as well.
+\end_layout
+
+\begin_layout Standard
+Subsuming the latent parameters (
+\begin_inset Formula $i=1,...,82)$
+\end_inset
+
+, the initial conditions and the period length we end up with 116 parameters
+ 
+\begin_inset Formula $\theta=\left(\theta_{i}\right)_{i=1}^{116}$
+\end_inset
+
+ for the estimation.
+ 
+\end_layout
+
+\begin_layout Standard
+We furthermore have to specify the priors.
+ For we did not want to imply any knowlege on the parameters but their order
+ of magnitude we chose the uniform prior bounded by the 
+\begin_inset Formula $\alpha:=5$
+\end_inset
+
+ multiple of its corresponding nominal parameter
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+P\left(\theta_{i}\right)=\mathcal{U}\left(0,\alpha\theta_{i}^{\text{nom}}\right)\quad i=1,...,82.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The prior for the initial conditions 
+\begin_inset Formula $y_{0,i}=\theta_{82+i},\,i=1,...,33$
+\end_inset
+
+ is constructed as a mixture of Gaussians centered at the trajectories of
+ the nominal solution
+\begin_inset Formula 
+\[
+P\left(\theta_{82+i}\right):=\frac{1}{31}\sum_{t=0}^{30}\mathcal{N}\left(\phi_{t}^{\text{nom}},\,\Sigma\right)\quad i=1,...,33
+\]
+
+\end_inset
+
+with reference solutions
+\begin_inset Formula 
+\[
+\phi_{t}^{nom}:=\phi\left(t;y_{0}^{\text{nom}},\theta^{\text{nom}}\right),\quad t=0,...,30
+\]
+
+\end_inset
+
+and the covariance 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ beeing a diagonal matrix with the component-wise covariance estimates
+\begin_inset Formula 
+\[
+\Sigma_{ii}:=\text{Cov}\left(\left(\phi_{t,i}^{\text{nom}}\right)_{t=0}^{30}\right),\quad i=1,...,33.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The prior for the period length 
+\begin_inset Formula $\theta_{116}$
+\end_inset
+
+ was chosen to be Gaussian according to Gaussian with mean 28.9 days and
+ a standard deviation of 3.4 days (c.f.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fehring2006variability"
+
+\end_inset
+
+) 
+\begin_inset Formula 
+\[
+P\left(\theta_{116}\right)=\mathcal{N}\left(28.9,3.4^{2}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Denote the set of measurements for a patient/woman/subject
+\begin_inset Formula 
+\[
+z:=\left(z_{t,i}\right)_{\left(t,i\right)\in I_{z}}
+\]
+
+\end_inset
+
+ with 
+\begin_inset Formula $z_{t,i}$
+\end_inset
+
+ beeing the single measurement of species 
+\begin_inset Formula $i$
+\end_inset
+
+ at time 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $I_{z}$
+\end_inset
+
+ denoting the index set of available measurements.
+\end_layout
+
+\begin_layout Standard
+We model each single measurement as independent on the others and afflicted
+ by a Gaussian measurement error with independent componentwise standard
+ deviations of 
+\begin_inset Formula $10\%$
+\end_inset
+
+ of their respective order of magnitude
+\begin_inset Formula 
+\[
+\sigma_{1}^{\text{meas}}=12,\,\sigma_{2}^{\text{meas}}=1{}^{2},\,\sigma_{3}^{\text{meas}}=40^{2},\,\sigma_{4}^{\text{meas}}=1.5^{2}.
+\]
+
+\end_inset
+
+ We end up with the following likelihood function for the parameters 
+\begin_inset Formula $\theta$
+\end_inset
+
+ given a single persons data 
+\begin_inset Formula $z$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+L\left(\theta\mid z\right)=\prod_{\left(t,i\right)\in I_{z}}\mathcal{N}\left(\phi\left(t;\theta\right)_{i},\sigma_{i}^{\text{meas}}\right)\left(z_{t,i}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+scratch this due to uncommon notation?
+\end_layout
+
+\end_inset
+
+or explicitly
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L\left(\theta\mid z\right)=\left(\prod_{\left(t,i\right)\in I_{z}}\frac{1}{\sigma_{i}^{\text{meas}}\sqrt{2\pi}}\right)\exp\left(-\frac{1}{2}\sum_{\left(t,i\right)\in I_{z}}\left(\frac{\phi\left(t;\theta\right)_{i}-z_{t,i}}{\sigma_{i}^{\text{meas}}}\right)^{2}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that this likelihood correctly reflects the amount of information available
+ dependent on the number of measurements.
+ A higher number of measurements results in sharper specified liklelihood
+ function.
+ This will allow us to correctly treat different patients/measurements in
+ the upcomming empirical Bayes analysis.
+\end_layout
+
+\begin_layout Subsection
+Sampling
+\end_layout
+
+\begin_layout Standard
+Since all sampled parameters 
+\begin_inset Formula $\left(\theta_{i}\right)_{i=1}^{116}$
+\end_inset
+
+ are restricted to 
+\begin_inset Formula $\mathbb{R}^{+}$
+\end_inset
+
+ but the used AMM sampler uses normal proposal densities, we first rescale
+ the original parameters using 
+\begin_inset Formula $\log:\mathbb{R}^{+}\rightarrow\mathbb{R}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\tilde{\Theta}_{i}=\log\left(\Theta_{i}\right),\quad i=1,...,116.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The normal proposals in the log-space now correspond to lognormal proposals
+ in the original parameter space.
+\end_layout
+
+\begin_layout Standard
+Undergoing this transformation however we also have to adjust the likelihood
+ function according to the change of variables formula:
+\begin_inset Formula 
+\[
+\tilde{L}\left(\tilde{\theta}\mid z\right)=L\left(\exp\left(\tilde{\theta}\right)\mid z\right)
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+find correct transformation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Chosing the initial value for the Markov chain according to our nominal
+ values 
+\begin_inset Formula 
+\[
+x_{0,i}:=\exp\theta_{i}^{\text{nom }},i=1,..,82x_{0,i+82}:=\exp y_{0,i}^{\text{nom}},i=1,..,33x_{0,116}:=\exp28.9
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+we may hope to start in a region of high density which henceforth is already
+ representative for the target density and thus expect a relatively short
+ burnin phase.
 \end_layout
 
 \begin_layout Subsection
