@@ -90,36 +90,171 @@ Introduction
 
 \begin_layout Standard
 This thesis will cover the development and application of an empirical Bayes
- method to cohort data.
+ method to the problem of parameter estimation in systems biology.
+ The goal is to provide a general and practical solution to the inverse
+ problem in the case of high dimensional parameter spaces and uncertain
+ data.
+ 
 \end_layout
 
 \begin_layout Standard
-Since the invention of the computer Bayesian methods, beforehand often untractab
-le to compute, have gained a great amount of importance in the field of
- reverse problems.
+Regarding it's application to systems biology or medicine a quantification
+ of uncertainty of the results is of utmost importance to any practitioner
+ facing decisions such as whether to apply a specific treatment or release
+ a new drug.
 \end_layout
 
 \begin_layout Standard
-Now, with the Internet of things coming and the progressing digitalisation
- of scienes, healthcare and *, ever greater amounts of data is beeing gathered,
- coining the term big data.
+Although the classical frequentist approach to statistics offers tools answers
+ to this in terms of confidence intervals and hypothesis tests, these techniques
+, aiming for point estimates, have a hard time dealing with ill-posed problems
+ incorporating uncertainties and unidentifiablities, often appearing in
+ applications with large nonlinear models.
 \end_layout
 
 \begin_layout Standard
-This poses new challenges for storage and performance, but also introduces
- problems of erroneous, incomplete and diverse/cohort * data raising the
- demand for adjusted analytical methods.
+We will henceforth adopt the Bayesian view which naturally confines the
+ treatment of uncertainty by its description in terms of disributions (in
+ contrast to the point estimates in the frequentist approach).
 \end_layout
 
 \begin_layout Standard
-By its nature the Bayesian formalism is very well suited to handle uncertainty
- and missing information and the here presented method fits (cohort parallelisat
-ion..*)
+As we will see it also allows for a natural incorporation of data, a circumstanc
+e of ever greater importance in a time of progressing digitalisation of
+ our lifes, the medicine and the sciences coining the term big data.
 \end_layout
 
 \begin_layout Standard
-Taking a nonparametric, sampling based approch allows the application of
- this method to a wide class of problems.
+We will furthermore tackle one of the main points of criticism on the Bayesian
+ approach, namely its subjectivity in the choice of the prior: Two scientists,
+ given the same data and working with the same model, can come up with different
+ results (the posterior) imposing different a priori knowledge about the
+ parameters in questions (the prior).
+\end_layout
+
+\begin_layout Standard
+This critique lead to the school of objective Bayes methods
+\end_layout
+
+\begin_layout Standard
+One approach was the choice of so called 
+\emph on
+non-informative priors
+\emph default
+, designed to incorporate namely the 
+\emph on
+Jeffrey's prior
+\emph default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "jeffreys1946invariant"
+
+\end_inset
+
+ and it's generalization to higher dimensions, the
+\emph on
+ reference priors
+\emph default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bernardo1979reference"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Another approach is given by the empirical Bayes methods:
+\end_layout
+
+\begin_layout Quote
+The empirical Bayes approach to statistical decision problems is applicable
+ when the same decision problem presents itself repeatedly and independently
+ with a fixed but unknown a priori distribution of the parameter - Herbert
+ Robbins 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "robbins1964empirical"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Here repeated measurements of the population in question, called cohort
+ data, are used to construct a prior representing that population.
+ The first major contribution was by Robbins
+\begin_inset CommandInset citation
+LatexCommand cite
+key "robbins1956"
+
+\end_inset
+
+, suggesting the nonparametric maximization of the marginal likelihood but
+ the topic got largely neglected, probably due to its computational cost,
+ until the topic was brought back to attention in parametric case by Efron
+ and Morris 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "efron1973stein"
+
+\end_inset
+
+ in 1973.
+\end_layout
+
+\begin_layout Standard
+Unfortunately the pure nonparametric approach applied to finite data results
+ in irregular priors, consisting of finitely many peaks.
+\end_layout
+
+\begin_layout Standard
+Section 3 will therefore discuss its regularization based on similar information
+ theoretic considerations as for the reference priors.
+ 
+\end_layout
+
+\begin_layout Standard
+We then end up with a nonparametric, hence generally applicable, method
+ combining the assumptions of least information with already measured informatio
+n from the cohort data and therefore getting the best of both worlds.
+ The suggested prior can as well be seen as a generalization of the reference
+ priors to the cohort data regime.
+\end_layout
+
+\begin_layout Standard
+We will also compare this method to the DS-MLE estimate by Seo and Lindsay
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "seo2013universally"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In section 4 we will then introduce the discretization and calculation schemes.
+ We will work with an importance sampling scheme and derive the necessary
+ Monte Carlo approximations for the optimization problem.
+\end_layout
+
+\begin_layout Standard
+techniqbased on individual Markov Chain Monte Carlo posterior samples, which
+ allow for easy parallization and high-dimensional parameter spaces in a
+ straightforward manner.
+ 
+\end_layout
+
+\begin_layout Standard
+As a proof of concept we will we will apply the developed methods and algorithms
+ to a high-dimensional model from systems biology and discuss the results
+ in section 5..
 \end_layout
 
 \begin_layout Standard
@@ -129,10 +264,6 @@ The Bayesian's strength but also weakness is the need to incorporate prior
  cohort data, e.g.
  measurements of several persons, to improve our prior knowledge by incorporatin
 g the individual posteriors into a new, informative, prior.
-\end_layout
-
-\begin_layout Standard
-objective bayes, jeffreys/reference prior
 \end_layout
 
 \begin_layout Standard
@@ -243,10 +374,11 @@ marginal density
 \end_layout
 
 \begin_layout Definition
-Succesive insertion of these identities leads to the probability density
- form of 
+Succesive insertion of these identities leads to 
 \emph on
 Bayes' theorem
+\emph default
+ in its probability density form:
 \end_layout
 
 \begin_layout Definition
@@ -1114,7 +1246,7 @@ Let
 \begin{align*}
 \mathcal{I}\left(A;B\right): & =\int_{\mathcal{A}}\int_{\mathcal{B}}\rho_{A,B}\left(a,b\right)\log\left(\frac{\rho_{A,B}\left(a,b\right)}{\rho_{A}\left(a\right)\rho_{B}\left(b\right)}\right)\mathrm{d}a\mathrm{d}b\\
  & =\mathbb{E}_{b\sim B}\left[D_{KL}\left(\rho_{A\mid b}\parallel\rho_{A}\right)\right]\\
- & =H\left(B\right)-H\left(B;A\right)
+ & =H\left(B\right)-H\left(B;A\right),
 \end{align*}
 
 \end_inset
@@ -1134,7 +1266,7 @@ with
  
 \begin_inset Formula 
 \[
-D_{KL}\left(\rho_{A\mid b}\parallel\rho_{A}\right):=\int_{\mathcal{A}}\rho_{A\mid b}\left(a\right)\log\frac{\rho_{A\mid b}\left(a\right)}{\rho_{A}\left(a\right)}\mathrm{d}a
+D_{KL}\left(\rho_{A\mid b}\parallel\rho_{A}\right):=\int_{\mathcal{A}}\rho_{A\mid b}\left(a\right)\log\frac{\rho_{A\mid b}\left(a\right)}{\rho_{A}\left(a\right)}\mathrm{d}a,
 \]
 
 \end_inset
@@ -1159,7 +1291,7 @@ beeing the differential entropy of
 \begin_inset Formula $B$
 \end_inset
 
- and the conditional differential entropy of 
+ respectively the conditional differential entropy of 
 \begin_inset Formula $B$
 \end_inset
 
@@ -1167,7 +1299,7 @@ beeing the differential entropy of
 \begin_inset Formula $A$
 \end_inset
 
-
+ 
 \begin_inset Formula 
 \begin{eqnarray*}
 H\left(B\right) & := & -\int_{\mathcal{B}}\rho_{B}\left(b\right)\log\left(\rho_{B}\right)\mathrm{d}b\\
@@ -1379,12 +1511,12 @@ For
 
  constant we define the 
 \emph on
-information penalty
+missing information penalty
 \emph default
  
 \begin_inset Formula 
 \begin{eqnarray}
-\Phi_{I}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\right)\nonumber \\
+\Phi_{MI}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\mid\pi\right)\nonumber \\
  & = & -\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\int_{\mathcal{Z}}\rho_{Z\mid x}\left(z\right)\log\left(\frac{\rho_{Z\mid x}\left(z\right)}{\rho_{Z\mid\pi}\left(z\right)}\right)\mathrm{d}z\mathrm{dx}.\label{eq:ipen}
 \end{eqnarray}
 
@@ -1396,11 +1528,11 @@ information penalty
 \begin_layout Standard
 Minimizing this penalty then corresponds to maximizing the amount of shared
  information between the prior-predictive distribution 
-\begin_inset Formula $\rho_{Z\mid\pi}$
+\begin_inset Formula $Z\mid\pi$
 \end_inset
 
  and the prior 
-\begin_inset Formula $\rho_{X\mid\pi}$
+\begin_inset Formula $X\mid\pi$
 \end_inset
 
  itself.
@@ -1424,7 +1556,7 @@ reference "eq:mple"
 
 \end_inset
 
- with the information penalty 
+ with the missing information penalty 
 \begin_inset Formula $\Phi_{I}$
 \end_inset
 
@@ -1481,14 +1613,18 @@ Z=G\left(X\right)+E
 
 \end_inset
 
-the MPLE estimates with the 
+the MPLE estimate 
+\begin_inset Formula $\pi_{\Phi_{H_{Z}}}$
+\end_inset
+
+, penalized by the 
 \emph on
-Z-entropy penalty
+Z-entropy
 \emph default
 
 \begin_inset Formula 
 \[
-\Phi_{E_{Z}}\left(\pi\right):=-\gamma H\left(Z\mid\pi\right)
+\Phi_{H_{Z}}\left(\pi\right):=-\gamma H\left(Z\mid\pi\right),
 \]
 
 \end_inset
@@ -1496,7 +1632,7 @@ Z-entropy penalty
  and the information penalty coincide:
 \begin_inset Formula 
 \[
-\pi_{\Phi_{I}}=\pi_{\Phi_{E_{Z}}}.
+\pi_{\Phi_{MI}}=\pi_{\Phi_{E_{Z}}}.
 \]
 
 \end_inset
@@ -1533,21 +1669,11 @@ H\left(Z\mid x\right) & =\int_{\mathcal{Z}}\rho_{Z\mid x}\left(z\right)\log\left
 
 Hence the conditional entropy part is constant and both penalties agree
  up to an additive constant
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-think again: realy H(Z), not H(Z/pi)?
-\end_layout
-
-\end_inset
-
-
 \begin_inset Formula 
 \begin{align*}
-\Phi_{I}\left(\pi\right) & =-\gamma\left(H\left(Z\right)-H\left(Z;X\mid\pi\right)\right)\\
- & =-\gamma\left(H\left(Z\right)-\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)H\left(Z\mid x\right)\mathrm{d}x\right)\\
- & =-\gamma H\left(Z\right)+H\left(E\right)\\
+\Phi_{MI}\left(\pi\right) & =-\gamma\left(H\left(Z\mid\pi\right)-H\left(Z;X\mid\pi\right)\right)\\
+ & =-\gamma\left(H\left(Z\mid\pi\right)-\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)H\left(Z\mid x\right)\mathrm{d}x\right)\\
+ & =-\gamma H\left(Z\mid\pi\right)+H\left(E\right)\\
  & =\Phi_{H_{Z}}+H\left(E\right).
 \end{align*}
 
@@ -1577,34 +1703,40 @@ key "theo1"
 \begin_inset Formula $H\left(Z,\Pi\right)$
 \end_inset
 
- of the whole model.
- This derivation from a maximum entropy principle, which they conjecture
- to hold as well in the more general setting with continious 
+ of the whole model and furthermore conjecture this to hold as well for
+ continious 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
-, back the choice of 
+.
+ This derivation from a maximum entropy principle is a further justification
+ for the choice of 
 \begin_inset Formula $\Phi_{H_{Z}}$
-\end_inset
-
- and hence its generalization 
-\begin_inset Formula $\Phi_{\mathcal{I}}$
 \end_inset
 
  as a meaningful penalty.
 \end_layout
 
-\begin_layout Remark
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-jeffreys/reference prior as special case?
+\begin_layout Standard
+_
 \end_layout
+
+\begin_layout Remark
+In the case of no data the likelihood term of 
+\begin_inset Formula $\pi_{\Phi_{MI}}$
+\end_inset
+
+ vanishes.
+ It then matches the definition of reference priors 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "berger2009formal"
 
 \end_inset
 
-
+ by Beger et al.
+ Therefore this estimation routine can be seen as an extension of reference
+ priors from a noninformative to a cohort data based, empirical Bayes approach.
 \end_layout
 
 \begin_layout Subsection
