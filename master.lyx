@@ -4,9 +4,12 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass amsart
+\textclass scrartcl
 \begin_preamble
 \DeclareMathOperator{\Ima}{Im}
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhf{}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -35,10 +38,10 @@ figs-within-sections
 \bibtex_command default
 \index_command default
 \paperfontsize default
-\spacing other 1.5
+\spacing other 1.3
 \use_hyperref false
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_package amsmath 1
 \use_package amssymb 1
 \use_package cancel 1
@@ -62,6 +65,10 @@ figs-within-sections
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 3cm
+\topmargin 4cm
+\rightmargin 3cm
+\bottommargin 4cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation skip
@@ -80,8 +87,161 @@ figs-within-sections
 \begin_body
 
 \begin_layout Title
-Nonparametric prior estimation from cohort data and its application to Systems
- Biology
+
+\shape up
+Master's Thesis
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset VSpace 1cm*
+\end_inset
+
+An Empirical Bayes Method and its Application to a Systems Biology Model
+\begin_inset VSpace 2cm*
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subtitle
+\begin_inset Graphics
+	filename siegel.png
+	display false
+	width 7cm
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset VSpace 2cm*
+\end_inset
+
+Free University of Berlin
+\begin_inset Newline newline
+\end_inset
+
+Department of Mathematics and Computer Science
+\begin_inset VSpace 1cm*
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+Alexander Sikorski
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+Berlin 2017
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Declaration
+\end_layout
+
+\begin_layout Standard
+I hereby declare that this thesis is my own work and has not been submitted
+ in any form for another degree or diploma at any university or other institute.
+ Information derived from the published and unpublished work of others has
+ been acknowledged in the text and a list of references is given.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 2cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Alexander Sikorski
+\end_layout
+
+\begin_layout Standard
+Berlin, March 14th, 2017
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{page}{1}
+\backslash
+fancyhf[FRO,FLE]{
+\backslash
+thepage}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fancyhead[LO]{
+\backslash
+leftmark}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fancyhead[RE]{
+\backslash
+rightmark} 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -248,32 +408,6 @@ In section 4 we will then introduce the discretization and calculation schemes.
 As a proof of concept we will we will apply the developed methods and algorithms
  to a high-dimensional model from systems biology and discuss the results
  in section 5.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-todos:
-\end_layout
-
-\begin_layout Plain Layout
-check p/
-\begin_inset Formula $\rho$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-check rand.
- variable vs realization vs density
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -1396,7 +1530,7 @@ For
  
 \begin_inset Formula 
 \begin{eqnarray}
-\Phi_{I}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\mid\pi\right)\nonumber \\
+\Phi_{I}^{\gamma}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\mid\pi\right)\nonumber \\
  & = & -\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\int_{\mathcal{Z}}\rho_{Z\mid x}\left(z\right)\log\left(\frac{\rho_{Z\mid x}\left(z\right)}{\rho_{Z\mid\pi}\left(z\right)}\right)\mathrm{d}z\mathrm{dx}.\label{eq:ipen}
 \end{eqnarray}
 
@@ -1531,7 +1665,7 @@ According to the change of variables formula
 
 \begin_layout Corollary
 The maximum penalized likelihood estimator 
-\begin_inset Formula $\pi_{MPLE}$
+\begin_inset Formula $\pi_{\Phi_{I}^{\gamma}}$
 \end_inset
 
  
@@ -1542,7 +1676,7 @@ reference "eq:mple"
 \end_inset
 
  with the information penalty 
-\begin_inset Formula $\Phi_{I}$
+\begin_inset Formula $\Phi_{I}^{\gamma}$
 \end_inset
 
  
@@ -1595,7 +1729,7 @@ Z=G\left(X\right)+E
 \end_inset
 
 the MPLE estimate 
-\begin_inset Formula $\pi_{\Phi_{H_{Z}}}$
+\begin_inset Formula $\pi_{\Phi_{H_{Z}}^{\gamma}}$
 \end_inset
 
 , penalized by the 
@@ -1605,7 +1739,7 @@ Z-entropy
 
 \begin_inset Formula 
 \[
-\Phi_{H_{Z}}\left(\pi\right):=-\gamma H\left(Z\mid\pi\right),
+\Phi_{H_{Z}}^{\gamma}\left(\pi\right):=-\gamma H\left(Z\mid\pi\right),
 \]
 
 \end_inset
@@ -1613,7 +1747,7 @@ Z-entropy
  and the information penalty coincide:
 \begin_inset Formula 
 \[
-\pi_{\Phi_{I}}=\pi_{\Phi_{E_{Z}}}.
+\pi_{\Phi_{I}^{\gamma}}=\pi_{\Phi_{H_{Z}}^{\gamma}}.
 \]
 
 \end_inset
@@ -1652,10 +1786,10 @@ Hence the conditional entropy part is constant and both penalties agree
  up to an additive constant
 \begin_inset Formula 
 \begin{align*}
-\Phi_{I}\left(\pi\right) & =-\gamma\left(H\left(Z\mid\pi\right)-H\left(Z;X\mid\pi\right)\right)\\
+\Phi_{I}^{\gamma}\left(\pi\right) & =-\gamma\left(H\left(Z\mid\pi\right)-H\left(Z;X\mid\pi\right)\right)\\
  & =-\gamma\left(H\left(Z\mid\pi\right)-\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)H\left(Z\mid x\right)\mathrm{d}x\right)\\
- & =-\gamma H\left(Z\mid\pi\right)+H\left(E\right)\\
- & =\Phi_{H_{Z}}+H\left(E\right).
+ & =-\gamma\left(H\left(Z\mid\pi\right)+H\left(E\right)\right)\\
+ & =\Phi_{H_{Z}}^{\gamma}+\gamma H\left(E\right).
 \end{align*}
 
 \end_inset
@@ -1693,7 +1827,7 @@ key "theo1"
 .
  This derivation from a maximum entropy principle is a further justification
  for the choice of 
-\begin_inset Formula $\Phi_{H_{Z}}$
+\begin_inset Formula $\Phi_{H_{Z}}^{\gamma}$
 \end_inset
 
  as a meaningful penalty.
@@ -1708,7 +1842,7 @@ key "theo1"
 
 \begin_layout Remark
 In the case of no data the likelihood term of 
-\begin_inset Formula $\pi_{\Phi_{I}}$
+\begin_inset Formula $\pi_{\Phi_{I}^{\gamma}}$
 \end_inset
 
  vanishes.
@@ -2116,6 +2250,27 @@ H\left(Z\mid\pi\right) & \approx H\left(Z\mid\bm{w}\right):=-\gamma\sum_{j=1}^{\
 
 \end_layout
 
+\begin_layout Standard
+We can furthermore approximate the expectation value of any measurable function
+ 
+\begin_inset Formula $g$
+\end_inset
+
+ under 
+\begin_inset Formula $\pi$
+\end_inset
+
+ via 
+\begin_inset Formula 
+\[
+\mathbb{E}_{x\sim\pi}\left[g\left(x\right)\right]=\int_{\mathcal{X}}g\left(x\right)\pi\left(x\right)\mathrm{d}x\approx\sum_{k=1}^{K}w_{k}g\left(x_{k}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 EM algorithm for NPMLE and DS-MLE
 \end_layout
@@ -2402,7 +2557,7 @@ In the case of additive the measurement error the Monte Carlo discretized
  version of the MPLE with the information penalty takes the form
 \begin_inset Formula 
 \begin{align*}
-w_{\Phi_{I}} & =\arg\max_{\bm{w}\in\mathcal{W}}O\left(\bm{w}\right)\\
+w_{\Phi_{I}^{\gamma}} & =\arg\max_{\bm{w}\in\mathcal{W}}O\left(\bm{w}\right)\\
 \end{align*}
 
 \end_inset
@@ -3382,7 +3537,7 @@ Note that these samples, which conform to the average density of the individual
  NPMLE, these points serve as a good basis for the importance sampling:
 \begin_inset Formula 
 \[
-\bm{x}\sim\psi\left(\pi_{0}\right)\approx\pi_{ML}\approx\pi_{\Phi_{I}}.
+\bm{x}\sim\psi\left(\pi_{0}\right)\approx\pi_{ML}\approx\pi_{\Phi_{I}^{\gamma}}.
 \]
 
 \end_inset
@@ -3437,26 +3592,33 @@ key "svanberg2002class"
 
 \end_inset
 
-.
+, a globally-convergent, gradient-based optimizer.
  To guarantee the constraint 
 \begin_inset Formula $\sum_{k=1}^{K}w_{k}=1$
 \end_inset
 
  we used the built in Augmentated Lagrangian algortithm.
  This basically amends a penalty to the objective, whose impact is scaled
- based on the misfit of the constraint.
- Unfortunately this lead to a quite slow optimization which is the main
- reason why the number of samples was chosen so relatively low.
+ based on the current misfit of the constraint.
+ We furthermore set the upper bounds for each component to 
+\begin_inset Formula $1$
+\end_inset
+
+, and the lower bounds to 
+\begin_inset Formula $10^{-12}$
+\end_inset
+
+ to avoid eventual divisions by zero.
 \end_layout
 
 \begin_layout Standard
-For the penalty constant we chose 
-\begin_inset Formula $\gamma=100$
+The penalty constant 
+\begin_inset Formula $\gamma$
 \end_inset
 
-, rather ad hoc by trial and error until we achieved desired smoothing results.
- It would be interesting to find a way to objectify this choice by e.g.
- information theoretic reasons or cross validation.
+ is chosen by trial and error, until achieving desired smoothing results.
+ It would be interesting to find a rule for its choice, e.g.
+ by information theoretic reasons or cross validation.
 \end_layout
 
 \begin_layout Subsection
@@ -3477,10 +3639,33 @@ We will now compare the initial prior
 \end_inset
 
  and the information penalized MPLE 
-\begin_inset Formula $\pi_{I}$
+\begin_inset Formula $\pi_{\Phi_{I}^{\gamma}}$
 \end_inset
 
 .
+ For the visualization we will plot kernel density estimates of selected
+ marginal densities.
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:paperplot"
+
+\end_inset
+
+ shows the marginal distributions of the individual priors, a density plot
+ of the prior predicitve distributions together with the cohort-data, and
+ the resulting posteriors for a single person.
+\end_layout
+
+\begin_layout Standard
+Figure ?? compares different choices for the regularization constant 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ by showing the corresponding marginal distributions.
 \end_layout
 
 \begin_layout Standard
@@ -3489,10 +3674,6 @@ paperplot
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -3506,6 +3687,12 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:paperplot"
+
+\end_inset
+
 f
 \end_layout
 
@@ -3533,7 +3720,7 @@ Conclusion
 
 \begin_layout Standard
 We have shown that the MPLE with the information penalty 
-\begin_inset Formula $\Phi_{I}$
+\begin_inset Formula $\Phi_{I}^{\gamma}$
 \end_inset
 
  is an attractive approach to the empirical Bayes method.
@@ -3558,6 +3745,13 @@ Unfortunately we could not resolve all questions in the scope of this thesis.
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
