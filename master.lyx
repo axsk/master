@@ -108,20 +108,20 @@ Regarding it's application to systems biology or medicine a quantification
 Although the classical frequentist approach to statistics offers tools answers
  to this in terms of confidence intervals and hypothesis tests, these techniques
 , aiming for point estimates, have a hard time dealing with ill-posed problems
- incorporating uncertainties and unidentifiablities, often appearing in
+ incorporating uncertainties and unidentifiabilities, often appearing in
  applications with large nonlinear models.
 \end_layout
 
 \begin_layout Standard
 We will henceforth adopt the Bayesian view which naturally confines the
- treatment of uncertainty by its description in terms of disributions (in
+ treatment of uncertainty by its description in terms of distributions (in
  contrast to the point estimates in the frequentist approach).
 \end_layout
 
 \begin_layout Standard
 As we will see it also allows for a natural incorporation of data, a circumstanc
-e of ever greater importance in a time of progressing digitalisation of
- our lifes, the medicine and the sciences coining the term big data.
+e of ever greater importance in a time of progressing digitalization of
+ our lives, the medicine and the sciences coining the term big data.
 \end_layout
 
 \begin_layout Standard
@@ -245,25 +245,9 @@ In section 4 we will then introduce the discretization and calculation schemes.
 \end_layout
 
 \begin_layout Standard
-techniqbased on individual Markov Chain Monte Carlo posterior samples, which
- allow for easy parallization and high-dimensional parameter spaces in a
- straightforward manner.
- 
-\end_layout
-
-\begin_layout Standard
 As a proof of concept we will we will apply the developed methods and algorithms
  to a high-dimensional model from systems biology and discuss the results
- in section 5..
-\end_layout
-
-\begin_layout Standard
-The Bayesian's strength but also weakness is the need to incorporate prior
- belief/knowledge about the system in question.
- Whilst the choice of the prior remains a question of debate, we will use
- cohort data, e.g.
- measurements of several persons, to improve our prior knowledge by incorporatin
-g the individual posteriors into a new, informative, prior.
+ in section 5.
 \end_layout
 
 \begin_layout Standard
@@ -500,7 +484,7 @@ The likelihood model
 Our inference bases on the combination of a deterministic physical model,
  our description of the reality, with a stochastic measurement error and
  the formalism of Bayes'.
- The phyiscal model is represented as a map 
+ The physical model is represented as a map 
 \begin_inset Formula $\Phi:\mathcal{X}\subseteq\mathbb{R}^{n}\rightarrow\mathcal{Y}\subseteq\mathbb{R}^{m}$
 \end_inset
 
@@ -619,7 +603,7 @@ Note also that whilst this model is extensible to multiple measurements
 \end_inset
 
  (the same subject), but is wrong assuming different measurements correspond
- to independant draws from the prior 
+ to independent draws from the prior 
 \begin_inset Formula $X$
 \end_inset
 
@@ -628,10 +612,6 @@ Note also that whilst this model is extensible to multiple measurements
 
 \begin_layout Subsection
 The empirical Bayes model
-\end_layout
-
-\begin_layout Standard
-robbins efron emalgo
 \end_layout
 
 \begin_layout Standard
@@ -669,16 +649,6 @@ hyperparametric model
 \emph default
 .
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-list characterizing equations here?
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -743,7 +713,7 @@ Since this likelihood, in contrast to the basic Bayesian model above, does
 \begin_inset Formula $X$
 \end_inset
 
- anymore, this allows us to handle multiple measurements coming from different
+ anymore, this allows us to handle multiple measurements coming from independent
  samples of 
 \begin_inset Formula $X$
 \end_inset
@@ -763,7 +733,7 @@ For finite data/measurements
  as
 \begin_inset Formula 
 \[
-\rho\left(\bm{z}^{M}|\pi\right):=\prod_{m=1}^{M}\rho_{Z}\left(z_{m}\mid\Pi=\pi\right)
+\rho\left(\bm{z}^{M}|\pi\right):=\prod_{m=1}^{M}\rho_{Z\mid\pi}\left(z_{m}\right)
 \]
 
 \end_inset
@@ -789,7 +759,7 @@ name: log-likelihood?
 
 \begin_inset Formula 
 \[
-\mathcal{L}_{cd}\left(\pi\mid\bm{z}^{M}\right):=\frac{1}{M}\log\rho\left(\bm{z}^{M}|\pi\right)=\frac{1}{M}\sum_{m=1}^{M}\log\rho_{Z}\left(z_{m}\mid\pi\right).
+\mathcal{L}\left(\pi\mid\bm{z}^{M}\right):=\frac{1}{M}\log\rho\left(\bm{z}^{M}|\pi\right)=\frac{1}{M}\sum_{m=1}^{M}\log\rho_{Z\mid\pi}\left(z_{m}\right).
 \]
 
 \end_inset
@@ -820,7 +790,7 @@ infinite data log-likelihood
 \emph on
 \begin_inset Formula 
 \[
-\mathcal{L}_{cc}\left(\pi\mid\rho_{Z}\right):=\int\rho_{Z}\left(z\right)\log\rho_{Z}\left(z\mid\pi\right)\mathrm{d}z.
+\mathcal{L}^{\infty}\left(\pi\mid\rho_{Z}\right):=\int_{\mathcal{Z}}\rho_{Z}\left(z\right)\log\rho_{Z\mid\pi}\left(z\right)\mathrm{d}z.
 \]
 
 \end_inset
@@ -839,19 +809,9 @@ The latter definition follows from the former in the limit for
 
  is indeed the data generating distribution:
 \begin_inset Formula 
-\[
-z_{m}\overset{i.i.d.}{\sim}\rho_{Z}\Rightarrow\mathcal{L}_{cd}\left(\pi\mid\bm{z}^{M}\right)\overset{M\rightarrow\infty}{\longrightarrow}\mathcal{L}_{cc}\left(\pi\mid\rho_{Z}\right)
-\]
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-convergence in which sense?
-\end_layout
+\begin{equation}
+z_{m}\overset{i.i.d.}{\sim}\rho_{Z}\Rightarrow\mathcal{L}\left(\pi\mid\bm{z}^{M}\right)\overset{\text{p}}{\underset{M\rightarrow\infty}{\longrightarrow}}\mathcal{L}^{\infty}\left(\pi\mid\rho_{Z}\right).\label{eq:limit}
+\end{equation}
 
 \end_inset
 
@@ -874,7 +834,7 @@ true prior
 
  in the infinite data regime by maximizing the corresponding likelihood
  functional 
-\begin_inset Formula $L_{cc}.$
+\begin_inset Formula $L^{\infty}.$
 \end_inset
 
 
@@ -923,7 +883,7 @@ key "van2000asymptotic"
 We then have that
 \begin_inset Formula 
 \[
-\pi^{*}=\underset{\pi'\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}L_{cc}\left(\pi'\right).
+\pi^{*}=\underset{\pi'\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}L^{\infty}\left(\pi'\right).
 \]
 
 \end_inset
@@ -932,16 +892,24 @@ We then have that
 \end_layout
 
 \begin_layout Proof
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-todo
-\end_layout
+Gibbs' inequality says that
+\begin_inset Formula 
+\[
+\int_{\mathcal{Z}}\rho_{Z}\left(z\right)\log\rho_{Z}\left(z\right)\mathrm{d}z\ge\int_{\mathcal{Z}}\rho_{Z}\left(z\right)\log q\left(z\right)\mathrm{d}z
+\]
 
 \end_inset
 
+for any probability density 
+\begin_inset Formula $q$
+\end_inset
 
+, with equality if and only if 
+\begin_inset Formula $q=\rho_{Z}$
+\end_inset
+
+.
+ The rest follows from the assumptions.
 \end_layout
 
 \begin_layout Standard
@@ -984,24 +952,17 @@ This can be retracted though by lifting the inference problem to equivalence
 which is all we can hope for.
 \end_layout
 
-\begin_layout Section
-Regularization
-\end_layout
-
 \begin_layout Standard
 In practice though usually only finite data is available, and even though
  the limiting property 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-ref
-\end_layout
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:limit"
 
 \end_inset
 
  might give hope that maximization of 
-\begin_inset Formula $L_{cd}$
+\begin_inset Formula $\mathcal{L}$
 \end_inset
 
  might approximate 
@@ -1017,7 +978,7 @@ key "lindsay1995mixture"
 \end_inset
 
  that the maximizer of 
-\begin_inset Formula $L_{cd}$
+\begin_inset Formula $\mathcal{L}$
 \end_inset
 
  is a discrete distribution with at most 
@@ -1028,7 +989,7 @@ key "lindsay1995mixture"
 \end_layout
 
 \begin_layout Standard
-In the field of machine learning this phenomenom, commonly occuring for
+In the field of machine learning this phenomenon, commonly occurring for
  insufficient data, is referred to as 
 \emph on
 overfitting
@@ -1037,13 +998,13 @@ overfitting
  more regular and smooth solutions.
 \end_layout
 
-\begin_layout Subsection
-Regularization via a penalization term
+\begin_layout Section
+Regularization
 \end_layout
 
 \begin_layout Standard
-To address this problem we will introduce two such regularization methods,
- the 
+To address this problem of irregularity we will introduce two regularization
+ methods, the 
 \emph on
 maximum penalized likelihood estimation
 \emph default
@@ -1059,6 +1020,10 @@ ting distribution
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Regularization via a penalization term
 \end_layout
 
 \begin_layout Standard
@@ -1089,10 +1054,14 @@ regularization term
 \end_inset
 
 , responsible for penalizing unsmooth or unwanted solutions with high values,
- the MPLE estimate admits the form 
+ the MPLE 
+\begin_inset Formula $\pi_{\Phi}$
+\end_inset
+
+ estimate admits the form 
 \begin_inset Formula 
 \begin{equation}
-\pi_{MPLE,\Phi}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right).\label{eq:mple}
+\pi_{\Phi}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right).\label{eq:mple}
 \end{equation}
 
 \end_inset
@@ -1134,7 +1103,7 @@ estimate
  for the hyperparametric model corresponds to the MPLE estimate:
 \begin_inset Formula 
 \[
-\pi_{MAP}=\underset{\pi}{\arg\max}L\left(\pi\right)e^{-\Phi\left(\pi\right)}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right)=\pi_{MPLE}.
+\pi_{MAP}=\underset{\pi}{\arg\max}L\left(\pi\right)e^{-\Phi\left(\pi\right)}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right)=\pi_{\Phi}.
 \]
 
 \end_inset
@@ -1190,7 +1159,7 @@ key "good1963maximum"
  suggested the use of the differential entropy for the penalty
 \begin_inset Formula 
 \[
-\Phi\left(\pi\right):=-\gamma H_{X}\left(\pi\right):=\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\log\rho_{X\mid\pi}\left(x\right)\mathrm{d}x,
+\Phi_{H_{X}}\left(\pi\right):=\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\log\rho_{X\mid\pi}\left(x\right)\mathrm{d}x,
 \]
 
 \end_inset
@@ -1255,7 +1224,11 @@ with
 \begin_inset Formula $D_{KL}$
 \end_inset
 
- beeing the Kullback-Leibler divergence from 
+ being the 
+\emph on
+Kullback-Leibler divergence 
+\emph default
+from 
 \begin_inset Formula $\rho_{A}$
 \end_inset
 
@@ -1287,11 +1260,19 @@ and
 
  
 \series default
-beeing the differential entropy of 
+being the 
+\emph on
+differential entropy
+\emph default
+ of 
 \begin_inset Formula $B$
 \end_inset
 
- respectively the conditional differential entropy of 
+ respectively the 
+\emph on
+conditional differential
+\emph default
+ entropy of 
 \begin_inset Formula $B$
 \end_inset
 
@@ -1310,24 +1291,151 @@ H\left(B;A\right) & := & \int_{\mathcal{A}}\rho_{A}\left(a\right)H\left(B\mid a\
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Notation: H
-\begin_inset Formula $\left(;\right)$
-\end_inset
-
- vs H
-\begin_inset Formula $\left(\parallel\right)$
-\end_inset
-
-?
 \end_layout
 
+\begin_layout Standard
+The mutual information quantifies the 
+\begin_inset Quotes eld
+\end_inset
+
+amount of information
+\begin_inset Quotes erd
+\end_inset
+
+ that one random variable shares with the respective other, expressed by
+ the information content of the their joint distribution (
+\begin_inset Formula $\rho_{A,B}$
+\end_inset
+
+) relative to their joint distribution if they were independent (
+\begin_inset Formula $\rho_{A}\rho_{B})$
+\end_inset
+
+, weighted by their joint distribution.
+\end_layout
+
+\begin_layout Standard
+We can gain further insights into its meaning by expressing it in terms
+ of another fundamental information-theoretic quantity, the Kullback-Leibler
+ divergence 
+\begin_inset Formula $D_{KL}\left(A\parallel B\right)$
+\end_inset
+
+ from 
+\begin_inset Formula $B$
+\end_inset
+
+ to 
+\begin_inset Formula $A$
+\end_inset
+
+ (also called 
+\emph on
+information gain 
+\emph default
+or 
+\emph on
+relative entropy
+\emph default
+).
+ It is a measure for the loss of information when considering 
+\begin_inset Formula $B$
+\end_inset
+
+ as a approximation to 
+\begin_inset Formula $A$
+\end_inset
+
+, or consequently in the Bayesian context it is the gain of information
+ revising one's beliefs from the prior 
+\begin_inset Formula $B$
+\end_inset
+
+ to the posterior 
+\begin_inset Formula $A$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In this form the mutual information of 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+ corresponds to the expected information gain from the prior to the posterior
+ over 
+\begin_inset Formula $A$
+\end_inset
+
+ when the measurements are 
+\begin_inset Formula $B$
+\end_inset
+
+-distributed.
+ This interpretation gives rise to the following definition:
+\end_layout
+
+\begin_layout Definition
+For 
+\begin_inset Formula $\gamma>0$
+\end_inset
+
+ constant we define the
+\emph on
+ information penalty
+\emph default
+ 
+\begin_inset Formula 
+\begin{eqnarray}
+\Phi_{I}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\mid\pi\right)\nonumber \\
+ & = & -\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\int_{\mathcal{Z}}\rho_{Z\mid x}\left(z\right)\log\left(\frac{\rho_{Z\mid x}\left(z\right)}{\rho_{Z\mid\pi}\left(z\right)}\right)\mathrm{d}z\mathrm{dx}.\label{eq:ipen}
+\end{eqnarray}
+
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Minimizing this penalty then corresponds to maximizing the amount of shared
+ information between the prior-predictive distribution 
+\begin_inset Formula $Z\mid\pi$
+\end_inset
+
+ and the prior 
+\begin_inset Formula $X\mid\pi$
+\end_inset
+
+ itself (where we understand these random variables as restrictions of 
+\begin_inset Formula $Z$
+\end_inset
+
+ respectively 
+\begin_inset Formula $X$
+\end_inset
+
+ onto the events where 
+\begin_inset Formula $\Pi=\pi$
+\end_inset
+
+).
+ In terms of the Kullback-Leibler formulation this means priors 
+\begin_inset Formula $\pi$
+\end_inset
+
+ are rewarded by the amount of information gain expected from their induced
+ measurements hence encoding a notion of non-informativity.
+\end_layout
+
+\begin_layout Standard
+Fortunately the mutual information is also transformation invariant, thus
+ allowing for the application of the information penalty independent of
+ the models parametrization:
 \end_layout
 
 \begin_layout Lemma
@@ -1417,133 +1525,6 @@ According to the change of variables formula
 
 \end_layout
 
-\begin_layout Standard
-The mutual information quantifies the 
-\begin_inset Quotes eld
-\end_inset
-
-amount of information
-\begin_inset Quotes erd
-\end_inset
-
- that one random variable shares with the respective other, expressed by
- the weighted information content of the their joint distribution (
-\begin_inset Formula $\rho_{X,Y}$
-\end_inset
-
-) relative to their joint distribution if they were independent (
-\begin_inset Formula $\rho_{X}\rho_{Y})$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-We can gain further insights into its meaning by expressing it in terms
- of another fundamental information-theoretic quantity, the Kullback-Leibler
- divergence.
-\end_layout
-
-\begin_layout Standard
-The Kullbach-Leibler divergence (also called 
-\emph on
-information gain 
-\emph default
-or 
-\emph on
-relative entropy
-\emph default
-) is a measure for the loss of information when considering 
-\begin_inset Formula $B$
-\end_inset
-
- as a approximation to 
-\begin_inset Formula $A$
-\end_inset
-
-, or consequently in the Bayesian context it is the gain of information
- revising one's beliefs from the prior 
-\begin_inset Formula $B$
-\end_inset
-
- to the posterior 
-\begin_inset Formula $A$
-\end_inset
-
-.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-quelle
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-that is the mutual information of 
-\begin_inset Formula $X$
-\end_inset
-
- and 
-\begin_inset Formula $Y$
-\end_inset
-
- corresponds to the expected information gain from the prior to the posterior
- over 
-\begin_inset Formula $\mathcal{X}$
-\end_inset
-
- when the measurements are 
-\begin_inset Formula $Y$
-\end_inset
-
--distributed.
-\end_layout
-
-\begin_layout Definition
-For 
-\begin_inset Formula $\gamma>0$
-\end_inset
-
- constant we define the 
-\emph on
-missing information penalty
-\emph default
- 
-\begin_inset Formula 
-\begin{eqnarray}
-\Phi_{MI}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\mid\pi\right)\nonumber \\
- & = & -\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\int_{\mathcal{Z}}\rho_{Z\mid x}\left(z\right)\log\left(\frac{\rho_{Z\mid x}\left(z\right)}{\rho_{Z\mid\pi}\left(z\right)}\right)\mathrm{d}z\mathrm{dx}.\label{eq:ipen}
-\end{eqnarray}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Minimizing this penalty then corresponds to maximizing the amount of shared
- information between the prior-predictive distribution 
-\begin_inset Formula $Z\mid\pi$
-\end_inset
-
- and the prior 
-\begin_inset Formula $X\mid\pi$
-\end_inset
-
- itself.
- In terms of the Kullback-Leibler formulation this means priors 
-\begin_inset Formula $\pi$
-\end_inset
-
- are rewarded by the amount of information gain expected from their induced
- measurements hence leading to non-informativity.
-\end_layout
-
 \begin_layout Corollary
 The maximum penalized likelihood estimator 
 \begin_inset Formula $\pi_{MPLE}$
@@ -1556,7 +1537,7 @@ reference "eq:mple"
 
 \end_inset
 
- with the missing information penalty 
+ with the information penalty 
 \begin_inset Formula $\Phi_{I}$
 \end_inset
 
@@ -1586,12 +1567,8 @@ reference "lem:invariance"
 \end_layout
 
 \begin_layout Standard
-The 
-\end_layout
-
-\begin_layout Standard
 In the case of an additive measurement error we can simplify the MPLE estimator
- using its formulation in the entropy form
+ by only computing the entropy of the prior predictive distribution:
 \end_layout
 
 \begin_layout Theorem
@@ -1632,7 +1609,7 @@ Z-entropy
  and the information penalty coincide:
 \begin_inset Formula 
 \[
-\pi_{\Phi_{MI}}=\pi_{\Phi_{E_{Z}}}.
+\pi_{\Phi_{I}}=\pi_{\Phi_{E_{Z}}}.
 \]
 
 \end_inset
@@ -1671,7 +1648,7 @@ Hence the conditional entropy part is constant and both penalties agree
  up to an additive constant
 \begin_inset Formula 
 \begin{align*}
-\Phi_{MI}\left(\pi\right) & =-\gamma\left(H\left(Z\mid\pi\right)-H\left(Z;X\mid\pi\right)\right)\\
+\Phi_{I}\left(\pi\right) & =-\gamma\left(H\left(Z\mid\pi\right)-H\left(Z;X\mid\pi\right)\right)\\
  & =-\gamma\left(H\left(Z\mid\pi\right)-\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)H\left(Z\mid x\right)\mathrm{d}x\right)\\
  & =-\gamma H\left(Z\mid\pi\right)+H\left(E\right)\\
  & =\Phi_{H_{Z}}+H\left(E\right).
@@ -1687,7 +1664,8 @@ For the mentioned additive error model and discrete parameter space
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
-, 
+, Klebanov et al.
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 after "3.1"
@@ -1718,12 +1696,15 @@ key "theo1"
 \end_layout
 
 \begin_layout Standard
-_
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Remark
 In the case of no data the likelihood term of 
-\begin_inset Formula $\pi_{\Phi_{MI}}$
+\begin_inset Formula $\pi_{\Phi_{I}}$
 \end_inset
 
  vanishes.
@@ -1736,11 +1717,45 @@ key "berger2009formal"
 
  by Beger et al.
  Therefore this estimation routine can be seen as an extension of reference
- priors from a noninformative to a cohort data based, empirical Bayes approach.
+ priors from a noninformative to a cohort-data based empirical Bayes approach.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+It can be shown that the information penalty is convex in 
+\begin_inset Formula $\pi$
+\end_inset
+
+, with strict convexity in the identifiable case.
+ Together with the convexity of the likelihood function 
+\begin_inset Formula $L$
+\end_inset
+
+, the MPLE 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mple"
+
+\end_inset
+
+ becomes a concave optimization problem.
 \end_layout
 
 \begin_layout Subsection
 Regularization by smoothing of the data
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:dsmle"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1749,7 +1764,7 @@ on by the empiricial distribution
 \begin_inset Formula $\rho_{\bm{z}^{M}}\approx\rho_{Z}$
 \end_inset
 
- and then penalizing overconfident priors, we may as well adress the issue
+ and then penalizing overconfident priors, we may as well address the issue
  of overfitting by providing a smooth approximation 
 \begin_inset Formula $\rho_{Z}^{appr}$
 \end_inset
@@ -1849,7 +1864,7 @@ reference "prop:identifiable"
 The resulting DS-MLE then takes the form
 \begin_inset Formula 
 \[
-\pi_{DS}:=\underset{\pi\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}L_{cc}\left(\pi\mid\tilde{\rho}_{\bm{z}^{M}}\right)
+\pi_{DS}:=\underset{\pi\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}\mathcal{L}^{\infty}\left(\pi\mid\tilde{\rho}_{\bm{z}^{M}}\right)
 \]
 
 \end_inset
@@ -1873,7 +1888,7 @@ Note however that the choice of a kernel
 \end_inset
 
  leaves space for debate and furthermore for fixed kernels this procedure
- is not invariant under reparametrizations of the meaurement space 
+ is not invariant under reparametrizations of the measurement space 
 \begin_inset Formula $\mathcal{Z}$
 \end_inset
 
@@ -1975,23 +1990,26 @@ In the case of the parameter space
 \end_layout
 
 \begin_layout Standard
-Inserting these approximations into above integrals of interest we end up
- with the following Monte Carlo approximations.
-\end_layout
+Expressing any prior 
+\begin_inset Formula $\pi$
+\end_inset
 
-\begin_layout Standard
-Let 
+ in terms of its weights
 \begin_inset Formula 
 \[
-\pi\approx\rho_{X\mid w}:=\sum_{k=1}^{K}w_{k}\delta_{x_{k}}.
+\pi\approx\rho_{X\mid w}:=\sum_{k=1}^{K}w_{k}\delta_{x_{k}},
 \]
 
 \end_inset
 
-The prior predictive distribution can be approximated by
+
+\end_layout
+
+\begin_layout Standard
+the prior predictive distribution can be approximated by
 \begin_inset Formula 
 \[
-\rho_{Z\mid\pi}\left(z\right)=\int_{\mathcal{X}}\rho_{Z\mid x}\left(z\right)\pi\left(x\right)\mathrm{d}x\approx\rho_{Z\mid w}\left(z\right):=\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z\right)
+\rho_{Z\mid\pi}\left(z\right)=\int_{\mathcal{X}}\rho_{Z\mid x}\left(z\right)\pi\left(x\right)\mathrm{d}x\approx\rho_{Z\mid w}\left(z\right):=\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z\right).
 \]
 
 \end_inset
@@ -2003,7 +2021,7 @@ The prior predictive distribution can be approximated by
 Inserting this into the marginal likelihood leads to
 \begin_inset Formula 
 \[
-L\left(\pi\mid\bm{z}^{M}\right)\approx L\left(w\mid\bm{z}^{M}\right):=\prod_{m=1}^{M}\sum_{k=1}^{K}w_{k}L_{mk}.
+L\left(\pi\mid\bm{z}^{M}\right)\approx L\left(\bm{w}\mid\bm{z}^{M}\right):=\prod_{m=1}^{M}\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z_{m}\right).
 \]
 
 \end_inset
@@ -2086,7 +2104,7 @@ The Monte Carlo approximation to the
 -entropy then takes the form
 \begin_inset Formula 
 \begin{align*}
-H\left(\rho_{Z\mid\pi}\right) & \approx H\left(\bm{w}\right):=-\gamma\sum_{j=1}^{\bar{K}}\bar{w}_{j}\log\left(\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)\right).
+H\left(Z\mid\pi\right) & \approx H\left(Z\mid\bm{w}\right):=-\gamma\sum_{j=1}^{\bar{K}}\bar{w}_{j}\log\left(\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)\right).
 \end{align*}
 
 \end_inset
@@ -2234,11 +2252,26 @@ w_{n+1}:=\underset{w^{*}\in\mathcal{W}}{\arg\max\,}Q\left(w^{*}\mid w_{n}\right)
 \end_layout
 
 \begin_layout Standard
-Proof of convergence and uniqueness.
+For a proof of uniqueness and convergence in the case of strict convex likelihoo
+ds we refer to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dempster1977maximum"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wu1983convergence"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-We can furthermore explicitly compute the maximizer 
+We now show how to explicitly compute the maximizer 
 \begin_inset Formula $w^{*}$
 \end_inset
 
@@ -2290,46 +2323,139 @@ Since
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Remark self consistency.
 \end_layout
 
+\begin_layout Standard
+Note that this update step corresponds to the inference of the posterior
+ 
+\begin_inset Formula $w_{n+1}$
+\end_inset
+
+ based on the current prior 
+\begin_inset Formula $w_{n}$
+\end_inset
+
+ for the model consisting of a uniform mixture of M persons with individual
+ measurements 
+\begin_inset Formula $z_{m}.$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Remark reapeated Bayesian inference.
-\end_layout
+Applying the Monte Carlo discretization to the DS-MLE setting (
+\begin_inset CommandInset citation
+LatexCommand cite
+key "seo2013universally"
 
 \end_inset
 
+) we end up with the above EM-algorithm of the NPMLE applied to the augmented
+ data points 
+\begin_inset Formula $z_{m}\overset{i.i.d}{\sim}\tilde{\rho}_{\bm{z}^{M}}$
+\end_inset
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-DSMLE
-\end_layout
+ and the smoothed likelihoods (c.f.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:dsmle"
 
 \end_inset
 
+).
+ Since 
+\begin_inset Formula $M$
+\end_inset
 
+ data points result in maximally 
+\begin_inset Formula $M$
+\end_inset
+
+ peaks in the NPMLE 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lindsay1995mixture"
+
+\end_inset
+
+, a necessary condition for strictly positive weights is that the number
+ of augmented data points is at least that of the parameter-space nodes,
+ 
+\begin_inset Formula $M>K.$
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Subsection
 Optimization for MPLE
+\end_layout
+
+\begin_layout Standard
+In the case of additive the measurement error the Monte Carlo discretized
+ version of the MPLE with the information penalty takes the form
+\begin_inset Formula 
+\begin{align*}
+w_{\Phi_{I}} & =\arg\max_{\bm{w}\in\mathcal{W}}O\left(\bm{w}\right)\\
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+with objective function
+\begin_inset Formula 
+\begin{align*}
+O\left(w\right) & =\log L\left(\bm{w}\mid\bm{z}^{M}\right)-H\left(Z\mid\bm{z}^{M}\right)\\
+ & =\log\prod_{m=1}^{M}\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z_{m}\right)+\gamma\sum_{j=1}^{\bar{K}}\bar{w}_{j}\log\left(\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)\right).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Being a composition of linear and concave functions the objective 
+\begin_inset Formula $O$
+\end_inset
+
+ is easily shown to be concave, allowing for the use of constraint concave/conve
+x optimization routines.
+ 
+\end_layout
+
+\begin_layout Standard
+The high dimensionality of 
+\begin_inset Formula $\bm{w}$
+\end_inset
+
+ suggests the usage of derivative based optimization techniques.
+ The derivative of the objective is given by
+\begin_inset Formula 
+\begin{align*}
+\frac{\mathrm{d}O}{\mathrm{d}w_{k}}\left(w\right) & =\frac{\sum_{m=1}^{M}\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\prod_{m=1}^{M}\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z_{m}\right)}\\
+ & +\gamma\sum_{j=1}^{\bar{K}}\frac{\bar{w}_{j}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)}{\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)}\\
+ & +\gamma\sum_{j\in J^{-1}\left(k\right)}\frac{\log\left(\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)\right)}{\#J^{-1}\left(k\right)}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Instead of first discretizing and then deriving, one might as well try to
+ work with the discretization of the derivative (of the corresponding continuous
+ objective).
+ Whilst this promises to better approximate the gradient of the underlying
+ continuous problem, the gradient does not fit to the objective anymore
+ and may therefore lead to problems with optimization routines relying on
+ correctness of the gradient.
 \end_layout
 
 \begin_layout Subsection
@@ -3170,7 +3296,7 @@ to speed up the adaption process.
 
 \begin_layout Standard
 We computed 
-\begin_inset Formula $20.000.000$
+\begin_inset Formula $50.000.000$
 \end_inset
 
  samples 
@@ -3284,11 +3410,11 @@ In the following we will give an overview over the core components of the
 \end_layout
 
 \begin_layout Subsubsection*
-Empirical Bayes
+Empirical Bayes - src/eb
 \end_layout
 
 \begin_layout Subsubsection*
-GynC
+GynC - src/gc
 \end_layout
 
 \end_body
