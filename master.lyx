@@ -1578,6 +1578,12 @@ instead of the entropy for the penalty:
 \end_layout
 
 \begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:mutinf"
+
+\end_inset
+
 Let 
 \begin_inset Formula $A:\,\Omega\rightarrow\mathcal{A}$
 \end_inset
@@ -1813,14 +1819,14 @@ Minimizing this penalty then corresponds to maximizing the amount of shared
 \begin_inset Formula $\pi$
 \end_inset
 
- are rewarded by the amount of information gain expected from their induced
- measurements, hence encoding a notion of non-informativity.
+ are rewarded by the amount of information gain expected from their hypothetical
+ly induced measurements, hence encoding a notion of non-informativity.
 \end_layout
 
 \begin_layout Standard
-Fortunately the mutual information is also transformation invariant, thus
- allowing for the application of the information penalty independent of
- the models parametrization:
+Fortunately the mutual information is furthermore transformation invariant,
+ thus allowing for the application of the information penalty independent
+ of the models parametrization:
 \end_layout
 
 \begin_layout Lemma
@@ -1838,7 +1844,14 @@ Let
 \begin_inset Formula $B$
 \end_inset
 
- as above, and 
+ as in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:mutinf"
+
+\end_inset
+
+, and 
 \begin_inset Formula $\varphi^{-1}:\,\mathcal{A}\rightarrow\tilde{\mathcal{A}}$
 \end_inset
 
@@ -1846,7 +1859,7 @@ Let
 \begin_inset Formula $\psi^{-1}:\,\mathcal{B}\rightarrow\tilde{\mathcal{B}}$
 \end_inset
 
- be diffeomorphisms defining the coordinate transformations and corresponding
+ be diffeomorphisms defining coordinate transformations and corresponding
  transformed random variables 
 \begin_inset Formula $\tilde{A},\,\tilde{B}$
 \end_inset
@@ -1870,7 +1883,7 @@ Let
 
 \end_layout
 
-\begin_layout Lemma
+\begin_layout Enumerate
 The mutual information 
 \begin_inset Formula $\mathcal{I}\left(A;B\right)$
 \end_inset
@@ -1891,6 +1904,10 @@ The mutual information
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Enumerate
 
 \end_layout
 
@@ -1941,7 +1958,7 @@ reference "eq:ipen"
 \begin_inset Formula $\mathcal{Y}$
 \end_inset
 
- specified in Lemma 
+ similar as specified in Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:invariance"
@@ -1949,6 +1966,10 @@ reference "lem:invariance"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Proof
+Whilst invariance 
 \end_layout
 
 \begin_layout Standard
@@ -1970,7 +1991,7 @@ For models with additive measurement error
 
 \begin_inset Formula 
 \[
-Z=G\left(X\right)+E
+Z=\Phi\left(X\right)+E
 \]
 
 \end_inset
