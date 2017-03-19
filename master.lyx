@@ -107,7 +107,7 @@ Master's Thesis
 \end_inset
 
 An Empirical Bayes Method and its Application to a Systems Biology Model
-\begin_inset VSpace 2cm*
+\begin_inset VSpace 1.5cm*
 \end_inset
 
 
@@ -126,7 +126,7 @@ An Empirical Bayes Method and its Application to a Systems Biology Model
 \end_inset
 
 
-\begin_inset VSpace 2cm*
+\begin_inset VSpace 0.5cm*
 \end_inset
 
 Free University of Berlin
@@ -145,7 +145,8 @@ Alexander Sikorski
 \begin_inset Newline newline
 \end_inset
 
-
+Supervisor: Prof.
+ Susanna Röblitz 
 \end_layout
 
 \begin_layout Date
@@ -274,11 +275,11 @@ Regarding it's application to systems biology or medicine a quantification
 \end_layout
 
 \begin_layout Standard
-Although the classical frequentist approach to statistics offers tools to
- answers to this in terms of confidence intervals and hypothesis tests,
- these techniques, aiming for point estimates, have a hard time dealing
- with ill-posed problems incorporating uncertainties and unidentifiabilities,
- often appearing in applications with large nonlinear models.
+Although the classical frequentist approach to statistics offers answers
+ to this in terms of confidence intervals and hypothesis tests, these techniques
+, aiming for point estimates, have a hard time dealing with ill-posed problems
+ incorporating uncertainties and unidentifiabilities, often appearing in
+ applications with large nonlinear models.
 \end_layout
 
 \begin_layout Standard
@@ -302,7 +303,7 @@ We will furthermore tackle one of the main points of criticism on the Bayesian
 \end_layout
 
 \begin_layout Standard
-This critique lead to the school of objective Bayesian Analysis (c.f.
+This critique lead to the school of objective Bayesian analysis (c.f.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -319,8 +320,8 @@ One approach is the choice of so called
 \emph on
 non-informative priors
 \emph default
-, using information theoritc considerations to formalize the notion of non-infor
-mativity, given rise to the 
+, using information theoretic considerations to formalize the notion of
+ non-informativity, giving rise to the 
 \emph on
 Jeffrey's prior
 \emph default
@@ -346,7 +347,7 @@ key "bernardo1979reference"
 \end_layout
 
 \begin_layout Standard
-An alterative approach is given by the empirical Bayes methods:
+An alternative approach is given by the empirical Bayes methods:
 \end_layout
 
 \begin_layout Quote
@@ -364,8 +365,8 @@ key "robbins1964empirical"
 \end_layout
 
 \begin_layout Standard
-Here repeated measurements of the population in question, called cohort
- data, are used to construct a prior representing that population.
+Here repeated measurements of individuals from the population in question,
+ called cohort data, are used to construct a prior representing that population.
  The first major contribution was by Robbins
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -373,10 +374,15 @@ key "robbins1956"
 
 \end_inset
 
-, suggesting the nonparametric maximization of the marginal likelihood,
- leading to the NPMLE estimator, but the topic got largely neglected, probably
- due to its computational cost, until the topic was brought back to attention
- in the parametric case by Efron and Morris 
+, deriving explicit formulas for the Bayes estimators of nonparametric priors
+ for different families of likelihood functions giving rise to the 
+\emph on
+nonparametric maximum likelihood estimator
+\emph default
+ (NPMLE).
+ For a while these ideas got largely neglected, probably due to its computationa
+l cost, until they was brought back to attention in the parametric case
+ by Efron and Morris 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "efron1973stein"
@@ -387,15 +393,15 @@ key "efron1973stein"
 \end_layout
 
 \begin_layout Standard
-Unfortunately the NPMLE approach applied to finite data results in irregular
- priors, consisting of finitely many peaks.
-\end_layout
-
-\begin_layout Standard
-In Section 3 we will therefore discuss its regularization.
+Unfortunately the NPMLE approach applied to finite data results in discrete
+ distributions.
+ In Section 3 we will therefore discuss its regularization.
  We start by treating the topic of penalization of unsmooth solution, leading
- to the MPLE estimate, and will set this into relation with Bayesian hyperpriors
-, i.e.
+ to the 
+\emph on
+maximal penalized likelihood estimator
+\emph default
+ (MPLE), and will set this into relation with Bayesian hyperpriors, i.e.
  prior assumption on the prior.
  
 \end_layout
@@ -407,17 +413,21 @@ mutual information penalty
 \emph default
 , a specific choice for penalizing unsmooth priors based on information
  theoretic considerations.
- We then end up with a nonparametric, hence generally applicable, method
- combining the assumptions of least information from the non-informative
- priors with the usage of cohort data from the empirical Bayes approach
- and therefore getting the best of both worlds.
+ We end up with a nonparametric, hence generally applicable, method combining
+ the assumptions of least information from the non-informative priors with
+ the usage of cohort data from the empirical Bayes approach combining their
+ strengths.
  The suggested prior can as well be seen as a generalization of the reference
  priors to the cohort data regime.
  
 \end_layout
 
 \begin_layout Standard
-We additionally introduce the DS-MLE estimate by Seo and Lindsay 
+We additionally discuss the 
+\emph on
+doubly-smoothed maximum likelihood estimator
+\emph default
+ (DS-MLE) estimate by Seo and Lindsay 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "seo2013universally"
@@ -425,8 +435,7 @@ key "seo2013universally"
 \end_inset
 
 , an alternative approach with the idea of tackling the problem of finite
- data at its root by smoothing the data itself followed by the regular maximum
- likelihood estimation.
+ data at its root by smoothing the data itself followed by the NPMLE.
 \end_layout
 
 \begin_layout Standard
@@ -434,9 +443,15 @@ In section 4 we will then address the question of how to compute the introduced
  prior estimates numerically.
  We will work with a sample driven Monte Carlo approach, expressing the
  priors as importance samplings.
- We then derive the explicit formulas for the EM-algorithm for the approximation
- of the NPMLE and the DS-MLE and provide the jacobian for the optimization
- of the MPLE with the 
+ We then derive the explicit formulas for the EM algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dempster1977maximum"
+
+\end_inset
+
+ for the approximation of the NPMLE and the DS-MLE and provide the Jacobian
+ for the optimization of the MPLE with the 
 \emph on
 mutual information penalty
 \emph default
@@ -535,7 +550,7 @@ marginal density
 
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
 Whenever the corresponding random variables are clear we will, by slight
  abuse of notation, directly denote the condition in the subscript, i.e.
 \begin_inset Formula 
@@ -554,12 +569,9 @@ Succesive insertion of these identities leads to
 Bayes' theorem
 \emph default
  in its probability density form:
-\end_layout
-
-\begin_layout Definition
 \begin_inset Formula 
 \begin{equation}
-\rho_{X\mid y}\left(x\right):=\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{Y}\left(y\right)}=\frac{\rho_{Y\mid x}\left(y\right)\rho_{X}\left(x\right)}{\rho_{Y}\left(y\right)}=\frac{\rho_{Y\mid x}\left(y\right)\rho_{X}\left(x\right)}{\int_{x}\rho_{Y\mid x'}\left(y\right)\rho_{X}\left(x'\right)\mathrm{d}x'}.\label{eq:bayes}
+\rho_{X\mid y}\left(x\right):=\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{Y}\left(y\right)}=\frac{\rho_{Y\mid x}\left(y\right)\rho_{X}\left(x\right)}{\rho_{Y}\left(y\right)}=\frac{\rho_{Y\mid x}\left(y\right)\rho_{X}\left(x\right)}{\int_{\mathcal{X}}\rho_{Y\mid x'}\left(y\right)\rho_{X}\left(x'\right)\mathrm{d}x'}.\label{eq:bayes}
 \end{equation}
 
 \end_inset
@@ -622,20 +634,20 @@ Note that for fixed
 \end_inset
 
  and prior 
-\begin_inset Formula $\rho_{X}\left(x\right)$
+\begin_inset Formula $\rho_{X}$
 \end_inset
 
  both are probability densities in 
-\begin_inset Formula $x$
+\begin_inset Formula $\mathcal{X}$
 \end_inset
 
 .
- The likelihood on the other side is not a probability density in 
-\begin_inset Formula $x$
+ The likelihood on the other hand is not a probability density in 
+\begin_inset Formula $\mathcal{X}$
 \end_inset
 
- (it would be one in 
-\begin_inset Formula $y$
+ (it is one one in 
+\begin_inset Formula $\mathcal{Y}$
 \end_inset
 
  for fixed 
@@ -709,7 +721,7 @@ where
 \begin_inset Formula $\mathcal{\mathcal{N}}\left(y,\,\Sigma\right)$
 \end_inset
 
- denotes the Normal distribution with mean 
+ denotes the normal distribution with mean 
 \begin_inset Formula $y$
 \end_inset
 
@@ -1996,11 +2008,7 @@ key "seo2013universally"
 
 \end_inset
 
- as the 
-\emph on
-doubly-smoothed maximum likelihood estimator 
-\emph default
-(DS-MLE), to the empirical Bayes setting.
+ as the DS-MLE, to the empirical Bayes setting.
  
 \end_layout
 
