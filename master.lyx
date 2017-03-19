@@ -9,7 +9,7 @@
 \DeclareMathOperator{\Ima}{Im}
 \usepackage{fancyhdr}
 \pagestyle{fancyplain}
-\usepackage[backend=bibtex,maxbibnames=4]{biblatex}
+\usepackage[backend=bibtex,maxbibnames=4,firstinits=true]{biblatex}
 \addbibresource{refs.bib}
 \fancyhf{}
 \end_preamble
