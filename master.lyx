@@ -2711,7 +2711,7 @@ complete data likelihood functio
 n
 \begin_inset Formula 
 \begin{align*}
-L^{c}\left(\tilde{\bm{x}},\tilde{\bm{z}}\mid\pi\right): & =\prod_{m=1}^{M}\rho_{X\mid\pi}\left(\tilde{x}_{m}\right)\rho_{Z\mid\tilde{x}_{m}}\left(\tilde{z}_{m}\right),\\
+L^{c}\left(\pi\mid\bm{x},\bm{z}\right): & =\prod_{m=1}^{M}\rho_{X\mid\pi}\left(x_{m}\right)\rho_{Z\mid x_{m}}\left(z_{m}\right),\\
 \end{align*}
 
 \end_inset
@@ -2731,16 +2731,16 @@ the likelihood of a specific prior represented by
 \end_inset
 
  given the measurements 
-\begin_inset Formula $\tilde{\bm{z}}=\left(\tilde{z}_{m}\right)_{m=1}^{M}$
+\begin_inset Formula $\bm{z}=\left(z_{m}\right)_{m=1}^{M}$
 \end_inset
 
- with corresponding the parameters 
-\begin_inset Formula $\tilde{\bm{x}}=\left(\tilde{x}_{m}\right)_{m=1}^{M}$
+ with corresponding parameters 
+\begin_inset Formula $\bm{x}=\left(x_{m}\right)_{m=1}^{M}$
 \end_inset
 
 , where the completeness is meant in the context of knowing all involved
  variables, including 
-\begin_inset Formula $\tilde{\bm{x}}$
+\begin_inset Formula $\bm{x}$
 \end_inset
 
 .
@@ -2755,20 +2755,19 @@ of
 \begin_inset Formula $\pi$
 \end_inset
 
- with respect to the current estimate 
+ as the expectation over the posterior 
+\begin_inset Formula $\bm{x}_{n}=\left(x_{m}\overset{\text{ind.}}{\sim}\rho_{X\mid\pi_{n},z_{m}}\right)_{m=1}^{M}$
+\end_inset
+
+ under the current estimate 
 \begin_inset Formula $\pi_{n}$
 \end_inset
 
- as the expectation of the logarithm of the compete data likelihood over
- 
-\begin_inset Formula $X$
+ of the logarithm of the complete data likelihood conditioned on 
+\begin_inset Formula $\pi$
 \end_inset
 
- conditioned on the estimate 
-\begin_inset Formula $\pi_{n}$
-\end_inset
-
- and the cohort-data 
+ and the observed cohort-data 
 \begin_inset Formula $\bm{z}^{M}$
 \end_inset
 
@@ -2777,9 +2776,9 @@ of
 
 \begin_inset Formula 
 \begin{align}
-Q\left(\pi\mid\pi_{n}\right):= & \mathbb{E}_{\bm{C}}\left[\log\left(L^{c}\left(\bm{X},\bm{z}^{M}\mid\pi\right)\right)\right],\nonumber \\
-= & \mathbb{E}_{\bm{C}}\left[\sum_{m=1}^{m}\log\left(\rho_{X\mid\pi}\left(\tilde{x}_{m}\right)\rho_{Z\mid\pi}\left(z_{m}\right)\right)\right]\label{eq:expcomploglike}\\
-= & \sum_{m=1}^{M}\mathbb{E}_{x\sim\rho_{X\mid\pi_{n},z_{m}}}\left[\log\left(\rho_{X\mid\pi}\left(x\right)\rho_{Z\mid x}\left(z_{m}\right)\right)\right]\nonumber \\
+Q\left(\pi\mid\pi_{n}\right):= & \mathbb{E}_{\bm{x}_{n}}\left[\log\left(L^{c}\left(\pi\mid\bm{x}_{n},\bm{z}^{M}\right)\right)\right]\nonumber \\
+= & \mathbb{E}_{\bm{x}_{n}}\left[\sum_{m=1}^{m}\log\left(\rho_{X\mid\pi}\left(x_{m}\right)\rho_{Z\mid\pi}\left(z_{m}\right)\right)\right]\label{eq:expcomploglike}\\
+= & \sum_{m=1}^{M}\mathbb{E}_{x\sim\rho_{X\mid\pi_{n},z_{m}}}\left[\log\left(\rho_{X\mid\pi}\left(x\right)\rho_{Z\mid x}\left(z_{m}\right)\right)\right].\nonumber \\
 \nonumber 
 \end{align}
 
@@ -2789,12 +2788,7 @@ Q\left(\pi\mid\pi_{n}\right):= & \mathbb{E}_{\bm{C}}\left[\log\left(L^{c}\left(\
 \end_layout
 
 \begin_layout Standard
-where 
-\begin_inset Formula $\bm{C}=\left(\tilde{x}_{m}\overset{\text{}}{\sim}\rho_{X\mid\pi_{n},z_{m}}\right)_{m=1}^{M}$
-\end_inset
-
-.
- The second step follows from the insight that after exchanging integration
+The second step follows from the insight that after exchanging integration
  and summation each 
 \begin_inset Formula $\log$
 \end_inset
@@ -3849,7 +3843,7 @@ Sampling
 We will now compute the individual posterior samples
 \begin_inset Formula 
 \[
-\left(x_{i}^{m}\right)\sim\rho_{x\mid z^{m}}L\left(\theta\mid z\right)\rho_{z}^{0}\left(z\right)
+\left(x_{i}^{m}\right)_{i=1}^{N}\overset{\text{i.i.d}}{\sim}\rho_{x\mid z^{m}}L\left(\theta\mid z\right)\rho_{z}^{0}\left(z\right)
 \]
 
 \end_inset
