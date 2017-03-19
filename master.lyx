@@ -1052,6 +1052,12 @@ Since this likelihood, in contrast to the basic Bayesian model above, does
 \end_layout
 
 \begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:defL"
+
+\end_inset
+
 For finite data 
 \begin_inset Formula $\bm{z}^{M}=\left(z_{m}\in\mathcal{Z}\right)_{m=1,...,M}$
 \end_inset
@@ -1062,9 +1068,9 @@ For finite data
 
  as
 \begin_inset Formula 
-\[
-L\left(\pi\mid\bm{z}^{M}\right):=\prod_{m=1}^{M}\rho_{Z\mid\pi}\left(z_{m}\right)
-\]
+\begin{equation}
+L\left(\pi\mid\bm{z}^{M}\right):=\prod_{m=1}^{M}\rho_{Z\mid\pi}\left(z_{m}\right)\label{eq:defL}
+\end{equation}
 
 \end_inset
 
@@ -1118,6 +1124,12 @@ infinite data
 \end_layout
 
 \begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:Linf"
+
+\end_inset
+
 Let 
 \begin_inset Formula $\rho_{Z}$
 \end_inset
@@ -1404,21 +1416,26 @@ Regularization via a penalization term
 \end_layout
 
 \begin_layout Standard
-For a given likelihood function 
-\begin_inset Formula $L$
+For this section, let us fix the data data 
+\begin_inset Formula $\bm{z}^{M}$
 \end_inset
 
- 
-\begin_inset Note Note
-status open
+ in Definition
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "def:defL"
 
-\begin_layout Plain Layout
-specify
+\end_inset
+
+, denoting 
+\begin_inset Formula $L\left(\pi\right):=L\left(\pi\mid\bm{z}^{M}\right)$
+\end_inset
+
+.
 \end_layout
 
-\end_inset
-
- and a 
+\begin_layout Definition
+For a given 
 \emph on
 roughness penalty 
 \emph default
@@ -1837,37 +1854,34 @@ name "lem:invariance"
 \end_inset
 
 Let 
-\begin_inset Formula $A$
+\begin_inset Formula $X$
 \end_inset
 
 , 
-\begin_inset Formula $B$
+\series bold
+
+\begin_inset Formula $Y$
 \end_inset
 
- as in Definition 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "def:mutinf"
 
-\end_inset
-
-, and 
-\begin_inset Formula $\varphi^{-1}:\,\mathcal{A}\rightarrow\tilde{\mathcal{A}}$
+\series default
+ be two random variables and 
+\begin_inset Formula $\varphi^{-1}:\,\mathcal{X}\rightarrow\tilde{\mathcal{X}}$
 \end_inset
 
 , 
-\begin_inset Formula $\psi^{-1}:\,\mathcal{B}\rightarrow\tilde{\mathcal{B}}$
+\begin_inset Formula $\psi^{-1}:\,\mathcal{Z}\rightarrow\tilde{\mathcal{Z}}$
 \end_inset
 
  be diffeomorphisms defining coordinate transformations and corresponding
  transformed random variables 
-\begin_inset Formula $\tilde{A},\,\tilde{B}$
+\begin_inset Formula $\tilde{X},\,\tilde{Z}$
 \end_inset
 
  with the densities
 \begin_inset Formula 
 \[
-\rho_{\tilde{A},\tilde{B}}\left(\tilde{a},\tilde{b}\right):=\rho_{A,B}\left(\varphi\left(\tilde{a}\right),\psi\left(\tilde{b}\right)\right)\left|D\varphi\left(\tilde{a}\right)\right|\left|D\psi\left(\tilde{b}\right)\right|
+\rho_{\tilde{X},\tilde{Z}}\left(\tilde{x},\tilde{z}\right):=\rho_{X,Z}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{z}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{z}\right)\right|
 \]
 
 \end_inset
@@ -1875,7 +1889,7 @@ reference "def:mutinf"
 
 \begin_inset Formula 
 \[
-\rho_{\tilde{A}}\left(\tilde{a}\right):=\rho_{A}\left(\varphi\left(\tilde{a}\right)\right)\left|D\varphi\left(\tilde{a}\right)\right|,\,\quad\rho_{\tilde{B}}\left(\tilde{b}\right):=\rho_{B}\left(\psi\left(\tilde{b}\right)\right)\left|D\psi\left(\tilde{b}\right)\right|.
+\rho_{\tilde{X}}\left(\tilde{x}\right):=\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|,\,\quad\rho_{\tilde{Z}}\left(\tilde{z}\right):=\rho_{Z}\left(\psi\left(\tilde{z}\right)\right)\left|D\psi\left(\tilde{z}\right)\right|.
 \]
 
 \end_inset
@@ -1883,23 +1897,40 @@ reference "def:mutinf"
 
 \end_layout
 
-\begin_layout Enumerate
-The mutual information 
-\begin_inset Formula $\mathcal{I}\left(A;B\right)$
+\begin_layout Lemma
+Let 
+\begin_inset Formula $\tilde{\pi}\left(\tilde{x}\right):=\pi\left(\varphi\left(\tilde{x}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|$
 \end_inset
 
- is then invariant under these coordinate transformations of 
-\begin_inset Formula $\mathcal{A}$
+ define the corresponding pullback onto 
+\begin_inset Formula $\pi$
 \end_inset
 
  and 
-\begin_inset Formula $\mathcal{B}$
+\begin_inset Formula $\tilde{\bm{z}}^{M}:=\left(\tilde{z}_{m}\right)_{m=1}^{M},\,\tilde{z}_{m}=\psi^{-1}\left(z_{m}\right),\,m=1,...,M$
+\end_inset
+
+ the transformed data.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The mutual information 
+\begin_inset Formula $\mathcal{I}\left(X;Z\right)$
+\end_inset
+
+ is invariant under these coordinate transformations of 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{Z}$
 \end_inset
 
 :
 \begin_inset Formula 
 \[
-\mathcal{I}\left(A;B\right)=\mathcal{I}(\tilde{A};\tilde{B}).
+\mathcal{I}\left(X;Z\right)=\mathcal{I}(\tilde{X};\tilde{Z}).
 \]
 
 \end_inset
@@ -1908,6 +1939,30 @@ The mutual information
 \end_layout
 
 \begin_layout Enumerate
+The likelihood 
+\begin_inset Formula $L\left(\pi\mid\bm{z}^{M}\right)$
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:defL"
+
+\end_inset
+
+ is invariant under these coordinate transformations up to a constant factor
+ 
+\begin_inset Formula $c=\prod_{m=1}^{M}\left|D\psi\left(\tilde{\bm{z}}_{m}\right)\right|$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+L\left(\pi\mid\bm{z}^{M}\right)=cL\left(\tilde{\pi}\mid\tilde{\bm{z}}^{M}\right)
+\]
+
+\end_inset
+
 
 \end_layout
 
@@ -1915,11 +1970,17 @@ The mutual information
 According to the change of variables formula 
 \begin_inset Formula 
 \begin{align*}
- & \ \mathcal{I}\left(A;B\right)\\
-= & \int_{\mathcal{B}}\int_{\mathcal{A}}\rho_{A,B}\left(a,b\right)\log\left(\frac{\rho_{A,B}\left(a,b\right)}{\rho_{A}\left(a\right)\rho_{B}\left(b\right)}\right)\mathrm{d}a\mathrm{d}b.\\
-= & \int_{\mathcal{\tilde{B}}}\int_{\tilde{A}}\rho_{A,B}\left(\varphi\left(\tilde{a}\right),\psi\left(\tilde{b}\right)\right)\log\left(\frac{\rho_{A,B}\left(\varphi\left(\tilde{a}\right),\psi\left(\tilde{b}\right)\right)}{\rho_{A}\left(\varphi\left(\tilde{a}\right)\right)\rho_{B}\left(\psi\left(\tilde{b}\right)\right)}\right)\left|D\varphi\left(\tilde{a}\right)\right|\left|D\psi\left(\tilde{b}\right)\right|\mathrm{d}\tilde{a}\mathrm{d}\tilde{b}\\
-= & \int_{\mathcal{\tilde{B}}}\int_{\tilde{A}}\rho_{\tilde{A},\tilde{B}}\left(\tilde{a},\tilde{b}\right)\log\left(\frac{\rho_{\tilde{A},\tilde{B}}\left(\tilde{a},\tilde{b}\right)}{\rho_{\tilde{A}}\left(\tilde{a}\right)\rho_{\tilde{B}}\left(\tilde{b}\right)}\right)\mathrm{d}\tilde{a}\mathrm{d}\tilde{b}\\
-= & \ \mathcal{I}(\tilde{A};\tilde{B})
+ & \ \mathcal{I}\left(X;Z\right)\\
+= & \int_{\mathcal{Z}}\int_{\mathcal{X}}\rho_{X,Z}\left(x,z\right)\log\left(\frac{\rho_{X,Z}\left(x,z\right)}{\rho_{X}\left(x\right)\rho_{z}\left(z\right)}\right)\mathrm{d}x\mathrm{d}z.\\
+= & \int_{\mathcal{\tilde{Z}}}\int_{\tilde{X}}\rho_{X,Z}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{z}\right)\right)\log\left(\frac{\rho_{X,Z}\left(\varphi\left(\tilde{x}\right),\psi\left(\tilde{z}\right)\right)}{\rho_{X}\left(\varphi\left(\tilde{x}\right)\right)\rho_{Z}\left(\psi\left(\tilde{z}\right)\right)}\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{z}\right)\right|\mathrm{d}\tilde{x}\mathrm{d}\tilde{z}\\
+= & \int_{\mathcal{\tilde{Z}}}\int_{\tilde{X}}\rho_{\tilde{X},\tilde{Z}}\left(\tilde{x},\tilde{z}\right)\log\left(\frac{\rho_{\tilde{X},\tilde{Z}}\left(\tilde{x},\tilde{z}\right)}{\rho_{\tilde{X}}\left(\tilde{x}\right)\rho_{\tilde{Z}}\left(\tilde{z}\right)}\right)\mathrm{d}\tilde{x}\mathrm{d}\tilde{z}\\
+= & \ \mathcal{I}(\tilde{X};\tilde{Z}).\\
+\text{Analogously}\\
+ & L\left(\pi\mid\bm{z}^{M}\right)\\
+= & \prod_{m=1}^{M}\int_{\mathcal{X}}\rho_{Z\mid x}\left(z_{m}\right)\pi\left(x\right)\mathrm{d}x\\
+= & \prod_{m=1}^{M}\int_{\mathcal{X}}\rho_{Z\mid\tilde{x}}\left(\tilde{z}_{m}\right)\pi\left(\varphi\left(\tilde{x}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{\bm{z}}_{m}\right)\right|\mathrm{d}\tilde{x}\\
+= & \prod_{m=1}^{M}\left|D\psi\left(\tilde{\bm{z}}_{m}\right)\right|\int_{\mathcal{X}}\rho_{Z\mid\tilde{x}}\left(\tilde{z_{m}}\right)\tilde{\pi}\left(\tilde{x}\right)\mathrm{d}\tilde{x}\\
+= & cL\left(\tilde{\pi}\mid\tilde{\bm{z}}^{M}\right).\\
 \end{align*}
 
 \end_inset
@@ -1958,7 +2019,7 @@ reference "eq:ipen"
 \begin_inset Formula $\mathcal{Y}$
 \end_inset
 
- similar as specified in Lemma 
+ as specified in Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:invariance"
@@ -1969,7 +2030,13 @@ reference "lem:invariance"
 \end_layout
 
 \begin_layout Proof
-Whilst invariance 
+This follow immediately from the above Lemma, recognizing that the multiplicativ
+e constant turns into an additive shift due to the logarithm, which does
+ not change the 
+\begin_inset Formula $\arg\max$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2015,7 +2082,7 @@ Z-entropy
  and the information penalty coincide:
 \begin_inset Formula 
 \[
-\pi_{\phi_{I}^{\gamma}}=\pi_{\phi_{H_{Z}}^{\gamma}}.
+\pi_{\phi_{H_{Z}}^{\gamma}}=\pi_{\phi_{I}^{\gamma}}.
 \]
 
 \end_inset
@@ -2035,7 +2102,7 @@ In the case of additive measurement error
 
 \begin_inset Formula 
 \[
-\rho_{Z\mid x}\left(z\right)=\rho_{E}\left(z-G\left(x\right)\right)
+\rho_{Z\mid x}\left(z\right)=\rho_{E}\left(z-\Phi\left(x\right)\right)
 \]
 
 \end_inset
@@ -2075,7 +2142,7 @@ For the mentioned additive error model and discrete parameter space
 \begin_inset CommandInset citation
 LatexCommand cite
 after "3.1"
-key "theo1"
+key "klebanov2016theory"
 
 \end_inset
 
@@ -2113,8 +2180,15 @@ In the case of no data
 \begin_inset Formula $\bm{z}^{M}$
 \end_inset
 
- the likelihood term of 
+ the log-likelihood term of 
 \begin_inset Formula $\pi_{\phi_{I}^{\gamma}}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mple"
+
 \end_inset
 
  vanishes.
@@ -2127,7 +2201,8 @@ key "berger2009formal"
 
  by Beger et al.
  Therefore this estimation routine can be seen as an extension of reference
- priors from a noninformative to a cohort-data based empirical Bayes approach.
+ priors from a purely non-informative to a cohort-data based empirical Bayes
+ approach.
 \end_layout
 
 \begin_layout Standard
@@ -2142,19 +2217,31 @@ It can be shown that the information penalty is convex in
 \begin_inset Formula $\pi$
 \end_inset
 
-, with strict convexity in the identifiable case.
- Together with convexity of the likelihood function 
+, with strict convexity in the identifiable case, as well as that the likelihood
+ function 
 \begin_inset Formula $L$
 \end_inset
 
-, the MPLE 
+ is convex
+\begin_inset CommandInset citation
+LatexCommand cite
+key "klebanov2016theory"
+
+\end_inset
+
+.
+ The MPLE 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:mple"
 
 \end_inset
 
- becomes a concave optimization problem.
+ becomes a concave optimization problem for 
+\begin_inset Formula $\phi=\phi_{I}^{\gamma}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -2204,7 +2291,12 @@ Let
 \begin_inset Formula $K:\mathcal{Z}\rightarrow\mathbb{R}$
 \end_inset
 
- be a kernel density function and 
+ be a kernel density function (i.e.
+ 
+\begin_inset Formula $K\ge0,\,\int_{\mathcal{Z}}K\left(z\right)\mathrm{d}z=1$
+\end_inset
+
+) and 
 \begin_inset Formula $\bm{z}^{M}=\left(z_{m}\overset{i.i.d.}{\sim}\rho_{Z}\right)_{m=1}^{M}$
 \end_inset
 
@@ -2212,6 +2304,7 @@ Let
 \begin_inset Formula $M$
 \end_inset
 
+ indep.
  measurements.
  The 
 \emph on
@@ -2234,26 +2327,35 @@ Note that when smoothing the data we also have to smooth the model (hence
 \emph on
 doubly smoothed
 \emph default
-) to amount for the additional uncertainty in the data and stay consistent:
-\begin_inset Formula 
-\[
-\tilde{\rho}_{\bm{z}^{M}}\overset{M\rightarrow\infty}{\longrightarrow}\rho_{Z}*K=\tilde{\rho}_{Z\mid\pi^{*}}\ne\rho_{Z\mid\pi^{*}},
-\]
+) to amount for the additional uncertainty in the data and stay consistent.
+\end_layout
 
-\end_inset
-
- where 
+\begin_layout Definition
+That is in the identifiable case with data-generating prior 
 \begin_inset Formula $\pi^{*}$
 \end_inset
 
- is the data-generating prior as in Proposition 
+ (c.f.
+ Proposition 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "prop:identifiable"
 
 \end_inset
 
-.
+) we want
+\begin_inset Formula 
+\[
+\tilde{\rho}_{\bm{z}^{M}}\overset{M\rightarrow\infty}{\longrightarrow}\rho_{Z}*K=:\tilde{\rho}_{Z\mid\pi^{*}}\ne\rho_{Z\mid\pi^{*}},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+to hold.
 \end_layout
 
 \begin_layout Definition
@@ -2264,7 +2366,7 @@ smoothed likelihood model
  is given by
 \begin_inset Formula 
 \begin{align*}
-\tilde{\rho}_{Z\mid x} & =\rho_{Z,x}*K\\
+\tilde{\rho}_{Z\mid x} & =\rho_{Z\mid x}*K\\
 \Rightarrow\tilde{\rho}_{Z\mid\pi} & =\rho_{Z\mid\pi}*K
 \end{align*}
 
@@ -2277,13 +2379,28 @@ smoothed likelihood model
 The resulting DS-MLE then takes the form
 \begin_inset Formula 
 \[
-\pi_{DS}:=\underset{\pi\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}\mathcal{L}^{\infty}\left(\pi\mid\tilde{\rho}_{\bm{z}^{M}}\right)
+\pi_{DS}:=\underset{\pi\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}\mathcal{\tilde{L}}^{\infty}\left(\pi\mid\tilde{\rho}_{\bm{z}^{M}}\right),
 \]
 
 \end_inset
 
- and is proved to be consistent under weak assumptions on the kernel and
- likelihood model (c.f.
+ with 
+\begin_inset Formula $\tilde{\mathcal{L}}$
+\end_inset
+
+ as in Definition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "def:defL"
+
+\end_inset
+
+ with adjusted likelihood.
+\end_layout
+
+\begin_layout Definition
+This estimator is proven to be consistent under weak assumptions on the
+ kernel and likelihood model (c.f.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2321,7 +2438,7 @@ Monte Carlo approximations
 
 \begin_layout Standard
 Since the arising integrals are in general not tractable analytically, we
- will make use of sample based discretization of the continious spaces 
+ will make use of sample based discretization of the continuous spaces 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
@@ -2372,7 +2489,7 @@ In the case of the parameter space
 \end_inset
 
  distributed according to some density 
-\begin_inset Formula $x_{i}\sim\rho_{X}$
+\begin_inset Formula $x_{i}\sim\rho_{A}$
 \end_inset
 
  
@@ -2387,7 +2504,7 @@ nicht p_X
 
 .
  We can now approximate any other density distribution 
-\begin_inset Formula $\rho_{Y}$
+\begin_inset Formula $\rho_{B}$
 \end_inset
 
  on 
@@ -2399,13 +2516,13 @@ nicht p_X
 \end_inset
 
  such that 
-\begin_inset Formula $w_{i}\propto\frac{\rho_{Y}\left(x_{i}\right)}{\rho_{X}\left(x_{i}\right)}.$
+\begin_inset Formula $w_{i}\propto\frac{\rho_{B}\left(x_{i}\right)}{\rho_{A}\left(x_{i}\right)}.$
 \end_inset
 
  We then have
 \begin_inset Formula 
 \[
-\rho_{Y}\approx\sum_{k=1}^{K}w_{k}\delta_{x_{k}}.
+\rho_{B}\approx\sum_{k=1}^{K}w_{k}\delta_{x_{k}}.
 \]
 
 \end_inset
@@ -2414,18 +2531,18 @@ nicht p_X
 \end_layout
 
 \begin_layout Standard
-Approximating any prior 
+Let us express the prior 
 \begin_inset Formula $\pi$
 \end_inset
 
  in terms of its weights 
-\begin_inset Formula $w_{k},$
+\begin_inset Formula $\bm{w},$
 \end_inset
 
 
 \begin_inset Formula 
 \begin{equation}
-\pi\approx\rho_{X\mid w}:=\sum_{k=1}^{K}w_{k}\delta_{x_{k}},\label{eq:priorapprox}
+\pi\approx\rho_{X\mid w}:=\sum_{k=1}^{K}w_{k}\delta_{x_{k}}.\label{eq:priorapprox}
 \end{equation}
 
 \end_inset
@@ -2434,11 +2551,32 @@ Approximating any prior
 \end_layout
 
 \begin_layout Standard
-the prior predictive distribution can be approximated by
+We can now approximate the expectation value of any measurable function
+ 
+\begin_inset Formula $g$
+\end_inset
+
+ under 
+\begin_inset Formula $\pi$
+\end_inset
+
+ via 
+\begin_inset Formula 
+\[
+\mathbb{E}_{x\sim\pi}\left[g\left(x\right)\right]=\int_{\mathcal{X}}g\left(x\right)\pi\left(x\right)\mathrm{d}x\approx\sum_{k=1}^{K}w_{k}g\left(x_{k}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the prior predictive distribution this leads to
 \begin_inset Formula 
 \begin{align*}
 \rho_{Z\mid\pi}\left(z\right) & =\int_{\mathcal{X}}\rho_{Z\mid x}\left(z\right)\pi\left(x\right)\mathrm{d}x\\
-\approx\rho_{Z\mid w}\left(z\right) & :=\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z\right).
+\approx\rho_{Z\mid\bm{w}}\left(z\right) & :=\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z\right).
 \end{align*}
 
 \end_inset
@@ -2447,7 +2585,7 @@ the prior predictive distribution can be approximated by
 \end_layout
 
 \begin_layout Standard
-Inserting this into the marginal likelihood leads to
+Inserting this into the marginal likelihood yields
 \begin_inset Formula 
 \[
 L\left(\pi\mid\bm{z}^{M}\right)\approx L\left(\bm{w}\mid\bm{z}^{M}\right):=\prod_{m=1}^{M}\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z_{m}\right).
@@ -2533,29 +2671,8 @@ The Monte Carlo approximation to the
 -entropy then takes the form
 \begin_inset Formula 
 \begin{align*}
-H\left(Z\mid\pi\right) & \approx H\left(Z\mid\bm{w}\right):=-\gamma\sum_{j=1}^{\bar{K}}\bar{w}_{j}\log\left(\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)\right).
+H\left(Z\mid\pi\right) & \approx H\left(Z\mid\bm{w}\right):=-\sum_{j=1}^{\bar{K}}\bar{w}_{j}\log\left(\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)\right).
 \end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-We can furthermore approximate the expectation value of any measurable function
- 
-\begin_inset Formula $g$
-\end_inset
-
- under 
-\begin_inset Formula $\pi$
-\end_inset
-
- via 
-\begin_inset Formula 
-\[
-\mathbb{E}_{x\sim\pi}\left[g\left(x\right)\right]=\int_{\mathcal{X}}g\left(x\right)\pi\left(x\right)\mathrm{d}x\approx\sum_{k=1}^{K}w_{k}g\left(x_{k}\right).
-\]
 
 \end_inset
 
@@ -2567,11 +2684,7 @@ EM algorithm
 \end_layout
 
 \begin_layout Standard
-We will now show 
-\end_layout
-
-\begin_layout Standard
-We will now show how to apply the well known 
+We will first show how to apply the well known 
 \emph on
 Expectation Maximization 
 \emph default
@@ -2621,7 +2734,7 @@ the likelihood of a specific prior represented by
 \begin_inset Formula $\tilde{\bm{z}}=\left(\tilde{z}_{m}\right)_{m=1}^{M}$
 \end_inset
 
- as well as the parameters 
+ with corresponding the parameters 
 \begin_inset Formula $\tilde{\bm{x}}=\left(\tilde{x}_{m}\right)_{m=1}^{M}$
 \end_inset
 
@@ -2664,8 +2777,8 @@ of
 
 \begin_inset Formula 
 \begin{align}
-Q\left(\pi\mid\pi_{n}\right):= & \mathbb{E}_{\bm{X}_{n}}\left[\log\left(L^{c}\left(\bm{X},\bm{z}^{M}\mid\pi\right)\right)\right],\nonumber \\
-= & \mathbb{E}_{\bm{X}_{n}}\left[\sum_{m=1}^{m}\log\left(\rho_{X\mid\pi}\left(\tilde{x}_{m}\right)\rho_{Z\mid\pi}\left(z_{m}\right)\right)\right]\label{eq:expcomploglike}\\
+Q\left(\pi\mid\pi_{n}\right):= & \mathbb{E}_{\bm{C}}\left[\log\left(L^{c}\left(\bm{X},\bm{z}^{M}\mid\pi\right)\right)\right],\nonumber \\
+= & \mathbb{E}_{\bm{C}}\left[\sum_{m=1}^{m}\log\left(\rho_{X\mid\pi}\left(\tilde{x}_{m}\right)\rho_{Z\mid\pi}\left(z_{m}\right)\right)\right]\label{eq:expcomploglike}\\
 = & \sum_{m=1}^{M}\mathbb{E}_{x\sim\rho_{X\mid\pi_{n},z_{m}}}\left[\log\left(\rho_{X\mid\pi}\left(x\right)\rho_{Z\mid x}\left(z_{m}\right)\right)\right]\nonumber \\
 \nonumber 
 \end{align}
@@ -2677,7 +2790,7 @@ Q\left(\pi\mid\pi_{n}\right):= & \mathbb{E}_{\bm{X}_{n}}\left[\log\left(L^{c}\le
 
 \begin_layout Standard
 where 
-\begin_inset Formula $\bm{X}_{n}=\left(\tilde{x}_{m}\overset{\text{i.i.d.}}{\sim}\rho_{X\mid\pi_{n},z_{m}}\right)_{m=1}^{M}$
+\begin_inset Formula $\bm{C}=\left(\tilde{x}_{m}\overset{\text{}}{\sim}\rho_{X\mid\pi_{n},z_{m}}\right)_{m=1}^{M}$
 \end_inset
 
 .
@@ -3082,14 +3195,21 @@ transition probabilities
 
 \emph default
 , starting from the detailed balance condition 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
-\begin{align*}
- & P\left(x'\mid x\right)P\left(x\right) & = & P\left(x\mid x'\right)P\left(x'\right)\\
-\Leftrightarrow & \frac{P\left(x\right)}{P\left(x'\right)} & = & \frac{P\left(x\mid x'\right)}{P\left(x'\mid x\right)},
-\end{align*}
+\begin{alignat*}{2}
+ &  & P\left(x'\mid x\right)P\left(x\right) & =P\left(x\mid x'\right)P\left(x'\right)\\
+\Leftrightarrow\quad &  & \frac{P\left(x\right)}{P\left(x'\right)} & =\frac{P\left(x\mid x'\right)}{P\left(x'\mid x\right)}\\
+\end{alignat*}
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 which ensures the existence of a stationary distribution 
 \begin_inset Note Note
 status open
