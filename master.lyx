@@ -482,19 +482,25 @@ We start by laying out the basic formal tools in the Bayesian setting.
 \end_layout
 
 \begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:condprob"
+
+\end_inset
+
 Let 
-\begin_inset Formula $X$
+\begin_inset Formula $X:\Omega\rightarrow\mathcal{X}$
 \end_inset
 
  and 
-\begin_inset Formula $Y$
+\begin_inset Formula $Y:\Omega\rightarrow\mathcal{Y}$
 \end_inset
 
- denote continuous random variables and 
+ denote continuous random variables with joint probability density 
 \begin_inset Formula $\rho_{X,Y}\left(x,y\right)$
 \end_inset
 
- their joint probability density.
+.
  The 
 \emph on
 conditional probability
@@ -503,19 +509,24 @@ conditional probability
 \begin_inset Formula $Y$
 \end_inset
 
- given the value 
-\begin_inset Formula $x$
+ given the event 
+\begin_inset Formula $X=x$
 \end_inset
 
- for 
+ (i.e.
+ 
+\begin_inset Formula $\rho_{X}\left(x\right)>0$
+\end_inset
+
+) 
 \begin_inset Formula $X$
 \end_inset
 
- is
+ is defined as
 \begin_inset Formula 
-\[
-\rho_{Y\mid X}\left(y|x\right):=\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)},
-\]
+\begin{equation}
+\rho_{Y\mid X}\left(y|x\right):=\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{X}\left(x\right)},\label{eq:condprob}
+\end{equation}
 
 \end_inset
 
@@ -531,7 +542,8 @@ marginal density
 \begin_inset Formula $X$
 \end_inset
 
- defined as the joint density 
+, i.e.
+ the joint density 
 \begin_inset Formula $\rho\left(x,y\right)$
 \end_inset
 
@@ -541,8 +553,95 @@ marginal density
 
 :
 \begin_inset Formula 
+\begin{equation}
+\rho_{X}\left(x\right):=\int_{y}\rho\left(x,y\right)\mathrm{d}y.\label{eq:margdens}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Throughout this thesis, we will slightly abuse notation and not distinguish
+ between a probability distribution 
+\begin_inset Formula $X$
+\end_inset
+
+ and its density 
+\begin_inset Formula $\rho_{X}$
+\end_inset
+
+.
+ We will furthermore, whenever conditioning on an event 
+\begin_inset Formula $X=x$
+\end_inset
+
+ directly denote the condition in the subscript, i.e.
+\begin_inset Formula 
 \[
-\rho_{X}\left(x\right):=\int_{y}\rho\left(x,y\right)\mathrm{d}y.
+\rho_{Y\mid x}\left(y\right):=\rho_{Y\mid X}\left(y\mid x\right),
+\]
+
+\end_inset
+
+whenever the corresponding random variable is clear from the context.
+\end_layout
+
+\begin_layout Standard
+The above equations already imply the heart of Bayesian statistics, 
+\emph on
+Bayes' theorem:
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ be as above.
+ For all 
+\begin_inset Formula $y\in\mathcal{Y}$
+\end_inset
+
+, such that 
+\begin_inset Formula $\rho_{Y}\left(y\right)>0$
+\end_inset
+
+ holds: 
+\begin_inset Formula 
+\begin{equation}
+\rho_{X\mid y}\left(x\right)=\frac{\rho_{Y\mid x}\left(y\right)\rho_{X}\left(x\right)}{\rho_{Y}\left(y\right)}=\frac{\rho_{Y\mid x}\left(y\right)\rho_{X}\left(x\right)}{\int_{\mathcal{X}}\rho_{Y\mid x'}\left(y\right)\rho_{X}\left(x'\right)\mathrm{d}x'}.\label{eq:bayes}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+This follows by succesive insertsion of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:condprob"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:margdens"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\rho_{X\mid y}\left(x\right):\overset{\eqref{eq:condprob}}{=}\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{Y}\left(y\right)}\overset{\eqref{eq:condprob}}{=}\frac{\rho_{Y\mid x}\left(y\right)\rho_{X}\left(x\right)}{\rho_{Y}\left(y\right)}\overset{\eqref{eq:margdens}}{=}\frac{\rho_{Y\mid x}\left(y\right)\rho_{X}\left(x\right)}{\int_{\mathcal{X}}\rho_{Y\mid x'}\left(y\right)\rho_{X}\left(x'\right)\mathrm{d}x'}.
 \]
 
 \end_inset
@@ -551,33 +650,22 @@ marginal density
 \end_layout
 
 \begin_layout Standard
-Whenever the corresponding random variables are clear we will, by slight
- abuse of notation, directly denote the condition in the subscript, i.e.
-\begin_inset Formula 
-\[
-\rho_{Y\mid x}\left(y\right):=\rho_{Y\mid X}\left(y\mid x\right).
-\]
+This formula, obtained by succesive insertion of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:condprob"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Definition
-Succesive insertion of these identities leads to 
-\emph on
-Bayes' theorem
-\emph default
- in its probability density form:
-\begin_inset Formula 
-\begin{equation}
-\rho_{X\mid y}\left(x\right):=\frac{\rho_{X,Y}\left(x,y\right)}{\rho_{Y}\left(y\right)}=\frac{\rho_{Y\mid x}\left(y\right)\rho_{X}\left(x\right)}{\rho_{Y}\left(y\right)}=\frac{\rho_{Y\mid x}\left(y\right)\rho_{X}\left(x\right)}{\int_{\mathcal{X}}\rho_{Y\mid x'}\left(y\right)\rho_{X}\left(x'\right)\mathrm{d}x'}.\label{eq:bayes}
-\end{equation}
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:margdens"
 
 \end_inset
 
-This formula, constituting the heart of Bayesian statistics, tells us how
- to reconstruct the 
+, constitutes the heart of Bayesian statistics.
+ It tells us how to reconstruct the 
 \emph on
 posterior distribution
 \emph default
@@ -676,47 +764,76 @@ The likelihood model
 Our inference bases on the combination of a deterministic physical model,
  our description of the reality, with a stochastic measurement error and
  the formalism of Bayes'.
- The physical model is represented as a map 
+ 
+\end_layout
+
+\begin_layout Definition
+The
+\emph on
+ physical model
+\emph default
+ is a map 
 \begin_inset Formula $\Phi:\mathcal{X}\subseteq\mathbb{R}^{n}\rightarrow\mathcal{Y}\subseteq\mathbb{R}^{m}$
 \end_inset
 
-, mapping some parameter 
+, mapping some 
+\emph on
+parameter
+\emph default
+ 
 \begin_inset Formula $x\in\mathcal{X}$
 \end_inset
 
- to a resulting state 
+ to a resulting 
+\emph on
+state
+\emph default
+ 
 \begin_inset Formula $y\in\mathcal{Y}$
 \end_inset
 
 .
- We furthermore model the the data generating measurement process 
-\begin_inset Formula $Z$
+ The 
+\emph on
+parameters
+\emph default
+ 
+\begin_inset Formula $x\in\mathcal{X}$
 \end_inset
 
- as an independent Gaussian perturbation with prescribed covariance 
-\begin_inset Formula $\Sigma$
+ are distributed according to some prior 
+\begin_inset Formula $X:\Omega\rightarrow\mathcal{X}\sim\rho_{X}$
 \end_inset
 
- of that state:
-\begin_inset Formula 
-\begin{equation}
-\rho_{Z\mid X}\left(z\mid x\right)=\Phi\left(x\right)+E,\quad E\overset{}{\sim}\mathcal{N}\left(0,\Sigma\right)\label{eq:gaussmodel}
-\end{equation}
-
-\end_inset
-
-or slighty abusing notation 
-\begin_inset Formula 
-\[
-Z\mid X\sim\mathcal{N}\left(\Phi\left(X\right),\Sigma\right),
-\]
-
+, with 
+\begin_inset Formula $\rho_{X}\left(x\right)>0\forall x\in\mathcal{X}.$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Definition
+The data generating 
+\emph on
+measurement process
+\emph default
+ 
+\begin_inset Formula $Z:\Omega\rightarrow\mathcal{Z}\subseteq\mathbb{R}^{m}$
+\end_inset
+
+ is modeled as an independent Gaussian perturbation with prescribed covariance
+ 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ of the state conditioned on the parameter:
+\begin_inset Formula 
+\begin{equation}
+\rho_{Z\mid X}\left(z\mid x\right)=\Phi\left(x\right)+E,\quad E\overset{}{\sim}\mathcal{N}\left(0,\Sigma\right),\label{eq:gaussmodel}
+\end{equation}
+
+\end_inset
+
 where 
 \begin_inset Formula $\mathcal{\mathcal{N}}\left(y,\,\Sigma\right)$
 \end_inset
@@ -767,7 +884,7 @@ posterior
  
 \emph default
 given some measurement 
-\begin_inset Formula $z$
+\begin_inset Formula $z\in\mathcal{Z}$
 \end_inset
 
  by straightforward application of the Bayes' theorem 
@@ -780,36 +897,44 @@ reference "eq:bayes"
 .
 \end_layout
 
-\begin_layout Standard
-Note also that whilst this model is extensible to multiple measurements
- using the product of likelihoods as likelihood, this is only valid under
- the assumption of identically distributed likelihoods, which corresponds
- to the assumption that the same parameter 
-\begin_inset Formula $x$
+\begin_layout Remark
+Note that whilst this model is extensible to inference based on multiple
+ measurements 
+\begin_inset Formula $\bm{z}^{M}:=\left(z_{i}\overset{\text{i.i.d.}}{\sim}\rho_{Z\mid x}\left(x\right)\right)_{i=1}^{M}$
 \end_inset
 
- is underlying the different measurements.
- This would be the right model if all measurements result from the same
- realization of 
+ using the product-rule,
+\begin_inset Formula 
+\[
+\rho_{X\mid\bm{z}^{M}}\left(x\right)=\frac{\prod_{m=1}^{M}\rho_{Z\mid x}\left(z_{i}\right)\rho_{X}\left(x\right)}{\prod_{m=1}^{M}\rho_{Z}\left(z_{i}\right)}
+\]
+
+\end_inset
+
+the assumption of identically distributed 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ implies that they all depend on the same parameter 
+\begin_inset Formula $X=x$
+\end_inset
+
+.
+ This is the right inference if all measurements come from the same realization
+ of 
 \begin_inset Formula $X$
 \end_inset
 
- (the same subject), but is wrong assuming different measurements correspond
+, e.g.
+ the same subject, but is wrong assuming different measurements correspond
  to independent draws from the prior 
-\begin_inset Formula $X$
+\begin_inset Formula $\rho_{X}$
 \end_inset
 
- (multiple subjects).
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Ausfuehrlicher
-\end_layout
-
-\end_inset
-
-
+, e.g.
+ multiple subjects.
+ We will therefore proceed to a more general framework allowing for the
+ inference in the latter case.
 \end_layout
 
 \begin_layout Subsection
@@ -827,12 +952,12 @@ prior
 
  cannot be assumed to be known, a number of different methods have been
  established for estimating this prior based on empirical cohort data, giving
- rise to the so called 
+ rise to so=called 
 \emph on
 empirical Bayes methods.
  
 \emph default
-In that context we extend the model by conditioning the prior 
+In that context we extend the model by parametrizing the prior 
 \begin_inset Formula $\rho_{X}$
 \end_inset
 
@@ -840,8 +965,8 @@ In that context we extend the model by conditioning the prior
 \begin_inset Formula $\Pi$
 \end_inset
 
-, the prior of priors if one likes, resulting in the hierarchical model
- 
+, the prior on the set of priors if one likes, resulting in the hierarchical
+ model 
 \begin_inset Formula $\Pi\rightarrow X\rightarrow Z$
 \end_inset
 
@@ -859,9 +984,10 @@ Most literature confines itself to (finite dimensional) parametric empirical
 ons for the priors, e.g.
  
 \begin_inset Formula 
-\[
-\rho_{X|\pi}=\mathcal{N}\left(\pi,\,I\right),\,\pi\in\text{Im}\left(\Pi\right)=\mathbb{R}^{n},
-\]
+\begin{align*}
+ & \pi\in\Pi:\Omega\rightarrow=\mathbb{R}^{k},\\
+ & \rho_{X\mid\pi}\sim\mathcal{N}\left(\pi,\,I\right)
+\end{align*}
 
 \end_inset
 
@@ -876,17 +1002,19 @@ g regularization issues.
  arbitrary distributions as priors, i.e.
  
 \begin_inset Formula 
-\[
-\rho_{X\mid\pi}=\pi,\,\pi\in\text{Im}\left(\Pi\right)=\mathcal{M}_{1}\left(\mathcal{X}\right):=\left\{ \rho\in L^{1}\left(\mathcal{X}\right)\mid\rho\ge0,\,\left\Vert \rho\right\Vert _{L^{1}}=1\right\} ,
-\]
+\begin{align*}
+ & ,\\
+ & \Pi:\Omega\rightarrow\mathcal{M}_{1}\left(\mathcal{X}\right):=\left\{ \rho\in L^{1}\left(\mathcal{X}\right)\mid\rho\ge0,\,\left\Vert \rho\right\Vert _{L^{1}}=1\right\} ,\\
+ & \rho_{X\mid\pi}\left(x\right)=\pi\left(x\right)
+\end{align*}
 
 \end_inset
 
-resulting in a 
+resulting in 
 \emph on
 nonparametric empirical Bayes 
 \emph default
-method.
+methods.
 \end_layout
 
 \begin_layout Standard
@@ -924,7 +1052,7 @@ Since this likelihood, in contrast to the basic Bayesian model above, does
 \end_layout
 
 \begin_layout Definition
-For finite data/measurements 
+For finite data 
 \begin_inset Formula $\bm{z}^{M}=\left(z_{m}\in\mathcal{Z}\right)_{m=1,...,M}$
 \end_inset
 
@@ -944,7 +1072,7 @@ L\left(\pi\mid\bm{z}^{M}\right):=\prod_{m=1}^{M}\rho_{Z\mid\pi}\left(z_{m}\right
 \end_layout
 
 \begin_layout Definition
-or alternatively in its renomalized logarithmic form as 
+or alternatively in its renormalized logarithmic form as 
 \emph on
 finite data log-likelihood 
 \begin_inset Note Note
@@ -969,26 +1097,44 @@ do we need the log/normalization? call above L(pi|z)
 
 \end_layout
 
-\begin_layout Definition
-For 
+\begin_layout Standard
+In the case of 
 \begin_inset Quotes eld
 \end_inset
 
-infinite data/measurements
+infinite data
 \begin_inset Quotes erd
 \end_inset
 
-, represented in the form of a data-generating probability distribution
- 
+, represented by the probability density 
 \begin_inset Formula $\rho_{Z}$
 \end_inset
 
-, we define the corresponding 
-\emph on
-infinite data log-likelihood 
+ of the data-generating random variable 
+\begin_inset Formula $Z$
+\end_inset
+
+ we define analogously
 \end_layout
 
-\begin_layout Standard
+\begin_layout Definition
+Let 
+\begin_inset Formula $\rho_{Z}$
+\end_inset
+
+ be a probability density on 
+\begin_inset Formula $\mathcal{Z}$
+\end_inset
+
+.
+ The corresponding 
+\emph on
+infinite data log-likelihood 
+\emph default
+is defined as
+\end_layout
+
+\begin_layout Definition
 
 \emph on
 \begin_inset Formula 
@@ -1002,7 +1148,7 @@ infinite data log-likelihood
 \end_layout
 
 \begin_layout Standard
-The latter definition, also called the cross entropy between 
+This definition, also referred to as the cross entropy between 
 \begin_inset Formula $\rho_{Z}$
 \end_inset
 
@@ -1014,14 +1160,14 @@ The latter definition, also called the cross entropy between
 \begin_inset Formula $m\rightarrow\infty$
 \end_inset
 
- assuming that 
+ from the law of large numbers assuming that 
 \begin_inset Formula $\rho_{Z}$
 \end_inset
 
  is indeed the data generating distribution:
 \begin_inset Formula 
 \begin{equation}
-z_{m}\overset{i.i.d.}{\sim}\rho_{Z}\Rightarrow\mathcal{L}\left(\pi\mid\bm{z}^{M}\right)\overset{\text{p}}{\underset{M\rightarrow\infty}{\longrightarrow}}\mathcal{L}^{\infty}\left(\pi\mid\rho_{Z}\right).\label{eq:limit}
+z_{m}\overset{i.i.d.}{\sim}\rho_{Z}\Rightarrow\mathcal{L}\left(\pi\mid\bm{z}^{M}\right)\overset{\text{a.s.}}{\underset{M\rightarrow\infty}{\longrightarrow}}\mathcal{L}^{\infty}\left(\pi\mid\rho_{Z}\right).\label{eq:limit}
 \end{equation}
 
 \end_inset
@@ -1045,7 +1191,7 @@ true prior
 
  in the infinite data regime by maximizing the corresponding likelihood
  functional 
-\begin_inset Formula $L^{\infty}.$
+\begin_inset Formula $\mathcal{L}^{\infty}.$
 \end_inset
 
 
@@ -1064,9 +1210,13 @@ well specified
 \emph default
 , i.e.
  
+\begin_inset Formula $\exists\pi^{*}\in\mathcal{M}_{1}\left(\mathcal{X}\right)$
+\end_inset
+
+: 
 \begin_inset Formula 
 \[
-\exists\pi^{*}\in\mathcal{M}_{1}\left(\mathcal{X}\right):\,\rho_{Z}=\rho_{Z\mid\pi^{*}}
+\rho_{Z}=\rho_{Z\mid\pi^{*}}
 \]
 
 \end_inset
@@ -1083,18 +1233,31 @@ key "van2000asymptotic"
 
 \end_inset
 
+, i.e.
+ 
+\begin_inset Formula $\forall\pi\in\mathcal{M}_{1}:$
+\end_inset
 
+ 
 \begin_inset Formula 
 \[
-\rho_{Z\mid\pi^{'}}=\rho_{Z\mid\pi^{*}}\Rightarrow\pi'=\pi^{*}\quad\forall\pi'\in\mathcal{M}_{1}.
+\rho_{Z\mid\pi}=\rho_{Z\mid\pi^{*}}\Rightarrow\pi=\pi^{*}.
 \]
 
 \end_inset
 
-We then have that
+Then 
+\begin_inset Formula $\pi^{*}$
+\end_inset
+
+ is the unique maximizer of 
+\begin_inset Formula $\mathcal{L}^{\infty}$
+\end_inset
+
+
 \begin_inset Formula 
 \[
-\pi^{*}=\underset{\pi'\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}L^{\infty}\left(\pi'\right).
+\pi^{*}=\underset{\pi\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}\mathcal{L}^{\infty}\left(\pi\right).
 \]
 
 \end_inset
@@ -1120,31 +1283,36 @@ for any probability density
 \end_inset
 
 .
- The rest follows from the assumptions.
+ The claim follows from the assumptions.
 \end_layout
 
 \begin_layout Standard
-Both of the assumptions arise rather naturally; if the model is not well
- specified this merely means the measured data 
+Both assumptions arise rather naturally.
+ If the model is not well specified this merely means the measured data
+ 
 \begin_inset Formula $\rho_{Z}$
 \end_inset
 
  cannot be explained by any prior, thus resulting in an ill-posed problem.
  If on the other hand the model is not identifiable, which by definition
  corresponds to the injectivity of the marginal likelihood function 
-\begin_inset Formula $\rho_{Z}$
+\begin_inset Formula $\rho_{Z\mid\pi}$
+\end_inset
+
+ as a function of 
+\begin_inset Formula $\pi$
 \end_inset
 
 , there exists another 
 \begin_inset Formula $\pi'\ne\pi^{*}$
 \end_inset
 
- inducing the same measurements so we cannot hope to recover the right prior
- candidate from the data.
+ inducing the same measurement distribution so we cannot hope to recover
+ the true prior from the data.
 \end_layout
 
 \begin_layout Standard
-The latter problem can be retracted though by lifting the inference problem
+The latter problem can be retracted through lifting the inference problem
  to equivalence classes of priors leading to the same measurements,
 \end_layout
 
@@ -1160,11 +1328,11 @@ The latter problem can be retracted though by lifting the inference problem
 \end_layout
 
 \begin_layout Standard
-which is all we can hope for.
+which, in the non-identifiable case, is all we can hope for.
 \end_layout
 
 \begin_layout Standard
-In practice though usually only finite data is available, and even though
+Though in practice usually only finite data is available, and even though
  the limiting property 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -1175,7 +1343,7 @@ reference "eq:limit"
  might give hope that the NPMLE estimate 
 \begin_inset Formula 
 \[
-\pi_{ML}:=\arg\underset{\pi'\in\mathcal{M}_{1}}{\max}\mathcal{L}\left(\pi\mid\bm{z}^{M}\right)
+\pi_{ML}:=\underset{\pi'\in\mathcal{M}_{1}\left(\mathcal{X}\right)}{\arg\max}\mathcal{L}\left(\pi\mid\bm{z}^{M}\right)
 \]
 
 \end_inset
@@ -1228,13 +1396,7 @@ maximum penalized likelihood estimation
 \emph on
 doubly smoothed maximum likelihood estimation 
 \emph default
-(DSMLE), lifting the problem from the finite to the infinite data regime
- by smoothing the measurements and thus approximating the continuous data-genera
-ting distribution 
-\begin_inset Formula $\rho_{Z}.$
-\end_inset
-
-
+(DS-MLE), based on applying NPMLE after smoothing the data.
 \end_layout
 
 \begin_layout Subsection
@@ -1265,18 +1427,18 @@ roughness penalty
 regularization term
 \emph default
 ) 
-\begin_inset Formula $\Phi:\mathcal{M}_{1}\rightarrow\mathbb{R}$
+\begin_inset Formula $\phi:\mathcal{M}_{1}\rightarrow\mathbb{R}$
 \end_inset
 
 , responsible for penalizing unsmooth or unwanted solutions with high values,
  the MPLE estimate 
-\begin_inset Formula $\pi_{\Phi}$
+\begin_inset Formula $\pi_{\phi}$
 \end_inset
 
  admits the form 
 \begin_inset Formula 
 \begin{equation}
-\pi_{\Phi}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right).\label{eq:mple}
+\pi_{\phi}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\phi\left(\pi\right).\label{eq:mple}
 \end{equation}
 
 \end_inset
@@ -1287,15 +1449,19 @@ regularization term
 \begin_layout Standard
 This approach also allows for an interpretation in the context of the Bayesian
  hyperparametric model by identifying the penalty 
-\begin_inset Formula $\Phi$
+\begin_inset Formula $\phi$
 \end_inset
 
  with the hyperprior 
+\begin_inset Formula $\rho_{\Pi}$
+\end_inset
+
+ on 
 \begin_inset Formula $\Pi$
 \end_inset
 
  via 
-\begin_inset Formula $\rho_{\Pi}\propto e^{-\Phi}$
+\begin_inset Formula $\rho_{\Pi}\propto e^{-\phi}$
 \end_inset
 
 .
@@ -1306,7 +1472,7 @@ This approach also allows for an interpretation in the context of the Bayesian
  is then 
 \begin_inset Formula 
 \[
-\rho_{\Pi\mid Z}\propto L\left(\pi\right)e^{-\Phi\left(\pi\right)}
+\rho_{\Pi\mid Z}\propto L\left(\pi\right)e^{-\phi\left(\pi\right)}
 \]
 
 \end_inset
@@ -1322,7 +1488,7 @@ estimate
  for the hyperparametric model corresponds to the MPLE estimate:
 \begin_inset Formula 
 \[
-\pi_{MAP}=\underset{\pi}{\arg\max}\,L\left(\pi\right)e^{-\Phi\left(\pi\right)}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\Phi\left(\pi\right)=\pi_{\Phi}.
+\pi_{MAP}=\underset{\pi}{\arg\max}\,L\left(\pi\right)e^{-\phi\left(\pi\right)}=\underset{\pi}{\arg\max}\log L\left(\pi\right)-\phi\left(\pi\right)=\pi_{\phi}.
 \]
 
 \end_inset
@@ -1378,7 +1544,7 @@ key "good1963maximum"
  suggested the use of the differential entropy for the penalty
 \begin_inset Formula 
 \[
-\Phi_{H_{X}}\left(\pi\right):=\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\log\rho_{X\mid\pi}\left(x\right)\mathrm{d}x,
+\phi_{H_{X}}\left(\pi\right):=\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\log\rho_{X\mid\pi}\left(x\right)\mathrm{d}x,
 \]
 
 \end_inset
@@ -1393,7 +1559,7 @@ key "good1963maximum"
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
- due to the log-nonlinearity.
+.
  This means that if two scientists estimate the prior using equivalent models,
  using different systems of units, they could end up with different estimates.
  Hence this penalty does not rectify the problem of subjectivity in the
@@ -1561,7 +1727,7 @@ relative entropy
 \begin_inset Formula $B$
 \end_inset
 
- as a approximation to 
+ as an approximation to 
 \begin_inset Formula $A$
 \end_inset
 
@@ -1578,7 +1744,7 @@ relative entropy
 \end_layout
 
 \begin_layout Standard
-In this form the mutual information of 
+Hence the mutual information of 
 \begin_inset Formula $A$
 \end_inset
 
@@ -1611,7 +1777,7 @@ For
  
 \begin_inset Formula 
 \begin{eqnarray}
-\Phi_{I}^{\gamma}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\mid\pi\right)\nonumber \\
+\phi_{I}^{\gamma}\left(\pi\right): & = & -\gamma\mathcal{I}\left(X\mid\pi;Z\mid\pi\right)\nonumber \\
  & = & -\gamma\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)\int_{\mathcal{Z}}\rho_{Z\mid x}\left(z\right)\log\left(\frac{\rho_{Z\mid x}\left(z\right)}{\rho_{Z\mid\pi}\left(z\right)}\right)\mathrm{d}z\mathrm{dx}.\label{eq:ipen}
 \end{eqnarray}
 
@@ -1622,7 +1788,7 @@ For
 
 \begin_layout Standard
 Minimizing this penalty then corresponds to maximizing the amount of shared
- information between the prior-predictive distribution 
+ information between the prior prediction 
 \begin_inset Formula $Z\mid\pi$
 \end_inset
 
@@ -1638,7 +1804,7 @@ Minimizing this penalty then corresponds to maximizing the amount of shared
 \begin_inset Formula $X$
 \end_inset
 
- onto the events where 
+ onto the event 
 \begin_inset Formula $\Pi=\pi$
 \end_inset
 
@@ -1746,7 +1912,7 @@ According to the change of variables formula
 
 \begin_layout Corollary
 The maximum penalized likelihood estimator 
-\begin_inset Formula $\pi_{\Phi_{I}^{\gamma}}$
+\begin_inset Formula $\pi_{\phi_{I}^{\gamma}}$
 \end_inset
 
  
@@ -1757,7 +1923,7 @@ reference "eq:mple"
 \end_inset
 
  with the information penalty 
-\begin_inset Formula $\Phi_{I}^{\gamma}$
+\begin_inset Formula $\phi_{I}^{\gamma}$
 \end_inset
 
  
@@ -1810,7 +1976,7 @@ Z=G\left(X\right)+E
 \end_inset
 
 the MPLE estimate 
-\begin_inset Formula $\pi_{\Phi_{H_{Z}}^{\gamma}}$
+\begin_inset Formula $\pi_{\phi_{H_{Z}}^{\gamma}}$
 \end_inset
 
 , penalized by the 
@@ -1820,7 +1986,7 @@ Z-entropy
 
 \begin_inset Formula 
 \[
-\Phi_{H_{Z}}^{\gamma}\left(\pi\right):=-\gamma H\left(Z\mid\pi\right),
+\phi_{H_{Z}}^{\gamma}\left(\pi\right):=-\gamma H\left(Z\mid\pi\right),
 \]
 
 \end_inset
@@ -1828,7 +1994,7 @@ Z-entropy
  and the information penalty coincide:
 \begin_inset Formula 
 \[
-\pi_{\Phi_{I}^{\gamma}}=\pi_{\Phi_{H_{Z}}^{\gamma}}.
+\pi_{\phi_{I}^{\gamma}}=\pi_{\phi_{H_{Z}}^{\gamma}}.
 \]
 
 \end_inset
@@ -1867,10 +2033,10 @@ Hence the conditional entropy part is constant and both penalties agree
  up to an additive constant
 \begin_inset Formula 
 \begin{align*}
-\Phi_{I}^{\gamma}\left(\pi\right) & =-\gamma\left(H\left(Z\mid\pi\right)-H\left(Z;X\mid\pi\right)\right)\\
+\phi_{I}^{\gamma}\left(\pi\right) & =-\gamma\left(H\left(Z\mid\pi\right)-H\left(Z;X\mid\pi\right)\right)\\
  & =-\gamma\left(H\left(Z\mid\pi\right)-\int_{\mathcal{X}}\rho_{X\mid\pi}\left(x\right)H\left(Z\mid x\right)\mathrm{d}x\right)\\
  & =-\gamma\left(H\left(Z\mid\pi\right)+H\left(E\right)\right)\\
- & =\Phi_{H_{Z}}^{\gamma}+\gamma H\left(E\right).
+ & =\phi_{H_{Z}}^{\gamma}+\gamma H\left(E\right).
 \end{align*}
 
 \end_inset
@@ -1908,7 +2074,7 @@ key "theo1"
 .
  This derivation from a maximum entropy principle is a further justification
  for the choice of 
-\begin_inset Formula $\Phi_{H_{Z}}^{\gamma}$
+\begin_inset Formula $\phi_{H_{Z}}^{\gamma}$
 \end_inset
 
  as a meaningful penalty.
@@ -1927,7 +2093,7 @@ In the case of no data
 \end_inset
 
  the likelihood term of 
-\begin_inset Formula $\pi_{\Phi_{I}^{\gamma}}$
+\begin_inset Formula $\pi_{\phi_{I}^{\gamma}}$
 \end_inset
 
  vanishes.
@@ -2751,7 +2917,7 @@ In the case of additive the measurement error the Monte Carlo discretized
  version of the MPLE with the information penalty takes the form
 \begin_inset Formula 
 \begin{align*}
-w_{\Phi_{I}^{\gamma}} & =\arg\max_{\bm{w}\in\mathcal{W}}O\left(\bm{w}\right)\\
+w_{\phi_{I}^{\gamma}} & =\arg\max_{\bm{w}\in\mathcal{W}}O\left(\bm{w}\right)\\
 \end{align*}
 
 \end_inset
@@ -3734,7 +3900,7 @@ Note that these samples, which conform to the average density of the individual
  NPMLE, these points serve as a good basis for the importance sampling:
 \begin_inset Formula 
 \[
-\bm{x}\sim\psi\left(\pi_{0}\right)\approx\pi_{ML}\approx\pi_{\Phi_{I}^{\gamma}}.
+\bm{x}\sim\psi\left(\pi_{0}\right)\approx\pi_{ML}\approx\pi_{\phi_{I}^{\gamma}}.
 \]
 
 \end_inset
@@ -3836,7 +4002,7 @@ We will now compare the initial prior
 \end_inset
 
  and the information penalized MPLE 
-\begin_inset Formula $\pi_{\Phi_{I}^{\gamma}}$
+\begin_inset Formula $\pi_{\phi_{I}^{\gamma}}$
 \end_inset
 
 .
@@ -3917,7 +4083,7 @@ Conclusion
 
 \begin_layout Standard
 We have shown that the MPLE with the information penalty 
-\begin_inset Formula $\Phi_{I}^{\gamma}$
+\begin_inset Formula $\phi_{I}^{\gamma}$
 \end_inset
 
  is an attractive approach to the empirical Bayes method.
