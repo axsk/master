@@ -3619,11 +3619,11 @@ Our data consists of blood concentrations of follicle-stimulating hormone
  from 53 healthy women over thirty days, roughly every second day.
  This data was collected in the context of PAEON, a collaborative European
  research project on eHealth.
- Denote the set of measurements for a single patient 
+ Denote the set of measurements for a single subject 
 \begin_inset Formula $m$
 \end_inset
 
-
+ by
 \begin_inset Formula 
 \[
 z^{m}:=\left(z_{t,i}^{m}\right)_{\left(t,i\right)\in I_{z}^{m}}
@@ -3749,7 +3749,7 @@ We end up with the following likelihood function for the parameters
 \begin_inset Formula $x$
 \end_inset
 
- given a single person's data 
+ given a single measurement 
 \begin_inset Formula $z_{m}$
 \end_inset
 
@@ -3772,8 +3772,8 @@ This likelihood correctly reflects the amount of information available dependent
  on the number of measurements.
  A higher number of measurements results in sharper specified likelihood
  function.
- This will allow us to correctly treat different patients/measurements together
- in the upcoming empirical Bayes analysis.
+ This will allow us to correctly treat different measurements together in
+ the upcoming empirical Bayes analysis.
 \end_layout
 
 \begin_layout Standard
@@ -3912,7 +3912,7 @@ We will now compute the individual posterior samples
 
 \end_inset
 
-for each patient 
+for each subject 
 \begin_inset Formula $m$
 \end_inset
 
@@ -4017,7 +4017,7 @@ We computed
 \begin_inset Formula $\rho_{X\mid z^{m}}$
 \end_inset
 
- for each patient 
+ for each subject 
 \begin_inset Formula $m$
 \end_inset
 
@@ -4039,7 +4039,7 @@ key "gelman1992inference"
 
  and concluded convergence of a parameter if the potential scale reduction
  factors 0.975 quantiles were estimated below 1.2.
- This lead to on average 74 converged parameters (varying per patient).
+ This lead to on average 74 converged parameters (varying per subject).
  The Heidelberger and Welch diagnostic 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -4060,8 +4060,8 @@ Keeping in mind that many of the parameters are probably unidentifiable
 \begin_layout Remark
 Since the MCMC sampling, consuming most of the computational time of the
  here proposed prior estimation procedure, is easily parallelizable over
- the individual persons, the proposed scheme is well suited for the use
- in e.g.
+ the individual measurements, the proposed scheme is well suited for the
+ use in e.g.
  clinical studies, where lots of data is available (c.f.
  
 \begin_inset CommandInset citation
@@ -4963,7 +4963,7 @@ Config
 
 \end_inset
 
-Base-type managing the configuration for the MCMC sampling (patient data,
+Base-type managing the configuration for the MCMC sampling (measurement,
  measurement error, initial proposal variance for MCMC, adaptivity of MCMC,
  thinning, initial values and priors).
  For more information refer to 
