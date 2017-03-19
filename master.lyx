@@ -647,7 +647,7 @@ Let
 \end_layout
 
 \begin_layout Proof
-This follows by succesive insertsion of 
+This follows by successive insertion of 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:condprob"
@@ -673,7 +673,7 @@ reference "eq:margdens"
 \end_layout
 
 \begin_layout Standard
-This formula, obtained by succesive insertion of 
+This formula, obtained by successive insertion of 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:condprob"
@@ -845,7 +845,7 @@ measurement process
 \end_inset
 
  is modeled as an independent Gaussian perturbation with prescribed covariance
- 
+ matrix 
 \begin_inset Formula $\Sigma$
 \end_inset
 
@@ -877,7 +877,7 @@ This
 \emph on
 likelihood model 
 \emph default
-gives us the means to compute the probabilty of measuring a single measurement
+gives us the means to compute the probability of measuring a single measurement
  
 \begin_inset Formula $z$
 \end_inset
@@ -984,7 +984,7 @@ In that context we extend the model by parametrizing the prior
 \begin_inset Formula $\rho_{X}$
 \end_inset
 
- on a hyperparater 
+ on a hyperparameter 
 \begin_inset Formula $\Pi$
 \end_inset
 
@@ -1104,16 +1104,6 @@ L\left(\pi\mid\bm{z}^{M}\right):=\prod_{m=1}^{M}\rho_{Z\mid\pi}\left(z_{m}\right
 or alternatively in its renormalized logarithmic form as 
 \emph on
 finite data log-likelihood 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-do we need the log/normalization? call above L(pi|z)
-\end_layout
-
-\end_inset
-
-
 \emph default
 
 \begin_inset Formula 
@@ -1870,7 +1860,7 @@ ly induced measurements, hence encoding a notion of non-informativity.
 \begin_layout Standard
 Fortunately the mutual information is furthermore transformation invariant,
  thus allowing for the application of the mutual information penalty independent
- of the models parametrization:
+ of the models parameterization:
 \end_layout
 
 \begin_layout Lemma
@@ -2186,7 +2176,7 @@ key "klebanov2016theory"
 \end_inset
 
  of the whole model and furthermore conjecture this to hold as well for
- continious 
+ continuous 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
@@ -2230,7 +2220,7 @@ key "berger2009formal"
 
 \end_inset
 
- by Beger et al.
+ by Berger et al.
  Therefore this estimation routine can be seen as an extension of reference
  priors from a purely non-informative to a cohort-data based empirical Bayes
  approach.
@@ -2335,7 +2325,6 @@ Let
 \begin_inset Formula $M$
 \end_inset
 
- indep.
  measurements.
  The 
 \emph on
@@ -2521,16 +2510,6 @@ In the case of the parameter space
 
  distributed according to some density 
 \begin_inset Formula $x_{i}\sim\rho_{A}$
-\end_inset
-
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-nicht p_X
-\end_layout
-
 \end_inset
 
 .
@@ -2842,11 +2821,7 @@ The second step follows from the insight that after exchanging integration
 \begin_inset Formula $m$
 \end_inset
 
-'ths summand 
-\begin_inset Formula $\log$
-\end_inset
-
- term depends only on a single 
+'ths summand depends only on a single 
 \begin_inset Formula $x_{n,m}$
 \end_inset
 
@@ -2854,7 +2829,7 @@ The second step follows from the insight that after exchanging integration
 \begin_inset Formula $x_{n,m'}$
 \end_inset
 
-'s, 
+, 
 \begin_inset Formula $m'\ne m,$
 \end_inset
 
@@ -3184,8 +3159,8 @@ The quality of the Monte Carlo approximations greatly depends on the choice
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
-, its number of samples/gridpoints increases exponentially with the dimension
- of 
+, its number of grid points increases exponentially with the dimension of
+ 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
@@ -3404,7 +3379,7 @@ The fact that
 \end_layout
 
 \begin_layout Standard
-Hence we can use this Markov crocess to sample a Markov Chain according
+Hence we can use this Markov process to sample a Markov Chain according
  to the MH-MCMC algorithm:
 \end_layout
 
@@ -3459,7 +3434,7 @@ The speed of convergence to the stationary distribution is strongly influenced
 \end_layout
 
 \begin_layout Standard
-To circument the obstacle of choosing a proper proposal covariance we decided
+To circumvent the obstacle of choosing a proper proposal covariance we decided
  to use the adaptive Metropolis (AM) algorithm by Haario et.
  al 
 \begin_inset CommandInset citation
@@ -3557,7 +3532,7 @@ We will now discuss the application of the developed empirical Bayes method
 \end_inset
 
  by sampling from the individual Bayesian posteriors by means of MCMC sampling.
- We will then compute the MPMLE, MPLE and DS-MLE prior estimates and discuss
+ We will then compute the NPMLE, MPLE and DS-MLE prior estimates and discuss
  the results.
  
 \end_layout
@@ -3984,7 +3959,7 @@ However undergoing this transformation we also have to adjust the likelihood
 \end_layout
 
 \begin_layout Standard
-Chosing the initial value for the Markov chain according to our nominal
+Choosing the initial value for the Markov chain according to our nominal
  values 
 \end_layout
 
@@ -4004,7 +3979,7 @@ x_{0,116} & :=\log28.9,
 \begin_layout Standard
 we may hope to start in a region of high density which henceforth is already
  representative for the target density and thus expect a relatively short
- burnin phase.
+ burn-in phase.
 \end_layout
 
 \begin_layout Standard
@@ -4375,7 +4350,7 @@ Looking at the NPMLE (second row), we can observe, keeping in mind that
 \end_inset
 
 ).
- This expected behaviour can also be seen in the prior predictive density
+ This expected behavior can also be seen in the prior predictive density
  plot (middle), where the individual trajectories of the prior approximating
  the cohort-data are distinctly visible.
  The corresponding posterior exhibits a single peak (
@@ -4839,7 +4814,7 @@ hz(m,w), dhz(m,w), logl(m,w), dlogl(m,w)
 
 \end_inset
 
-Compute the loglikelihood, 
+Compute the log-likelihood, 
 \begin_inset Formula $\mathcal{Z}$
 \end_inset
 
