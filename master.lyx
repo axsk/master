@@ -9,6 +9,8 @@
 \DeclareMathOperator{\Ima}{Im}
 \usepackage{fancyhdr}
 \pagestyle{fancyplain}
+\usepackage[backend=bibtex,maxbibnames=4]{biblatex}
+\addbibresource{refs.bib}
 \fancyhf{}
 \end_preamble
 \use_default_options true
@@ -35,7 +37,7 @@ figs-within-sections
 \graphics default
 \default_output_format default
 \output_sync 0
-\bibtex_command default
+\bibtex_command bibtex
 \index_command default
 \paperfontsize default
 \spacing other 1.3
@@ -106,7 +108,17 @@ Master's Thesis
 \begin_inset VSpace 1cm*
 \end_inset
 
-An Empirical Bayes Method and its Application to a Systems Biology Model
+
+\shape default
+\size larger
+An Information-Theoretic Empirical Bayes Method 
+\begin_inset Newline newline
+\end_inset
+
+and its Application to a Systems Biology Model
+\shape up
+\size default
+
 \begin_inset VSpace 1.5cm*
 \end_inset
 
@@ -466,7 +478,18 @@ We conclude the section with a digression to Markov Chain Monte Carlo sampling
 \begin_layout Standard
 Finally we will apply the developed methods and algorithms to a high-dimensional
  model from systems biology and discuss the results in section 5.
- 
+\end_layout
+
+\begin_layout Standard
+The essence of this thesis, including the general presentation and lots
+ of the notation, originated in close relation to the articles 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "klebanov2016theory,klebanov2016sysmed"
+
+\end_inset
+
+, to which we hence refer for further reading.
 \end_layout
 
 \begin_layout Section
@@ -1523,7 +1546,7 @@ One now might might argue that we started with the question of finding the
 \end_layout
 
 \begin_layout Subsection
-An information theoretic penalty
+The mutual-information penalty
 \end_layout
 
 \begin_layout Standard
@@ -1618,7 +1641,11 @@ Let
 \end_inset
 
  their respective marginal densities.
- Their mutual information is defined as
+ Their 
+\emph on
+mutual information
+\emph default
+ is defined as
 \begin_inset Formula 
 \begin{align*}
 \mathcal{I}\left(A;B\right): & =\int_{\mathcal{A}}\int_{\mathcal{B}}\rho_{A,B}\left(a,b\right)\log\left(\frac{\rho_{A,B}\left(a,b\right)}{\rho_{A}\left(a\right)\rho_{B}\left(b\right)}\right)\mathrm{d}a\mathrm{d}b\\
@@ -1795,7 +1822,7 @@ For
 
  constant we define the
 \emph on
- information penalty
+ mutual information penalty
 \emph default
  
 \begin_inset Formula 
@@ -1842,7 +1869,7 @@ ly induced measurements, hence encoding a notion of non-informativity.
 
 \begin_layout Standard
 Fortunately the mutual information is furthermore transformation invariant,
- thus allowing for the application of the information penalty independent
+ thus allowing for the application of the mutual information penalty independent
  of the models parametrization:
 \end_layout
 
@@ -1906,7 +1933,11 @@ Let
 \begin_inset Formula $\pi$
 \end_inset
 
- and 
+ and
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Formula $\tilde{\bm{z}}^{M}:=\left(\tilde{z}_{m}\right)_{m=1}^{M},\,\tilde{z}_{m}=\psi^{-1}\left(z_{m}\right),\,m=1,...,M$
 \end_inset
 
@@ -2000,7 +2031,7 @@ reference "eq:mple"
 
 \end_inset
 
- with the information penalty 
+ with the mutual information penalty 
 \begin_inset Formula $\phi_{I}^{\gamma}$
 \end_inset
 
@@ -2079,7 +2110,7 @@ Z-entropy
 
 \end_inset
 
- and the information penalty coincide:
+ and the mutual information penalty coincide:
 \begin_inset Formula 
 \[
 \pi_{\phi_{H_{Z}}^{\gamma}}=\pi_{\phi_{I}^{\gamma}}.
@@ -2213,7 +2244,7 @@ key "berger2009formal"
 \end_layout
 
 \begin_layout Remark
-It can be shown that the information penalty is convex in 
+It can be shown that the mutual information penalty is convex in 
 \begin_inset Formula $\pi$
 \end_inset
 
@@ -2512,7 +2543,11 @@ nicht p_X
 \end_inset
 
  as an importance sampling with weights 
-\begin_inset Formula $\bm{w}=\left(w_{k}\right)_{k=1}^{K},\quad w_{k}\ge0,\quad\sum_{k=1}^{K}w_{k}=1$
+\begin_inset Formula 
+\[
+\bm{w}\in\mathcal{W}:=\mathcal{M}_{1}\left(\left\{ 1,...,K\right\} \right)
+\]
+
 \end_inset
 
  such that 
@@ -2548,6 +2583,20 @@ Let us express the prior
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+For ease of notation we will, by slightly abusing it, refer to the discretizatio
+n 
+\begin_inset Formula $w$
+\end_inset
+
+ of a continuous density 
+\begin_inset Formula $\pi$
+\end_inset
+
+ by its latter name, where appropriate.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2756,7 +2805,7 @@ of
 \end_inset
 
  as the expectation over the posterior 
-\begin_inset Formula $\bm{x}_{n}=\left(x_{m}\overset{\text{ind.}}{\sim}\rho_{X\mid\pi_{n},z_{m}}\right)_{m=1}^{M}$
+\begin_inset Formula $\bm{x}_{n}:=\left(x_{n,m}\overset{\text{ind.}}{\sim}\rho_{X\mid\pi_{n},z_{m}}\right)_{m=1}^{M}$
 \end_inset
 
  under the current estimate 
@@ -2777,7 +2826,7 @@ of
 \begin_inset Formula 
 \begin{align}
 Q\left(\pi\mid\pi_{n}\right):= & \mathbb{E}_{\bm{x}_{n}}\left[\log\left(L^{c}\left(\pi\mid\bm{x}_{n},\bm{z}^{M}\right)\right)\right]\nonumber \\
-= & \mathbb{E}_{\bm{x}_{n}}\left[\sum_{m=1}^{m}\log\left(\rho_{X\mid\pi}\left(x_{m}\right)\rho_{Z\mid\pi}\left(z_{m}\right)\right)\right]\label{eq:expcomploglike}\\
+= & \mathbb{E}_{\bm{x}_{n}}\left[\sum_{m=1}^{m}\log\left(\rho_{X\mid\pi}\left(x_{n,m}\right)\rho_{Z\mid\pi}\left(z_{m}\right)\right)\right]\label{eq:expcomploglike}\\
 = & \sum_{m=1}^{M}\mathbb{E}_{x\sim\rho_{X\mid\pi_{n},z_{m}}}\left[\log\left(\rho_{X\mid\pi}\left(x\right)\rho_{Z\mid x}\left(z_{m}\right)\right)\right].\nonumber \\
 \nonumber 
 \end{align}
@@ -2789,19 +2838,27 @@ Q\left(\pi\mid\pi_{n}\right):= & \mathbb{E}_{\bm{x}_{n}}\left[\log\left(L^{c}\le
 
 \begin_layout Standard
 The second step follows from the insight that after exchanging integration
- and summation each 
+ and summation the log term for the 
+\begin_inset Formula $m$
+\end_inset
+
+'ths summand 
 \begin_inset Formula $\log$
 \end_inset
 
  term depends only on a single 
-\begin_inset Formula $x_{m}$
+\begin_inset Formula $x_{n,m}$
 \end_inset
 
- and hence the other 
-\begin_inset Formula $x_{m}$
+ and thus the other 
+\begin_inset Formula $x_{n,m'}$
 \end_inset
 
-'s get marginalized out.
+'s, 
+\begin_inset Formula $m'\ne m,$
+\end_inset
+
+ get marginalized out.
 \end_layout
 
 \begin_layout Standard
@@ -2822,8 +2879,8 @@ The EM algorithm works by iteratively maximizing the expected complete-data
 \end_layout
 
 \begin_layout Standard
-For a proof of uniqueness and convergence in the case of strict convex likelihoo
-ds we refer to 
+For a proof of uniqueness and convergence in the case of strictly convex
+ likelihoods we refer to 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "dempster1977maximum"
@@ -2868,11 +2925,11 @@ reference "eq:priorapprox"
 \begin_inset Formula $\bm{w}_{n}$
 \end_inset
 
- respectively 
+, respectively,
 \begin_inset Formula 
 \begin{align*}
 \pi & \approx\sum_{k=1}^{K}w_{k}\delta_{x_{k}},\\
-\pi_{n} & \approx\sum_{k=1}^{K}w_{n,k}\delta_{x_{k}}\\
+\pi_{n} & \approx\sum_{k=1}^{K}w_{n,k}\delta_{x_{k}},\\
 \end{align*}
 
 \end_inset
@@ -2900,7 +2957,7 @@ reference "eq:expcomploglike"
  by
 \begin_inset Formula 
 \begin{align*}
-Q\left(\pi\mid\pi_{n}\right)\approx Q\left(\bm{w}\mid\bm{w}_{n}\right) & :=\sum_{m=1}^{M}\sum_{k=1}^{K}w_{n,k}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid\bm{w_{n}}}\left(z_{m}\right)}\log\left(\rho_{X\mid\bm{w}}\left(x\right)\rho_{Z\mid x_{k}}\left(z_{m}\right)\right)\\
+Q\left(\pi\mid\pi_{n}\right)\approx Q\left(\bm{w}\mid\bm{w}_{n}\right) & :=\sum_{m=1}^{M}\sum_{k=1}^{K}w_{n,k}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid\bm{w_{n}}}\left(z_{m}\right)}\log\left(\rho_{X\mid\bm{w}}\left(x_{k}\right)\rho_{Z\mid x_{k}}\left(z_{m}\right)\right)\\
  & =\sum_{m=1}^{M}\sum_{k=1}^{K}w_{n,k}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid\bm{w_{n}}}\left(z_{m}\right)}\log\left(w_{k}\rho_{Z\mid x_{k}}\left(z_{m}\right)\right).
 \end{align*}
 
@@ -2914,15 +2971,7 @@ We can furthermore explicitly compute the maximizer to the arising optimization
  problem
 \begin_inset Formula 
 \[
-\bm{w}_{n+1}:=\underset{\bm{w}\in\mathcal{W}}{\arg\max\,}Q\left(\bm{w}\mid\bm{w}_{n}\right),
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula 
-\[
-\mathcal{W}:=\mathcal{M}_{1}\left(\left\{ 1,...,K\right\} \right).
+\bm{w}_{n+1}:=\underset{\bm{w}\in\mathcal{W}}{\arg\max\,}Q\left(\bm{w}\mid\bm{w}_{n}\right).
 \]
 
 \end_inset
@@ -2931,7 +2980,15 @@ where
 \end_layout
 
 \begin_layout Standard
-A necessary condition is that the gradient at 
+A necessary condition is that the gradient of 
+\begin_inset Formula $Q$
+\end_inset
+
+
+\begin_inset Formula $\left(\cdot\mid\bm{w}_{n}\right)$
+\end_inset
+
+at 
 \begin_inset Formula $\bm{w}$
 \end_inset
 
@@ -2943,12 +3000,12 @@ A necessary condition is that the gradient at
 \begin_inset Formula $\mathcal{W}$
 \end_inset
 
-, which means that all components of the gradient are the same:
+, which means that all components of the gradient are equal:
 \begin_inset Formula 
 \begin{align*}
- & \frac{\mathrm{d}Q\left(\bm{w}\mid\bm{w_{n}}\right)}{\mathrm{d}w_{k}}\perp T_{\bm{w}}\mathcal{W}\\
+ & \frac{\partial Q\left(\bm{w}\mid\bm{w}_{n}\right)}{\partial w_{k}}\perp T_{\bm{w}}\mathcal{W}\\
 \Rightarrow\, & \exists c\in\mathbb{R}\:\forall k=1,...,K:\\
- & \frac{\mathrm{d}Q\left(\bm{w}\mid\bm{w_{n}}\right)}{\mathrm{d}w_{k}}=\sum_{m=1}^{M}\frac{w_{n,k}}{w_{k}}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid w_{n}}\left(z_{m}\right)}=c\\
+ & \frac{\partial Q\left(\bm{w}\mid\bm{w}_{n}\right)}{\partial w_{k}}=\sum_{m=1}^{M}\frac{w_{n,k}}{w_{k}}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid w_{n}}\left(z_{m}\right)}=c\\
 \Rightarrow\, & w_{k}=\frac{w_{n,k}}{c}\sum_{m=1}^{M}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid w_{n}}\left(z_{m}\right)}.
 \end{align*}
 
@@ -2972,9 +3029,9 @@ Since
 
 
 \begin_inset Formula 
-\[
-\psi\left(\bm{w}_{n}\right)_{k}:=\frac{w_{n,k}}{M}\sum_{m=1}^{M}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid w_{n}}\left(z_{m}\right)}.
-\]
+\begin{equation}
+\psi\left(\bm{w}_{n}\right)_{k}:=\frac{w_{n,k}}{M}\sum_{m=1}^{M}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\rho_{Z\mid w_{n}}\left(z_{m}\right)}.\label{eq:emstep}
+\end{equation}
 
 \end_inset
 
@@ -3000,7 +3057,7 @@ key "seo2013universally"
 
 ) we end up with the same EM-algorithm of the NPMLE applied to the augmented
  data points 
-\begin_inset Formula $z_{m}\overset{i.i.d}{\sim}\tilde{\rho}_{\bm{z}^{M}}$
+\begin_inset Formula $\left(z_{m}\overset{i.i.d}{\sim}\tilde{\rho}_{\bm{z}^{M}}\right)_{m=1}^{M^{\text{aug }}}$
 \end_inset
 
  and the smoothed likelihoods (c.f.
@@ -3030,7 +3087,7 @@ key "lindsay1995mixture"
 , a necessary condition for strictly positive weights is that the number
  of augmented data points is at least that of the parameter-space nodes,
  
-\begin_inset Formula $M>K.$
+\begin_inset Formula $M^{\text{aug }}>K.$
 \end_inset
 
  
@@ -3041,8 +3098,15 @@ Optimization for MPLE
 \end_layout
 
 \begin_layout Standard
-In the case of additive the measurement error the Monte Carlo discretized
- version of the MPLE with the information penalty takes the form
+In the case of an additive measurement error the Monte Carlo discretized
+ version of the MPLE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:mple"
+
+\end_inset
+
+ with the mutual information penalty takes the form
 \begin_inset Formula 
 \begin{align*}
 w_{\phi_{I}^{\gamma}} & =\arg\max_{\bm{w}\in\mathcal{W}}O\left(\bm{w}\right)\\
@@ -3057,8 +3121,8 @@ w_{\phi_{I}^{\gamma}} & =\arg\max_{\bm{w}\in\mathcal{W}}O\left(\bm{w}\right)\\
 with objective function
 \begin_inset Formula 
 \begin{align*}
-O\left(w\right) & =\log L\left(\bm{w}\mid\bm{z}^{M}\right)-H\left(Z\mid\bm{z}^{M}\right)\\
- & =\log\prod_{m=1}^{M}\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z_{m}\right)+\gamma\sum_{j=1}^{\bar{K}}\bar{w}_{j}\log\left(\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)\right).
+O\left(w\right) & =\log L\left(\bm{w}\mid\bm{z}^{M}\right)+\gamma H\left(Z\mid w\right)\\
+ & =\sum_{m=1}^{M}\log\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z_{m}\right)-\gamma\sum_{j=1}^{\bar{K}}\bar{w}_{j}\log\left(\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)\right).
 \end{align*}
 
 \end_inset
@@ -3073,7 +3137,6 @@ Being a composition of linear and concave functions the objective
 
  is easily shown to be concave, allowing for the use of constraint concave/conve
 x optimization routines.
- 
 \end_layout
 
 \begin_layout Standard
@@ -3085,9 +3148,9 @@ The high dimensionality of
  The derivative of the objective is given by
 \begin_inset Formula 
 \begin{align*}
-\frac{\mathrm{d}O}{\mathrm{d}w_{k}}\left(w\right) & =\frac{\sum_{m=1}^{M}\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\prod_{m=1}^{M}\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(z_{m}\right)}\\
- & +\gamma\sum_{j=1}^{\bar{K}}\frac{\bar{w}_{j}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)}{\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)}\\
- & +\gamma\sum_{j\in J^{-1}\left(k\right)}\frac{\log\left(\sum_{k=1}^{K}w_{k}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)\right)}{\#J^{-1}\left(k\right)}.
+\frac{\partial O}{\partial w_{k}}\left(w\right) & =\sum_{m=1}^{M}\frac{\rho_{Z\mid x_{k}}\left(z_{m}\right)}{\sum_{k'=1}^{K}w_{k'}\rho_{Z\mid x_{k'}}\left(z_{m}\right)}\\
+ & +\gamma\sum_{j=1}^{\bar{K}}\frac{\bar{w}_{j}\rho_{Z\mid x_{k}}\left(\bar{z}_{j}\right)}{\sum_{k'=1}^{K}w_{k'}\rho_{Z\mid x_{k'}}\left(\bar{z}_{j}\right)}\\
+ & +\gamma\sum_{j\in J^{-1}\left(k\right)}\frac{\log\left(\sum_{k'=1}^{K}w_{k'}\rho_{Z\mid x_{k'}}\left(\bar{z}_{j}\right)\right)}{\#J^{-1}\left(k\right)}.
 \end{align*}
 
 \end_inset
@@ -3116,7 +3179,7 @@ The quality of the Monte Carlo approximations greatly depends on the choice
 \end_inset
 
 .
- Whilst an equidistant grid may work well for small dimensional parameter
+ Whilst an equidistant grid may work well for low dimensional parameter
  spaces 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
@@ -3128,7 +3191,7 @@ The quality of the Monte Carlo approximations greatly depends on the choice
 
 .
  This so called curse of dimensionality suggests the use of Markov Chain
- Monte Carlo (MCMC) sampling, a popular sampling scheme for probability
+ Monte Carlo (MCMC) sampling methods, a popular sampling scheme for probability
  densities 
 \begin_inset Formula $f$
 \end_inset
@@ -3139,7 +3202,7 @@ The quality of the Monte Carlo approximations greatly depends on the choice
 \begin_layout Standard
 The basic idea of MCMC methods revolves around constructing an ergodic Markov
  Chain, a stochastic process whose conditional probability for future states
- depends only on the current state, which has the desired taget density
+ depends only on the current state, which has the desired target density
  
 \begin_inset Formula $f$
 \end_inset
@@ -3159,7 +3222,15 @@ The probably most common MCMC scheme is the Metropolis–Hastings (MH) algorithm
 \begin_inset Formula $x_{n}^{'}\in\mathcal{X}$
 \end_inset
 
- around the last MCMC sample 
+ 
+\begin_inset Quotes eld
+\end_inset
+
+around
+\begin_inset Quotes erd
+\end_inset
+
+ the last MCMC sample 
 \begin_inset Formula $x_{n-1}$
 \end_inset
 
@@ -3222,7 +3293,7 @@ ref
 \end_layout
 
 \begin_layout Standard
-Taking the Ansatz of splitting the transition probability into a proposal
+Taking the ansatz of splitting the transition probability into a proposal
  distribution 
 \begin_inset Formula $g$
 \end_inset
@@ -3278,7 +3349,7 @@ reference "eq:mhacceptance"
 
 \end_inset
 
-.
+ (or its inverse).
 \end_layout
 
 \begin_layout Standard
@@ -3295,7 +3366,7 @@ Let
 \end_inset
 
 .
- Then the Markov Process defined by 
+ Then the Markov chain defined by 
 \begin_inset Formula 
 \[
 P\left(x'\mid x\right)=g\left(x'\mid x\right)\min\left(1,\frac{f\left(x'\right)}{f\left(x\right)}\frac{g\left(x\mid x'\right)}{g\left(x'\mid x\right)}\right)
@@ -3319,12 +3390,13 @@ f=Pf.
 \end_layout
 
 \begin_layout Proof
-That 
+The fact that 
 \begin_inset Formula $f$
 \end_inset
 
- indeed is a stationary distribution follows by construction, uniqueness
- follows from irreducibility which is given due to positivity of 
+ is indeed a stationary distribution follows by construction, uniqueness
+ follows from irreducibility and aperiodicity which is given due to positivity
+ of 
 \begin_inset Formula $P$
 \end_inset
 
@@ -3332,7 +3404,7 @@ That
 \end_layout
 
 \begin_layout Standard
-We hence can use this Markov Process to sample a Markov Chain according
+Hence we can use this Markov crocess to sample a Markov Chain according
  to the MH-MCMC algorithm:
 \end_layout
 
@@ -3357,11 +3429,13 @@ With probability
 \begin_inset Formula $A\left(x_{n+1}'\mid x_{n}\right)$
 \end_inset
 
+ accept the proposal, i.e.
  set 
 \begin_inset Formula $x_{n+1}:=x_{n+1}'$
 \end_inset
 
-, otherwise set 
+, otherwise reject it, i.e.
+ set 
 \begin_inset Formula $x_{n+1}:=x_{n}$
 \end_inset
 
@@ -3369,17 +3443,18 @@ With probability
 \end_layout
 
 \begin_layout Enumerate
-Resume with 2 until sufficient states were generated
+Increase n by 1 and resume with 2 until sufficiently many states were generated
 \end_layout
 
 \begin_layout Standard
 The speed of convergence to the stationary distribution is strongly influenced
  by the choice of the proposal distribution.
- Whilst sampling from proposals directly from the target distribution would
- lead to the best results, this process was not possible firsthand which
- is why we resorted to MCMC.
- A common choice for the proposal distribution is the normal distribution,
- but even here the choice of the covariance is vital for rapid mixing of
+ A common choice for the proposal distribution is the normal distribution
+ centered at the current state 
+\begin_inset Formula $x_{n}$
+\end_inset
+
+, but even here the choice of the covariance is vital for rapid mixing of
  the resulting Markov Chain.
 \end_layout
 
@@ -3393,12 +3468,19 @@ key "haario2001adaptive"
 
 \end_inset
 
- which tunes the proposal covariance online based on the current samples,
- according to
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "haario2001adaptive"
+
+\end_inset
+
+ which tunes the proposal covariance matrix online based on the current
+ samples, according to
 \begin_inset Formula 
 \begin{align*}
 g_{n}(\text{·} & \mid x_{n})=\mathcal{N}(x,\,\Sigma_{0}) & \text{if }n\le2d,\\
-g_{n}(\text{·} & \mid x_{n})=(1\text{−}β)\mathcal{N}\left(x,\,\frac{2.38^{2}}{d}\Sigma_{n}\right)+β\mathcal{N}(x,\,\Sigma_{0}) & \text{if }n>2d,
+g_{n}(\text{·} & \mid x_{n})=(1-β)\mathcal{N}\left(x,\,\frac{2.38^{2}}{d}\Sigma_{n}\right)+β\mathcal{N}(x,\,\Sigma_{0}) & \text{if }n>2d,
 \end{align*}
 
 \end_inset
@@ -3407,7 +3489,7 @@ with
 \begin_inset Formula $d$
 \end_inset
 
- beeing the dimensionality of the sampling space 
+ being the dimensionality of the sampling space 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
@@ -3415,7 +3497,7 @@ with
 \begin_inset Formula $\frac{2.38^{2}}{d}$
 \end_inset
 
- a scaling constant considered to be optimal for large dimensions 
+ a scaling constant considered to be optimal for high dimensions 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "roberts1997weak"
@@ -3427,7 +3509,7 @@ key "roberts1997weak"
 \begin_inset Formula $\Sigma_{n}$
 \end_inset
 
- is the covariance estimate based on the previous samples 
+ is the covariance matrix estimate based on the previous samples 
 \begin_inset Formula $\left(x_{i}\right)_{i=0}^{n}$
 \end_inset
 
@@ -3435,9 +3517,9 @@ key "roberts1997weak"
 \begin_inset Formula $\Sigma_{0}$
 \end_inset
 
- an initially chosen positive definite covariance.
- The linear combination of the fixed normal by 
-\begin_inset Formula $\beta>0$
+ an initially chosen positive definite covariance matrix.
+ The linear combination with the fixed normal by 
+\begin_inset Formula $0<\beta<1$
 \end_inset
 
  ensures that the resulting proposal covariance stays positive definite
@@ -3450,7 +3532,7 @@ key "roberts1997weak"
 
 \begin_layout Standard
 The acceptance step remains the same as with the standard MH-MCMC.
- This Markov Chain still admits the desired target density as stationary
+ This Markov chain still admits the desired target density as stationary
  distribution, assuming it is log-concave outside of some arbitrary region
  (for a proof see 
 \begin_inset CommandInset citation
@@ -3468,15 +3550,16 @@ Application
 
 \begin_layout Standard
 We will now discuss the application of the developed empirical Bayes method
- on the basis of a large-dimensional ordinary differential model accompanied
- by real-life measurements.
+ on the basis of a high-dimensional ordinary differential equation model
+ accompanied by real-life measurements.
  We will therefore introduce the model and obtain a discretization of 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
  by sampling from the individual Bayesian posteriors by means of MCMC sampling.
- We will then compute the MLE, MPLE and DS-MLE prior estimates and discuss
+ We will then compute the MPMLE, MPLE and DS-MLE prior estimates and discuss
  the results.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -3485,9 +3568,9 @@ The problem
 
 \begin_layout Standard
 Our physical model, consisting of a system of 33 ordinary differential equations
-, models the feedback mechanisms of the prevalent hormones in the female
- menstrual cycle with a focus on GnRH-receptor binding and was derived by
- Röblitz et al.
+ (ODE), models the feedback mechanisms of the prevalent hormones in the
+ female menstrual cycle with a focus on GnRH-receptor binding and was derived
+ by Röblitz et al.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -3509,8 +3592,8 @@ key "roblitz2013"
 
 \end_inset
 
- the authors provide point estimates for the parameters and initial conditions,
- although concluding that only 52 of the parameters were identifiable.
+ the authors provide point estimates for the parameters, although concluding
+ that only 52 were identifiable, as well as initial conditions.
  We will denote these as 
 \emph on
 nominal parameters 
@@ -3532,11 +3615,11 @@ initial conditions
 \end_layout
 
 \begin_layout Standard
-Let us denote its solution at time 
+Let us denote the forward solution of the ODE at time 
 \begin_inset Formula $t$
 \end_inset
 
- with parameters 
+, given parameters 
 \begin_inset Formula $\theta\in\mathbb{R}^{82}$
 \end_inset
 
@@ -3544,7 +3627,7 @@ Let us denote its solution at time
 \begin_inset Formula $y_{0}\in\mathbb{R}^{33}$
 \end_inset
 
- as
+, as
 \begin_inset Formula 
 \[
 \phi\left(t;\theta,y_{0}\right)\in\mathbb{R}^{33}.
@@ -3577,7 +3660,7 @@ z^{m}:=\left(z_{t,i}^{m}\right)_{\left(t,i\right)\in I_{z}^{m}}
 \begin_inset Formula $z_{t,i}^{m}$
 \end_inset
 
- beeing the single measurement of species 
+ being the single measurement of species 
 \begin_inset Formula $i=1,...,4$
 \end_inset
 
@@ -3596,7 +3679,7 @@ z^{m}:=\left(z_{t,i}^{m}\right)_{\left(t,i\right)\in I_{z}^{m}}
 To impose the condition of periodicity of the data onto our inference process
  we further augment the data by a copy of itself shifted in time by an additiona
 l latent parameter representing the period length 
-\begin_inset Formula $\tau$
+\begin_inset Formula $\tau>0$
 \end_inset
 
 :
@@ -3654,16 +3737,19 @@ Subsuming the latent model parameters
 \end_inset
 
  we end up with 116 parameters 
-\begin_inset Formula $x=\left(\theta,y_{0},\tau\right)$
+\begin_inset Formula 
+\[
+x=\left(\theta,y_{0},\tau\right)\in X:=\left(\Theta,Y_{0},T\right)
+\]
+
 \end_inset
 
  for the Bayesian inference.
 \end_layout
 
 \begin_layout Standard
-We model each single measurement as independent on the others and afflicted
- by a Gaussian measurement error with independent componentwise standard
- deviations of 
+We model each single as afflicted by a independent Gaussian measurement
+ error with independent componentwise standard deviations of 
 \begin_inset Formula $10\%$
 \end_inset
 
@@ -3675,7 +3761,7 @@ We model each single measurement as independent on the others and afflicted
 :
 \begin_inset Formula 
 \[
-\sigma_{1}^{\text{meas}}=12,\,\sigma_{2}^{\text{meas}}=1{}^{2},\,\sigma_{3}^{\text{meas}}=40^{2},\,\sigma_{4}^{\text{meas}}=1.5^{2}.
+\sigma_{1}^{\text{meas}}=12,\,\sigma_{2}^{\text{meas}}=1,\,\sigma_{3}^{\text{meas}}=40,\,\sigma_{4}^{\text{meas}}=1.5.
 \]
 
 \end_inset
@@ -3688,8 +3774,8 @@ We end up with the following likelihood function for the parameters
 \begin_inset Formula $x$
 \end_inset
 
- given a single persons data 
-\begin_inset Formula $z^{m}$
+ given a single person's data 
+\begin_inset Formula $z_{m}$
 \end_inset
 
 :
@@ -3698,7 +3784,7 @@ We end up with the following likelihood function for the parameters
 \begin_layout Standard
 \begin_inset Formula 
 \[
-L\left(x\mid z^{m}\right)=L\left(\theta,y_{0},\tau\mid z^{m}\right)=\left(\prod_{\left(t,i\right)\in I_{z}^{m,\tau}}\frac{1}{\sigma_{i}^{\text{meas}}\sqrt{2\pi}}\right)\exp\left(-\frac{1}{2}\sum_{\left(t,i\right)\in I_{z}^{m,\tau}}\left(\frac{\phi\left(t;\theta,y_{0}\right)_{i}-z_{t,i}^{m,\tau}}{\sigma_{i}^{\text{meas}}}\right)^{2}\right).
+L\left(x\mid z^{m}\right)=L\left(\theta,y_{0},\tau\mid z^{m}\right)=\prod_{\left(t,i\right)\in I_{z}^{m,\tau}}\left(2\pi\right)^{-\frac{1}{2}}\left(\sigma_{i}^{\text{meas}}\right)^{-2}\exp\left(-\frac{1}{2}\left(\frac{\phi\left(t;\theta,y_{0}\right)_{i}-z_{t,i}^{m,\tau}}{\sigma_{i}^{\text{meas}}}\right)^{2}\right).
 \]
 
 \end_inset
@@ -3732,7 +3818,7 @@ reference "eq:gaussmodel"
 \end_inset
 
 .
- But it is equivalent to the model obtained but just duplicating the data
+ But it is equivalent to the model obtained by just duplicating the data
  and subsuming the shift operation into a new forward solution operator,
  hence Theorem 
 \begin_inset CommandInset ref
@@ -3754,26 +3840,29 @@ For the initial Bayesian sampling procedure, necessary for arrival at a
 \begin_inset Formula $\pi_{0}$
 \end_inset
 
- on our parameters.
+ on our parameters 
+\begin_inset Formula $X:=\left(\theta,y_{0},\tau\right)$
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Remark
-For we did not want to imply any knowlege on 
+\begin_layout Standard
+Since we did not want to imply any knowledge on 
 \begin_inset Formula $\theta$
 \end_inset
 
- but their order of magnitude we chose the uniform prior bounded by the
- 
+ but their order of magnitude we chose the uniform prior bounded by 
 \begin_inset Formula $\alpha:=5$
 \end_inset
 
- multiple of its corresponding nominal parameter
+ times the multiple of its corresponding nominal parameter value
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-X_{i}\mid\pi_{0}=\mathcal{U}\left(0,\alpha\theta_{i}^{\text{nom}}\right)\quad i=1,...,82.
+\Theta_{i}\mid\pi_{0}=\mathcal{U}\left(0,\alpha\theta_{i}^{\text{nom}}\right),\quad i=1,...,82.
 \]
 
 \end_inset
@@ -3790,7 +3879,7 @@ The prior for the initial conditions
  the nominal solution
 \begin_inset Formula 
 \[
-X_{82+i}\mid\pi_{0}:=\frac{1}{31}\sum_{t=0}^{30}\mathcal{N}\left(\phi^{\text{nom}}\left(t\right),\,\Sigma\right)\quad i=1,...,33
+Y_{0}\mid\pi_{0}:=\frac{1}{31}\sum_{t=0}^{30}\mathcal{N}\left(\phi^{\text{nom}}\left(t\right),\,\Sigma\right),\quad i=1,...,33,
 \]
 
 \end_inset
@@ -3799,7 +3888,7 @@ and the covariance
 \begin_inset Formula $\Sigma$
 \end_inset
 
- beeing a diagonal matrix with the component-wise covariance estimates
+ being a diagonal matrix with the component-wise covariance estimates
 \begin_inset Formula 
 \[
 \Sigma_{ii}:=\text{Cov}\left(\left(\phi_{i}^{\text{nom}}\left(t\right)\right)_{t=0}^{30}\right),\quad i=1,...,33.
@@ -3824,10 +3913,10 @@ key "fehring2006variability"
 
 \end_inset
 
-) 
+), 
 \begin_inset Formula 
 \[
-X_{116}\mid\pi_{0}:=\mathcal{N}\left(28.9,3.4^{2}\right).
+T\mid\pi_{0}:=\mathcal{N}\left(28.9,3.4^{2}\right).
 \]
 
 \end_inset
@@ -3843,7 +3932,7 @@ Sampling
 We will now compute the individual posterior samples
 \begin_inset Formula 
 \[
-\left(x_{i}^{m}\right)_{i=1}^{N}\overset{\text{i.i.d}}{\sim}\rho_{x\mid z^{m}}L\left(\theta\mid z\right)\rho_{z}^{0}\left(z\right)
+\bm{x}^{m}:=\left(x_{i}^{m}\right)_{i=1}^{N}\overset{\text{i.i.d}}{\sim}\rho_{X\mid z^{m}}=\rho_{X\mid\pi_{0}}L\left(\theta\mid z^{m}\right)
 \]
 
 \end_inset
@@ -3857,7 +3946,7 @@ for each patient
 
 \begin_layout Standard
 Since all sampled parameters 
-\begin_inset Formula $\left(\theta_{i}\right)_{i=1}^{116}$
+\begin_inset Formula $\left(x_{i}\right)_{i=1}^{116}$
 \end_inset
 
  are restricted to 
@@ -3872,7 +3961,7 @@ Since all sampled parameters
 :
 \begin_inset Formula 
 \[
-\tilde{\theta}_{i}=\log\left(\theta_{i}\right),\quad i=1,...,116.
+\tilde{x}_{i}=\log\left(x_{i}\right),\quad i=1,...,116.
 \]
 
 \end_inset
@@ -3886,7 +3975,7 @@ However undergoing this transformation we also have to adjust the likelihood
  function according to the change of variables formula:
 \begin_inset Formula 
 \[
-\tilde{L}\left(\tilde{\theta}\mid z\right)=L\left(\exp\left(\tilde{\theta}\right)\mid z\right)\prod_{i=1}^{116}\tilde{\theta}_{i}.
+\tilde{L}\left(\tilde{x}\mid z\right)=L\left(\exp\left(\tilde{x}\right)\mid z\right)\prod_{i=1}^{116}\tilde{x}_{i}.
 \]
 
 \end_inset
@@ -3919,11 +4008,12 @@ we may hope to start in a region of high density which henceforth is already
 \end_layout
 
 \begin_layout Standard
-In the first runs the initial covariance 
+In the first runs the initial covariance matrix 
 \begin_inset Formula $\Sigma_{0}$
 \end_inset
 
- of the proposal density for the AM sampler was chosen to be uniform.
+ of the proposal density for the AM sampler was chosen to be small value
+ uniform in each direction.
  Upon later runs we reused the covariance structure 
 \begin_inset Formula $\Sigma_{N}$
 \end_inset
@@ -3931,7 +4021,7 @@ In the first runs the initial covariance
  of present samplings according to
 \begin_inset Formula 
 \[
-\Sigma_{0}:=\frac{2.38^{2}}{d}\Sigma_{n},
+\Sigma_{0}:=\frac{2.38^{2}}{d}\Sigma_{N},
 \]
 
 \end_inset
@@ -3949,7 +4039,7 @@ We computed
 \end_inset
 
  of the individual posteriors 
-\begin_inset Formula $\theta\mid\pi_{0},z^{m}$
+\begin_inset Formula $\rho_{X\mid z^{m}}$
 \end_inset
 
  for each patient 
@@ -3992,6 +4082,22 @@ Keeping in mind that many of the parameters are probably unidentifiable
  results.
 \end_layout
 
+\begin_layout Remark
+Since the MCMC sampling, consuming most of the computational time of the
+ here proposed prior estimation procedure, is easily parallelizable over
+ the individual persons, the proposed scheme is well suited for the use
+ in e.g.
+ clinical studies, where lots of data is available (c.f.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "klebanov2016sysmed"
+
+\end_inset
+
+, Section 4).
+\end_layout
+
 \begin_layout Subsection
 Prior estimation
 \end_layout
@@ -4001,12 +4107,12 @@ After thinning the individual posterior samples
 \begin_inset Formula $\left(\bm{x}^{m}\right)_{m=1}^{53}$
 \end_inset
 
- for computational feasibility, we combined these in order to obtain a basis
+ for computational feasibility, we combined these in order to obtain a grid
  for the prior estimation.
  
 \begin_inset Formula 
 \[
-\bm{x}^{M}=\bigcup_{m=1}^{M}\bm{x}^{m}.
+\bm{x}^{M}:=\bigcup_{m=1}^{M}\bm{x}^{m}.
 \]
 
 \end_inset
@@ -4016,7 +4122,7 @@ After thinning the individual posterior samples
 
 \begin_layout Standard
 The results below were computed with 
-\begin_inset Formula $\#\bm{x}=1325.$
+\begin_inset Formula $\#\bm{x}^{M}=2596.$
 \end_inset
 
 
@@ -4024,18 +4130,24 @@ The results below were computed with
 
 \begin_layout Standard
 Note that these samples, which conform to the average density of the individual
- posteriors, are 
-\begin_inset Formula $\psi\left(\pi_{0}\right)$
+ posterior densities, are 
+\begin_inset Formula $\pi_{1}:=\psi\left(\pi_{0}\right)$
 \end_inset
 
  distributed.
- Our experiments have shown that this first approximation step is already
- quite close to the NPMLE.
+ Our experiments have shown that this first EM step 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:emstep"
+
+\end_inset
+
+ is already quite close to the NPMLE.
  Since furthermore the MPLE is expected to be a smoothed version of the
  NPMLE, these points serve as a good basis for the importance sampling:
 \begin_inset Formula 
 \[
-\bm{x}\sim\psi\left(\pi_{0}\right)\approx\pi_{ML}\approx\pi_{\phi_{I}^{\gamma}}.
+\bm{x}^{M}\sim\psi\left(\pi_{0}\right)\approx\pi_{ML}\approx\pi_{\phi_{I}^{\gamma}}.
 \]
 
 \end_inset
@@ -4044,8 +4156,8 @@ Note that these samples, which conform to the average density of the individual
 \end_layout
 
 \begin_layout Standard
-We computed the the NPMLE and DS-MLE estimates using 100 iterations of the
- EM algorithm, starting with uniform weights.
+We computed the NPMLE and DS-MLE estimates using 100 iterations of the EM
+ algorithm, starting with uniform weights.
 \end_layout
 
 \begin_layout Standard
@@ -4053,7 +4165,7 @@ In case of the DS-MLE model we smoothed each data point
 \begin_inset Formula $z_{i}$
 \end_inset
 
- by 30 additional samples.
+ by 50 additional samples.
  The kernel 
 \begin_inset Formula $K$
 \end_inset
@@ -4095,7 +4207,7 @@ key "svanberg2002class"
 \begin_inset Formula $\sum_{k=1}^{K}w_{k}=1$
 \end_inset
 
- we used the built in Augmentated Lagrangian algortithm.
+ we used the built in Augmented Lagrangian algorithm.
  This basically amends a penalty to the objective, whose impact is scaled
  based on the current misfit of the constraint.
  We furthermore set the upper bounds for each component to 
@@ -4140,9 +4252,11 @@ We will now compare the initial prior
 \begin_inset Formula $\pi_{\phi_{I}^{\gamma}}$
 \end_inset
 
+ for 
+\begin_inset Formula $\gamma=100$
+\end_inset
+
 .
- For the visualization we will plot kernel density estimates of selected
- marginal densities.
 \end_layout
 
 \begin_layout Standard
@@ -4153,21 +4267,19 @@ reference "fig:paperplot"
 
 \end_inset
 
- shows the marginal distributions of the individual priors, a density plot
- of the prior predicitve distributions together with the cohort-data, and
- the resulting posteriors for a single person.
-\end_layout
-
-\begin_layout Standard
-Figure ?? compares different choices for the regularization constant 
-\begin_inset Formula $\gamma$
+ shows the marginal distributions of the transition rate constant from PrA2
+ to SeF1, plotted as a kernel density estimate (KDE) with a bandwidth of
+ 0.1, of the individual estimated priors and an individual subjects (
+\begin_inset Formula $m=14)$
 \end_inset
 
- by showing the corresponding marginal distributions.
+ posteriors.
+ It furthermore illustrates the prior respectively posterior predictive
+ distribution as density plots with the cohort- respectively individual
+ data.
 \end_layout
 
 \begin_layout Standard
-paperplot
 \begin_inset Float figure
 wide false
 sideways false
@@ -4175,8 +4287,8 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename masterplot.png
-	lyxscale 10
+	filename masterplot.pdf
+	lyxscale 50
 	width 100text%
 
 \end_inset
@@ -4191,15 +4303,26 @@ name "fig:paperplot"
 
 \end_inset
 
-f
+
+\begin_inset Formula $\pi_{0},$
+\end_inset
+
+ NPMLE, DS-MLE and MPLE (top to bottom) 
+\begin_inset Quotes eld
+\end_inset
+
+transition rate constant from PrA2 to SeF1
+\begin_inset Quotes erd
+\end_inset
+
+-marginals of the respective priors (blue) with posteriors (red) for a single
+ subject (left), trajectories sampled from the prior together with the cohort
+ data (middle) and the subject data with trajectories sampled from the posterior
+ (right).
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -4209,7 +4332,100 @@ f
 \end_layout
 
 \begin_layout Standard
-2d marginals?
+For the prior 
+\begin_inset Formula $\pi_{0}$
+\end_inset
+
+ we combined the MCMC samples 
+\begin_inset Formula $\bm{x}^{M}\sim\pi_{1}$
+\end_inset
+
+ with the same amount of independent samples from the true density 
+\begin_inset Formula $\pi_{0}$
+\end_inset
+
+ and then reweighted this sampling with the inverse of a KDE (with the bandwidth
+s chosen according to Silverman's rule of thumb
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Silverm1982"
+
+\end_inset
+
+) at each of the grid-points to approximate a true sampling of 
+\begin_inset Formula $\pi_{0}$
+\end_inset
+
+, which itself did not lead to any interesting plots for the given, relative
+ low sample size.
+ The first row can therefore only be seen as an approximation to 
+\begin_inset Formula $\pi_{0}$
+\end_inset
+
+.
+ We can still recognize a lot of unfeasible solutions in the first few days
+ but also a diverse posterior plot.
+\end_layout
+
+\begin_layout Standard
+Looking at the NPMLE (second row), we can observe, keeping in mind that
+ we are looking at a KDE, that the estimated prior consists of a few, relatively
+ high peaks (
+\begin_inset Formula $\max_{i}w_{i}=0.023$
+\end_inset
+
+).
+ This expected behaviour can also be seen in the prior predictive density
+ plot (middle), where the individual trajectories of the prior approximating
+ the cohort-data are distinctly visible.
+ The corresponding posterior exhibits a single peak (
+\begin_inset Formula $\max_{i}w_{i}=0.999$
+\end_inset
+
+) for the most likely solution found.
+\end_layout
+
+\begin_layout Standard
+The DS-MLE (third row) provides a slightly more diverse view with smaller
+ peaks (
+\begin_inset Formula $\max_{i}w_{i}=0.019$
+\end_inset
+
+) then the NPMLE and a smoother prior predictive density plot, but still
+ exhibiting a rather erratic variation.
+ The posterior is dominated by three peaks (
+\begin_inset Formula $\max_{i}w_{i}=0.439$
+\end_inset
+
+), 
+\end_layout
+
+\begin_layout Standard
+Finally the MPLE (last row) provides the smoothest of the estimated priors
+ (
+\begin_inset Formula $\max_{i}w_{i}=0.014$
+\end_inset
+
+), while still sharing the informative peak at around 
+\begin_inset Formula $x=15$
+\end_inset
+
+ with the NPMLE.
+ The prior predictive density plot is also more densely covered in the feasible
+ region, indicating a higher explanatory power.
+ The individual posterior (right) shares the mode of the NPMLE but also
+ offers a lot of additional trajectories as explanation (
+\begin_inset Formula $\max_{i}w_{i}=0.258$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+We henceforth conclude that the MPLE with the mutual information penalty
+ indeed leads to satisfactory results, improving on the overconfidence of
+ the MPLE, and being at the very least capable of keeping up with other
+ contemporary methods such as DS-MLE.
 \end_layout
 
 \begin_layout Section
@@ -4222,27 +4438,18 @@ We have shown that the MPLE with the information penalty
 \end_inset
 
  is an attractive approach to the empirical Bayes method.
- It bases on natural, information theoretic considerations and admits the
+ It bases on natural, information-theoretic considerations and admits the
  desirable property of transformation invariance, generalizing the notion
  of the reference priors to the empirical Bayes framework.
- Due to its concavity the objective is computationally manageable and its
+ Due to its concavity the objective is computationally feasible and its
  Monte Carlo approximation enables it's application to high-dimensional
  problems eluding the curse of dimensionality.
 \end_layout
 
 \begin_layout Standard
 We furthermore showed how to apply the developed methods to a real world
- problem by the means of MCMC sampling.
-\end_layout
-
-\begin_layout Standard
-Unfortunately we could not resolve all questions in the scope of this thesis.
- In my eyes the most important questions are how to speed up the optimization
- routine as well as the choice of the penalization constant 
-\begin_inset Formula $\gamma$
-\end_inset
-
-.
+ problem by the means of MCMC sampling, affirming its proficiency in a practical
+ scenario.
 \end_layout
 
 \begin_layout Standard
@@ -4250,9 +4457,43 @@ Unfortunately we could not resolve all questions in the scope of this thesis.
 \end_inset
 
 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+appendix
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+References
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+printbibliography[heading=none]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 bibfiles "refs"
@@ -4263,18 +4504,31 @@ options "plain"
 
 \end_layout
 
-\begin_layout Section*
-Appendix
+\end_inset
+
+
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Section
 Implementation
 \end_layout
 
 \begin_layout Standard
-The introduced algorithms were implemented Julia, a modern programming language
- for numerical computing and bundled in the open-source package GynC.jl,
- available at www.github.com/axsk/GynC.jl.
+The introduced algorithms were implemented in Julia, a modern programming
+ language for numerical computing, and bundled in the open-source package
+ 
+\emph on
+GynC.jl
+\emph default
+, available at 
+\begin_inset CommandInset href
+LatexCommand href
+name "www.github.com/axsk/GynC.jl"
+target "https://github.com/axsk/GynC.jl/"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -4282,39 +4536,86 @@ For installation and usage run the following commands in the Julia REPL:
 \end_layout
 
 \begin_layout Standard
-Pkg.clone(
-\begin_inset Quotes eld
-\end_inset
+\begin_inset listings
+inline false
+status open
 
-https://github.com/axsk/GynC.jl
-\begin_inset Quotes erd
-\end_inset
+\begin_layout Plain Layout
 
-)
+Pkg.clone(https://github.com/axsk/GynC.jl)
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
+
 using GynC
 \end_layout
 
-\begin_layout Standard
-In the following we will give an overview over the core components and methods
- of the software and mention some implementation details.
-\end_layout
+\end_inset
 
-\begin_layout Subsubsection*
-Empirical Bayes 
+
 \end_layout
 
 \begin_layout Standard
-The core type of this module is the LikelihoodModel(xs, ys, zs, datas, measerr,
- zsampledistr).
- It provides the base data necessary for the empirical Bayes methods.
+The package was build in a modular way trying to separate the generic empirical
+ Bayes methods and the GynC model specifics in their respective own submodules
+ and should hence be easily extensible to other additive-error models.
+\end_layout
+
+\begin_layout Standard
+It also provides a series of Jupyter-notebooks, containing the code which
+ was ran to generate the results from Section 5.
+\end_layout
+
+\begin_layout Standard
+In the following we will give a short overview over the core components
+ and methods of the software and mention some implementation details.
  
 \end_layout
 
+\begin_layout Subsubsection*
+Empirical Bayes
+\end_layout
+
+\begin_layout Standard
+The code to this module can be found in the 
+\begin_inset Formula $\texttt{src/eb}$
+\end_inset
+
+ directory.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+LikelihoodModel(xs, ys, zs, datas, measerr, zsampledistr)
+\end_layout
+
+\end_inset
+
+This is the base-type of the empirical Bayes module, providing the data
+ necessary for the empirical Bayes methods.
+ It holds the following fields:
+\end_layout
+
 \begin_layout Itemize
-xs: vector of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{xs}
+\end_layout
+
+\end_inset
+
+: vector of 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
@@ -4322,11 +4623,23 @@ xs: vector of
 \begin_inset Formula $\left(x_{k}\right)$
 \end_inset
 
-
+ constituting the grid of the discretization
 \end_layout
 
 \begin_layout Itemize
-ys: corresponding pushforward under 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{ys}
+\end_layout
+
+\end_inset
+
+: vector of corresponding pushforward under 
 \begin_inset Formula $\Phi$
 \end_inset
 
@@ -4334,117 +4647,498 @@ ys: corresponding pushforward under
 \end_layout
 
 \begin_layout Itemize
-zs: storage of additional z samples for z-entropy computation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{zs}
+\end_layout
+
+\end_inset
+
+: vector of additional 
+\begin_inset Formula $\mathcal{Z}$
+\end_inset
+
+-samples for the 
+\begin_inset Formula $\mathcal{Z}$
+\end_inset
+
+-entropy computation (c.f.
+ Section 4.1)
 \end_layout
 
 \begin_layout Itemize
-datas: vector of cohort measurements
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{datas}
+\end_layout
+
+\end_inset
+
+: vector containing the cohort-data
 \end_layout
 
 \begin_layout Itemize
-measerr: specification of the measurement error for likelihood computation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{measerr}
+\end_layout
+
+\end_inset
+
+: specification of the measurement error for likelihood computation.
+ Whilst basic support is added for generic 
+\begin_inset Formula $\texttt{Distributions.Distribution}$
+\end_inset
+
+, we also provide the type 
+\begin_inset Formula $\texttt{MatrixNormalCentered}$
+\end_inset
+
+ used for the computation of the likelihoods in our application.
 \end_layout
 
 \begin_layout Itemize
-zsampledistr: specification of the smoothing kernel 
-\begin_inset Formula $K$
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{zsampledistr}
+\end_layout
+
 \end_inset
 
- (DS-MLE only)
-\end_layout
-
-\begin_layout Standard
-Based on this time the following convenience functions are available
-\end_layout
-
-\begin_layout Standard
-em(m::LikelihoodModel, w0, niter): perform niter iterations of the EM-algorithm
- on model m, starting with initial weights w0.
-\end_layout
-
-\begin_layout Standard
-mple(m::LikelihoodModel, w0, niter, reg, h): perform a constraint gradient
- ascent search to optimize the MPLE with 
-\begin_inset Formula $\gamma=\text{reg}$
+: specification of the distribution used for generating samples for the
+ 
+\begin_inset Formula $\mathcal{Z}$
 \end_inset
 
-, inital weights 
-\begin_inset Formula $w0,$
+-entropy computation
+\end_layout
+
+\begin_layout Standard
+Based on this type the following convenience functions are available
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+em(m::LikelihoodModel, w0, niter)
+\end_layout
+
 \end_inset
 
- stepsize h and niter iterations.
+Perform 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{niter}
+\end_layout
+
+\end_inset
+
+ iterations of the EM-algorithm on model 
+\begin_inset Formula $\texttt{m}$
+\end_inset
+
+, starting with initial weights 
+\begin_inset Formula $\texttt{w0}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-optimmple(m, reg, w0): perform a constraint optimization using the MMA optimizer
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+mple(m::LikelihoodModel, w0, niter, reg, h)
+\end_layout
+
+\end_inset
+
+Perform a constraint gradient ascent search to optimize the MPLE with 
+\begin_inset Formula $\gamma=\texttt{reg}$
+\end_inset
+
+, initial weights 
+\begin_inset Formula $\texttt{w0}$
+\end_inset
+
+, stepsize 
+\begin_inset Formula $\texttt{h}$
+\end_inset
+
+ and 
+\begin_inset Formula $\texttt{niter}$
+\end_inset
+
+ iterations.
 \end_layout
 
 \begin_layout Standard
-hz(m,w), dhz(m,w), logl(m,w), dlogl(m,w): compute the loglikelihood, z-entropies
- and their derivatives for the given weights w.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+optimmple(m, reg, w0)
+\end_layout
+
+\end_inset
+
+Perform a constraint optimization using the Method of Moving Asymptotes
+ algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "svanberg2002class"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-smoothedmodel(m, mult): perform the smoothing of the data and likelihood
- functions for the DS-MLE.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+hz(m,w), dhz(m,w), logl(m,w), dlogl(m,w)
+\end_layout
+
+\end_inset
+
+Compute the loglikelihood, 
+\begin_inset Formula $\mathcal{Z}$
+\end_inset
+
+-entropy and their derivatives for the given model 
+\begin_inset Formula $\texttt{m}$
+\end_inset
+
+ at weights 
+\begin_inset Formula $\texttt{w}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-likelihoodmat(xs::Vector,ys::Vector,d::Distribution): compute the pairwise
- likelihoods based for a multivariate gaussian distribution d.
- This is an optimized version making use of the binomial decomposition and
- renormalization of the likelihoods for stability.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+smoothedmodel(m, mult)
+\end_layout
+
+\end_inset
+
+Perform the smoothing of the data and likelihood functions for the DS-MLE.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+likelihoodmat(xs::Vector,ys::Vector,d::Distribution)
+\end_layout
+
+\end_inset
+
+Compute the pairwise likelihoods based for a distribution 
+\begin_inset Formula $\texttt{d}$
+\end_inset
+
+.
+ In the case that 
+\begin_inset Formula $\texttt{d::MatrixNormalCentered}$
+\end_inset
+
+ an optimized version making use of the binomial decomposition and renormalizati
+on of the likelihoods for stability is implemented.
  It also handles incomplete data by excluding NaNs of the computations.
 \end_layout
 
 \begin_layout Standard
-gyncmodel(n): generate a gync likelihoodmodel with n presampled x-samples.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+gyncmodel(n)
+\end_layout
+
+\end_inset
+
+Generate a GynC-likelihoodmodel with 
+\begin_inset Formula $\texttt{n}$
+\end_inset
+
+ presampled x-samples.
 \end_layout
 
 \begin_layout Standard
-gyncmodel(xs, datas; zmult, sigma): generate a gync likelihoodmodel for
- the given samples and datas with zmult z samples (for the entropy) per
- x sample and measurement error standard deviation sigma.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+gyncmodel(xs, datas; zmult, sigma)
+\end_layout
+
+\end_inset
+
+Generate a GynC-likelihoodmodel for the given samples 
+\begin_inset Formula $\texttt{xs}$
+\end_inset
+
+ and 
+\begin_inset Formula $\texttt{datas}$
+\end_inset
+
+ with 
+\begin_inset Formula $\texttt{zmult}$
+\end_inset
+
+ z samples (for the entropy) per x sample and measurement error standard
+ deviation 
+\begin_inset Formula $\texttt{sigma}$
+\end_inset
+
+ times the components magnitude.
 \end_layout
 
 \begin_layout Standard
-samplepi0, samplepi1, subsample: convenience functions for generating/loading
- samples corresponding to the prior and posterior distributions.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+samplepi0(m), samplepi1(m), subsample(m)
+\end_layout
+
+\end_inset
+
+Convenience functions for generating respectively loading (precomputed)
+ samples corresponding to the prior and posterior distributions, as well
+ as for subsampling.
 \end_layout
 
 \begin_layout Subsubsection*
-GynC - src/gc
+GynC
 \end_layout
 
 \begin_layout Standard
-Config: base type storing configuration for the mcmc sampling (patient data,
- measurement error, initial proposal variance for mcmc, adaptivity of mcmc,
- thinning, initial values and priors)
+The code to this module can be found in the 
+\begin_inset Formula $\texttt{src/gync}$
+\end_inset
+
+ directory.
+ 
 \end_layout
 
 \begin_layout Standard
-logprior(config, x), logpost(config, x), llh(config,x): log prior, posterior
- and likelihood values for sample x
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Config
+\end_layout
+
+\end_inset
+
+Base-type managing the configuration for the MCMC sampling (patient data,
+ measurement error, initial proposal variance for MCMC, adaptivity of MCMC,
+ thinning, initial values and priors).
+ For more information refer to 
+\begin_inset Formula $\texttt{src/gync/model.jl}$
+\end_inset
+
+ .
 \end_layout
 
 \begin_layout Standard
-sample(config, iters): sample iters samples using the the AMM sampler from
- the Mamba.jl package
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+logprior(c, x), logpost(c, x), llh(c,x)
+\end_layout
+
+\end_inset
+
+Log prior, posterior and likelihood values for given config 
+\begin_inset Formula $\texttt{c}$
+\end_inset
+
+ and sample 
+\begin_inset Formula $\texttt{x}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-batch([configs], [iters]; dir): sample the given configs in parallel on
- a cluster managed by ClusterManagers.jl and store them in the dir directory
- whenever any of the iterations in [iters] is reached.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+sample(config, iters)
+\end_layout
+
+\end_inset
+
+Sample 
+\begin_inset Formula $\texttt{iters}$
+\end_inset
+
+ samples using the the AMM sampler from the Mamba.jl package
 \end_layout
 
 \begin_layout Standard
-alldatas(): load all present data
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+batch(configs, iters; dir)
+\end_layout
+
+\end_inset
+
+Sample the given vector of 
+\begin_inset Formula $\texttt{configs}$
+\end_inset
+
+ in parallel on a Slurm cluster and store them in the 
+\begin_inset Formula $\texttt{dir}$
+\end_inset
+
+ directory whenever any of the iterations in the vector 
+\begin_inset Formula $\texttt{iters}$
+\end_inset
+
+ is reached.
 \end_layout
 
 \begin_layout Standard
-gync(y0, p, t): compute a trajectory for given inital values, parameters
- and time using the Sundials CVode solver.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+alldatas()
+\end_layout
+
+\end_inset
+
+Return all present cohort-data 
+\begin_inset Formula $\bm{z}^{M}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+gync(y0, p, ts)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Compute a trajectory for given initial values 
+\begin_inset Formula $\texttt{y0}$
+\end_inset
+
+, parameters 
+\begin_inset Formula $\texttt{p}$
+\end_inset
+
+ and times 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\texttt{ts}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ using the Sundials CVode solver.
 \end_layout
 
 \end_body
