@@ -412,7 +412,7 @@ Unfortunately the NPMLE approach applied to finite data results in discrete
  We start by treating the topic of penalization of unsmooth solutions, leading
  to the 
 \emph on
-penalized maximum likelihood estimator
+maximum penalized likelihood estimator
 \emph default
  (MPLE), and will set this into relation with Bayesian hyperpriors, i.e.
  prior assumption on the prior.
@@ -1426,7 +1426,7 @@ doubly smoothed maximum likelihood estimation
 \end_layout
 
 \begin_layout Subsection
-Regularization via a penalization term
+Regularization by a penalization term
 \end_layout
 
 \begin_layout Standard
@@ -2011,7 +2011,7 @@ According to the change of variables formula
 \end_layout
 
 \begin_layout Corollary
-The maximum penalized likelihood estimator 
+The MPLE 
 \begin_inset Formula $\pi_{\phi_{I}^{\gamma}}$
 \end_inset
 
@@ -2713,13 +2713,13 @@ H\left(Z\mid\pi\right) & \approx H\left(Z\mid\bm{w}\right):=-\sum_{j=1}^{\bar{K}
 \end_layout
 
 \begin_layout Subsection
-EM algorithm
+The EM algorithm
 \end_layout
 
 \begin_layout Standard
 We will first show how to apply the well known 
 \emph on
-Expectation Maximization 
+expectation-maximization 
 \emph default
 (EM) algorithm for the NPMLE and DS-MLE.
 \end_layout
@@ -3074,7 +3074,7 @@ key "lindsay1995mixture"
 \end_layout
 
 \begin_layout Subsection
-Optimization for MPLE
+Optimization for the MPLE
 \end_layout
 
 \begin_layout Standard
