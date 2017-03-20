@@ -482,15 +482,15 @@ Finally we will apply the developed methods and algorithms to a high-dimensional
 \end_layout
 
 \begin_layout Standard
-The essence of this thesis, including the general presentation and lots
- of the notation, originated in close relation to the articles 
+For supplementary reading we refer to the articles 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "klebanov2016theory,klebanov2016sysmed"
 
 \end_inset
 
-, to which we hence refer for further reading.
+, which originated in close relation to this thesis and share a lot of the
+ general approach and notation.
 \end_layout
 
 \begin_layout Section
@@ -4273,7 +4273,14 @@ reference "fig:paperplot"
 \end_layout
 
 \begin_layout Standard
-We provide two more similar plots in the apendix.
+We provide two more similar plots in Appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Plots"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -4283,10 +4290,34 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centerline{ 
+\end_layout
+
+\end_inset
+
+
 \begin_inset Graphics
-	filename masterplot.pdf
-	lyxscale 50
-	width 100text%
+	filename plots/master1.png
+	lyxscale 20
+	width 72page%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
 
 \end_inset
 
@@ -5571,6 +5602,204 @@ status open
 
 \backslash
 end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Plots
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Plots"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+These plots, generated under the same conditions as Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:paperplot"
+
+\end_inset
+
+, depict additional results.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centerline{ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/master2.png
+	lyxscale 20
+	width 75page%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:paperplot-1"
+
+\end_inset
+
+
+\begin_inset Formula $\pi_{0},$
+\end_inset
+
+ NPMLE, DS-MLE and MPLE (top to bottom) 
+\begin_inset Quotes eld
+\end_inset
+
+blood volume
+\begin_inset Quotes erd
+\end_inset
+
+-marginals (left) of the respective priors (blue) and posteriors (red) for
+ a single subject (
+\begin_inset Formula $m=14$
+\end_inset
+
+), 
+\begin_inset Quotes eld
+\end_inset
+
+LH
+\begin_inset Quotes erd
+\end_inset
+
+-trajectories sampled from the prior together with the cohort data (middle)
+ and the subject data with corresponding posterior trajectories (right).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centerline{ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename plots/master3.png
+	lyxscale 20
+	width 75page%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:paperplot-2"
+
+\end_inset
+
+
+\begin_inset Formula $\pi_{0},$
+\end_inset
+
+ NPMLE, DS-MLE and MPLE (top to bottom) 
+\begin_inset Quotes eld
+\end_inset
+
+blood volume
+\begin_inset Quotes erd
+\end_inset
+
+-marginals (left) of the respective priors (blue) and posteriors (red) for
+ a single subject (
+\begin_inset Formula $m=13$
+\end_inset
+
+), 
+\begin_inset Quotes eld
+\end_inset
+
+E2
+\begin_inset Quotes erd
+\end_inset
+
+-trajectories sampled from the prior together with the cohort data (middle)
+ and the subject data with corresponding posterior trajectories (right).
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
