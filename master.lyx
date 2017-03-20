@@ -1344,9 +1344,9 @@ The latter problem can be retracted through lifting the inference problem
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{equation}
-\pi\sim\pi':\iff\left\Vert \rho_{Z\mid\pi}-\rho_{Z\mid\pi'}\right\Vert _{L^{1}\left(\mathcal{Z}\right)}=0,\label{eq:equiv}
-\end{equation}
+\[
+\pi\sim\pi':\iff\left\Vert \rho_{Z\mid\pi}-\rho_{Z\mid\pi'}\right\Vert _{L^{1}\left(\mathcal{Z}\right)}=0,
+\]
 
 \end_inset
 
@@ -3624,13 +3624,13 @@ Our data consists of blood concentrations of follicle-stimulating hormone
  by
 \begin_inset Formula 
 \[
-z^{m}:=\left(z_{t,i}^{m}\right)_{\left(t,i\right)\in I_{z}^{m}}
+\bm{z}_{m}:=\left(z_{m}^{t,i}\right)_{\left(t,i\right)\in I_{z}^{m}}
 \]
 
 \end_inset
 
  with 
-\begin_inset Formula $z_{t,i}^{m}$
+\begin_inset Formula $z_{m}^{t,i}$
 \end_inset
 
  being the single measurement of species 
@@ -3651,7 +3651,7 @@ z^{m}:=\left(z_{t,i}^{m}\right)_{\left(t,i\right)\in I_{z}^{m}}
 \begin_layout Standard
 To impose the condition of periodicity of the data onto our inference process
  we further augment the data by a copy of itself shifted in time by an additiona
-l latent parameter representing the period length 
+l latent parameter representing the period length, 
 \begin_inset Formula $\tau>0$
 \end_inset
 
@@ -3661,7 +3661,7 @@ l latent parameter representing the period length
 \begin_layout Standard
 \begin_inset Formula 
 \[
-z^{m,\tau}:=\left(\hat{z}_{t,i}^{m}\right)_{\left(t,i\right)\in I_{z}^{m,\tau}},
+\bm{z}_{m}^{\tau}:=\left(\hat{z}_{m}^{t,i}\right)_{\left(t,i\right)\in I_{z}^{m,\tau}},
 \]
 
 \end_inset
@@ -3677,9 +3677,9 @@ I_{z}^{m,\tau}=\bigcup_{\left(t,i\in I_{z}^{m}\right)}\left\{ \left(t,i\right),\
  and augmented measurements
 \begin_inset Formula 
 \[
-\hat{z}_{t,i}^{m}:=\begin{cases}
-z_{t,i}^{m} & \text{if }\left(t,i\right)\in I_{z}^{m}\\
-z_{t-\tau,i}^{m} & \text{otherwise}
+\hat{z}_{m}^{t,i}:=\begin{cases}
+z_{m}^{t,i} & \text{if }\left(t,i\right)\in I_{z}^{m}\\
+z_{m}^{t-\tau,i} & \text{otherwise}
 \end{cases}.
 \]
 
@@ -3752,7 +3752,7 @@ giving rise to the likelihood function for the parameters
 \begin_layout Standard
 \begin_inset Formula 
 \[
-L\left(x\mid z^{m}\right)=L\left(\theta,y_{0},\tau\mid z^{m}\right)=\prod_{\left(t,i\right)\in I_{z}^{m,\tau}}\left(2\pi\sigma_{i}^{\text{meas}}{}^{2}\right)^{-\frac{1}{2}}\left(\right)^{-2}\exp\left(-\frac{1}{2}\left(\frac{\Phi\left(t;\theta,y_{0}\right)_{i}-z_{t,i}^{m,\tau}}{\sigma_{i}^{\text{meas}}}\right)^{2}\right),
+L\left(x\mid z_{m}\right)=L\left(\theta,y_{0},\tau\mid z_{m}\right):=\prod_{\left(t,i\right)\in I_{z}^{m,\tau}}\left(2\pi\sigma_{i}^{\text{meas}}{}^{2}\right)^{-\frac{1}{2}}\left(\right)^{-2}\exp\left(-\frac{1}{2}\left(\frac{\Phi\left(t;\theta,y_{0}\right)_{i}-\hat{z}_{m}^{,t,i}}{\sigma_{i}^{\text{meas}}}\right)^{2}\right),
 \]
 
 \end_inset
@@ -4152,16 +4152,20 @@ We computed the NPMLE and DS-MLE estimates using 100 iterations of the EM
 
 \begin_layout Standard
 In case of the DS-MLE model we smoothed each data point 
-\begin_inset Formula $z_{i}$
+\begin_inset Formula $z_{m}^{t,i}$
 \end_inset
 
- by 50 additional samples.
+ by 50 additional samples for each 
+\begin_inset Formula $t,\,i$
+\end_inset
+
+.
  The kernel 
-\begin_inset Formula $K$
+\begin_inset Formula $K^{t,i}$
 \end_inset
 
- was chosen to be a multivariate Gaussian with diagonal covariance 
-\begin_inset Formula $\Sigma^{K}$
+ was chosen to be a Gaussian with standard deviation 
+\begin_inset Formula $\sigma^{K^{t,i}}$
 \end_inset
 
 , computed by Silverman's rule of thumb 
@@ -4175,7 +4179,7 @@ key "Silverm1982"
 s:
 \begin_inset Formula 
 \[
-\Sigma_{i,i}^{K}=0.9M^{-\frac{1}{5}}\text{Cov}\left(z_{i}^{m}\right)_{m=1}^{M}.
+\left(\sigma^{K^{t,i}}\right)^{2}=0.9M^{-\frac{1}{5}}\text{Cov}\left(\left\{ z_{m}^{t,i}\mid\left(t,i\right)\in I_{z}^{m},\,m\in\{1,...,M\}\right\} \right).
 \]
 
 \end_inset
@@ -4432,8 +4436,8 @@ We have shown that the MPLE with the information penalty
  the desirable property of transformation invariance, generalizing the notion
  of the reference priors to the empirical Bayes framework.
  Due to its concavity the objective is computationally feasible and its
- Monte Carlo approximation enables its application to high-dimensional problems
- eluding the curse of dimensionality.
+ mesh-free Monte Carlo approximation enables its application to high-dimensional
+ problems eluding the curse of dimensionality.
 \end_layout
 
 \begin_layout Standard
