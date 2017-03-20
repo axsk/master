@@ -4262,15 +4262,18 @@ reference "fig:paperplot"
 
 \end_inset
 
- shows the marginal distributions of the transition rate constant from PrA2
- to SeF1, plotted as a kernel density estimate (KDE) with a bandwidth of
- 0.1, of the individual estimated priors and an individual subjects (
-\begin_inset Formula $m=14)$
-\end_inset
-
- posteriors.
+ shows kernel density estimates (KDE) (Gaussian kernel, bandwith 0.1) of
+ the marginal distributions of the transition rate constant from PrA2 to
+ SeF1.
+ These depict the estimated priors and corresponding posteriors for a single
+ subject.
  It furthermore illustrates the prior respectively posterior predictive
- distribution as density plots with the cohort respectively individual data.
+ distribution as density plots of the trajectories with the cohort respectively
+ individual data.
+\end_layout
+
+\begin_layout Standard
+We provide two more similar plots in the apendix.
 \end_layout
 
 \begin_layout Standard
@@ -4309,10 +4312,21 @@ transition rate constant from PrA2 to SeF1
 \begin_inset Quotes erd
 \end_inset
 
--marginals of the respective priors (blue) with posteriors (red) for a single
- subject (left), trajectories sampled from the prior together with the cohort
- data (middle) and the subject data with trajectories sampled from the posterior
- (right).
+-marginals (left) of the respective priors (blue) and posteriors (red) for
+ a single subject (
+\begin_inset Formula $m=14$
+\end_inset
+
+), 
+\begin_inset Quotes eld
+\end_inset
+
+E2
+\begin_inset Quotes erd
+\end_inset
+
+-trajectories sampled from the prior together with the cohort data (middle)
+ and the subject data with corresponding posterior trajectories (right).
 \end_layout
 
 \end_inset
