@@ -3244,8 +3244,8 @@ transition probabilities
 \begin_layout Standard
 \begin_inset Formula 
 \begin{alignat*}{2}
- &  & P\left(x'\mid x\right)P\left(x\right) & =P\left(x\mid x'\right)P\left(x'\right)\\
-\Leftrightarrow\quad &  & \frac{P\left(x\right)}{P\left(x'\right)} & =\frac{P\left(x\mid x'\right)}{P\left(x'\mid x\right)}
+ &  & P\left(x'\mid x\right)f\left(x\right) & =P\left(x\mid x'\right)f\left(x'\right)\\
+\Leftrightarrow\quad &  & \frac{f\left(x\right)}{f\left(x'\right)} & =\frac{P\left(x\mid x'\right)}{P\left(x'\mid x\right)}
 \end{alignat*}
 
 \end_inset
@@ -3254,18 +3254,12 @@ transition probabilities
 \end_layout
 
 \begin_layout Standard
-which ensures the existence of a stationary distribution 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-ref
-\end_layout
-
+ensuring that 
+\begin_inset Formula $f$
 \end_inset
 
-
-\begin_inset Formula $\pi=P\pi$
+ is indeed a stationary distribution 
+\begin_inset Formula $f=Pf$
 \end_inset
 
 .
@@ -3292,7 +3286,7 @@ P\left(x'\mid x\right)=g\left(x'\mid x\right)A\left(x'\mid x\right),
 we end up with 
 \begin_inset Formula 
 \begin{equation}
-\frac{A\left(x'\mid x\right)}{A\left(x\mid x'\right)}=\frac{P\left(x'\right)}{P\left(x\right)}\frac{g\left(x\mid x'\right)}{g\left(x'\mid x\right)}.\label{eq:mhacceptance}
+\frac{A\left(x'\mid x\right)}{A\left(x\mid x'\right)}=\frac{f\left(x'\right)}{f\left(x\right)}\frac{g\left(x\mid x'\right)}{g\left(x'\mid x\right)}.\label{eq:mhacceptance}
 \end{equation}
 
 \end_inset
@@ -3300,7 +3294,7 @@ we end up with
 The Metropolis-Hastings choice for the acceptance distribution 
 \begin_inset Formula 
 \[
-A\left(x'\mid x\right):=\min\left(1,\frac{P\left(x'\right)}{P\left(x\right)}\frac{g\left(x\mid x'\right)}{g\left(x'\mid x\right)}\right)
+A\left(x'\mid x\right):=\min\left(1,\frac{f\left(x'\right)}{f\left(x\right)}\frac{g\left(x\mid x'\right)}{g\left(x'\mid x\right)}\right)
 \]
 
 \end_inset
@@ -3337,11 +3331,11 @@ This choice allows for the formulation of the following theorem.
 
 \begin_layout Theorem
 Let 
-\begin_inset Formula $f,g\in\mathcal{M}_{1}\left(\mathcal{X}\right)$
+\begin_inset Formula $f,g\left(\cdot\mid x\right)\in\mathcal{M}_{1}\left(\mathcal{X}\right)$
 \end_inset
 
  with 
-\begin_inset Formula $f\left(x\right)>0,\,g\left(x\right)>0\,\forall x\in\mathcal{X}$
+\begin_inset Formula $f>0,\,g\left(\cdot\mid x\right)>0\,\forall x\in\mathcal{X}$
 \end_inset
 
 .
@@ -3616,7 +3610,11 @@ Our data consists of blood concentrations of follicle-stimulating hormone
  from 53 healthy women over thirty days, roughly every second day.
  This data was collected in the context of PAEON, a collaborative European
  research project on eHealth.
- Denote the set of measurements for a single subject 
+ 
+\end_layout
+
+\begin_layout Standard
+Denote the set of measurements for a single subject 
 \begin_inset Formula $m$
 \end_inset
 
@@ -3684,7 +3682,7 @@ z_{m}^{t-\tau,i} & \text{otherwise}
 
 \end_inset
 
- 
+
 \end_layout
 
 \begin_layout Standard
@@ -3692,19 +3690,11 @@ Subsuming the latent model parameters
 \begin_inset Formula $\theta$
 \end_inset
 
- (
-\begin_inset Formula $82)$
-\end_inset
-
-, the initial conditions 
+ (82), the initial conditions 
 \begin_inset Formula $y_{0}$
 \end_inset
 
- 
-\begin_inset Formula $(33)$
-\end_inset
-
- and the period length 
+ (33) and the period length 
 \begin_inset Formula $\tau$
 \end_inset
 
@@ -4067,8 +4057,8 @@ key "heidelberger1983simulation"
 
 \begin_layout Standard
 Keeping in mind that many of the parameters are probably unidentifiable
- (hence random walking in 100 dimensional space) we consider these as good
- results.
+ (and one is hence random walking in high-dimensional submanifold) we consider
+ these as good results.
 \end_layout
 
 \begin_layout Remark
