@@ -2002,7 +2002,7 @@ According to the change of variables formula
 = & \prod_{m=1}^{M}\int_{\mathcal{X}}\rho_{Z\mid x}\left(z_{m}\right)\pi\left(x\right)\mathrm{d}x\\
 = & \prod_{m=1}^{M}\int_{\mathcal{X}}\rho_{Z\mid\tilde{x}}\left(\tilde{z}_{m}\right)\pi\left(\varphi\left(\tilde{x}\right)\right)\left|D\varphi\left(\tilde{x}\right)\right|\left|D\psi\left(\tilde{\bm{z}}_{m}\right)\right|\mathrm{d}\tilde{x}\\
 = & \prod_{m=1}^{M}\left|D\psi\left(\tilde{\bm{z}}_{m}\right)\right|\int_{\mathcal{X}}\rho_{Z\mid\tilde{x}}\left(\tilde{z_{m}}\right)\tilde{\pi}\left(\tilde{x}\right)\mathrm{d}\tilde{x}\\
-= & cL\left(\tilde{\pi}\mid\tilde{\bm{z}}^{M}\right).\\
+= & \,cL\left(\tilde{\pi}\mid\tilde{\bm{z}}^{M}\right).
 \end{align*}
 
 \end_inset
@@ -2744,7 +2744,7 @@ complete data likelihood functio
 n
 \begin_inset Formula 
 \begin{align*}
-L^{c}\left(\pi\mid\bm{x},\bm{z}\right): & =\prod_{m=1}^{M}\rho_{X\mid\pi}\left(x_{m}\right)\rho_{Z\mid x_{m}}\left(z_{m}\right),\\
+L^{c}\left(\pi\mid\bm{x},\bm{z}\right): & =\prod_{m=1}^{M}\rho_{X\mid\pi}\left(x_{m}\right)\rho_{Z\mid x_{m}}\left(z_{m}\right),
 \end{align*}
 
 \end_inset
@@ -2811,8 +2811,7 @@ of
 \begin{align}
 Q\left(\pi\mid\pi_{n}\right):= & \mathbb{E}_{\bm{x}_{n}}\left[\log\left(L^{c}\left(\pi\mid\bm{x}_{n},\bm{z}^{M}\right)\right)\right]\nonumber \\
 = & \mathbb{E}_{\bm{x}_{n}}\left[\sum_{m=1}^{m}\log\left(\rho_{X\mid\pi}\left(x_{n,m}\right)\rho_{Z\mid\pi}\left(z_{m}\right)\right)\right]\label{eq:expcomploglike}\\
-= & \sum_{m=1}^{M}\mathbb{E}_{x\sim\rho_{X\mid\pi_{n},z_{m}}}\left[\log\left(\rho_{X\mid\pi}\left(x\right)\rho_{Z\mid x}\left(z_{m}\right)\right)\right].\nonumber \\
-\nonumber 
+= & \sum_{m=1}^{M}\mathbb{E}_{x\sim\rho_{X\mid\pi_{n},z_{m}}}\left[\log\left(\rho_{X\mid\pi}\left(x\right)\rho_{Z\mid x}\left(z_{m}\right)\right)\right].\nonumber 
 \end{align}
 
 \end_inset
@@ -3246,7 +3245,7 @@ transition probabilities
 \begin_inset Formula 
 \begin{alignat*}{2}
  &  & P\left(x'\mid x\right)P\left(x\right) & =P\left(x\mid x'\right)P\left(x'\right)\\
-\Leftrightarrow\quad &  & \frac{P\left(x\right)}{P\left(x'\right)} & =\frac{P\left(x\mid x'\right)}{P\left(x'\mid x\right)}\\
+\Leftrightarrow\quad &  & \frac{P\left(x\right)}{P\left(x'\right)} & =\frac{P\left(x\mid x'\right)}{P\left(x'\mid x\right)}
 \end{alignat*}
 
 \end_inset
