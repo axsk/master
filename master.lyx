@@ -280,7 +280,7 @@ This thesis will cover the development and application of an empirical Bayes
 \end_layout
 
 \begin_layout Standard
-Regarding it's application to systems biology or medicine a quantification
+Regarding its application to systems biology or medicine a quantification
  of uncertainty of the results is of utmost importance to any practitioner
  facing decisions such as whether to apply a specific treatment or release
  a new drug.
@@ -303,7 +303,7 @@ We will henceforth adopt the Bayesian view which, contrary to the point
 \begin_layout Standard
 As we will see it also allows for a natural incorporation of data, a circumstanc
 e of ever greater importance in a time of progressing digitalization of
- our lives, the medicine and the sciences coining the term big data.
+ our lives, the medicine and the sciences.
 \end_layout
 
 \begin_layout Standard
@@ -315,7 +315,7 @@ We will furthermore tackle one of the main points of criticism on the Bayesian
 \end_layout
 
 \begin_layout Standard
-This critique lead to the school of objective Bayesian analysis (c.f.
+This critique lead to the school of objective Bayesian analysis (cf.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -332,7 +332,7 @@ One approach is the choice of so called
 \emph on
 non-informative priors
 \emph default
-, using information theoretic considerations to formalize the notion of
+, using information-theoretic considerations to formalize the notion of
  non-informativity, giving rise to the 
 \emph on
 Jeffrey's prior
@@ -344,7 +344,7 @@ key "jeffreys1946invariant"
 
 \end_inset
 
- and it's generalization to more general spaces, the
+ and its generalization to more general spaces, the
 \emph on
  reference priors
 \emph default
@@ -379,7 +379,7 @@ key "robbins1964empirical"
 \begin_layout Standard
 Here repeated measurements of individuals from the population in question,
  called cohort data, are used to construct a prior representing that population.
- The first major contribution was by Robbins
+ The first major contribution was by Robbins 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "robbins1956"
@@ -392,9 +392,9 @@ key "robbins1956"
 nonparametric maximum likelihood estimator
 \emph default
  (NPMLE).
- For a while these ideas got largely neglected, probably due to its computationa
-l cost, until they was brought back to attention in the parametric case
- by Efron and Morris 
+ These ideas got largely neglected due to their computational cost, until
+ they was brought back to attention in the parametric case by Efron and
+ Morris 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "efron1973stein"
@@ -408,10 +408,10 @@ key "efron1973stein"
 Unfortunately the NPMLE approach applied to finite data results in discrete
  distributions.
  In Section 3 we will therefore discuss its regularization.
- We start by treating the topic of penalization of unsmooth solution, leading
+ We start by treating the topic of penalization of unsmooth solutions, leading
  to the 
 \emph on
-maximal penalized likelihood estimator
+penalized maximum likelihood estimator
 \emph default
  (MPLE), and will set this into relation with Bayesian hyperpriors, i.e.
  prior assumption on the prior.
@@ -423,8 +423,8 @@ We then continue by introducing the
 \emph on
 mutual information penalty
 \emph default
-, a specific choice for penalizing unsmooth priors based on information
- theoretic considerations.
+, a specific choice for penalizing unsmooth priors based on information-theoreti
+c considerations.
  We end up with a nonparametric, hence generally applicable, method combining
  the assumptions of least information from the non-informative priors with
  the usage of cohort data from the empirical Bayes approach combining their
@@ -1550,7 +1550,7 @@ key "mclachlan2007algorithm"
 
 \end_inset
 
-) or derivatives (c.f.
+) or derivatives (cf.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1599,7 +1599,7 @@ ions.
 \end_layout
 
 \begin_layout Standard
-Embracing the information theoretic approach we therefore propose the use
+Embracing the information-theoretic approach we therefore propose the use
  of the 
 \emph on
 mutual information 
@@ -2355,7 +2355,7 @@ That is in the identifiable case with data-generating prior
 \begin_inset Formula $\pi^{*}$
 \end_inset
 
- (c.f.
+ (cf.
  Proposition 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2420,7 +2420,7 @@ reference "def:defL"
 
 \begin_layout Definition
 This estimator is proven to be consistent under weak assumptions on the
- kernel and likelihood model (c.f.
+ kernel and likelihood model (cf.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2505,10 +2505,14 @@ In the case of the parameter space
 \end_inset
 
  we start with an arbitrary sampling 
-\begin_inset Formula $\bm{x=}\left(x_{k}\in\mathcal{X}\right)_{k=1}^{K}$
+\begin_inset Formula 
+\begin{equation}
+\bm{x=}\left(x_{k}\in\mathcal{X}\right)_{k=1}^{K}\label{eq:discretization}
+\end{equation}
+
 \end_inset
 
- distributed according to some density 
+distributed according to some density 
 \begin_inset Formula $x_{i}\sim\rho_{A}$
 \end_inset
 
@@ -3035,7 +3039,7 @@ key "seo2013universally"
 \begin_inset Formula $\left(z_{m}\overset{i.i.d}{\sim}\tilde{\rho}_{\bm{z}^{M}}\right)_{m=1}^{M^{\text{aug }}}$
 \end_inset
 
- and the smoothed likelihoods (c.f.
+ and the smoothed likelihoods (cf.
  Section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3439,19 +3443,12 @@ To circumvent the obstacle of choosing a proper proposal covariance we decided
  al 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "haario2001adaptive"
+key "haario2001adaptive,Roberts2009"
 
 \end_inset
 
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "haario2001adaptive"
-
-\end_inset
-
- which tunes the proposal covariance matrix online based on the current
- samples, according to
+which tunes the proposal covariance matrix online based on the current samples,
+ according to
 \begin_inset Formula 
 \begin{align*}
 g_{n}(\text{·} & \mid x_{n})=\mathcal{N}(x,\,\Sigma_{0}) & \text{if }n\le2d,\\
@@ -3538,7 +3535,7 @@ We will now discuss the application of the developed empirical Bayes method
 \end_layout
 
 \begin_layout Subsection
-The problem
+The model
 \end_layout
 
 \begin_layout Standard
@@ -3605,7 +3602,7 @@ Let us denote the forward solution of the ODE at time
 , as
 \begin_inset Formula 
 \[
-\phi\left(t;\theta,y_{0}\right)\in\mathbb{R}^{33}.
+\Phi\left(t;\theta,y_{0}\right)\in\mathbb{R}^{33}.
 \]
 
 \end_inset
@@ -3723,29 +3720,24 @@ x=\left(\theta,y_{0},\tau\right)\in X:=\left(\Theta,Y_{0},T\right)
 \end_layout
 
 \begin_layout Standard
-We model each single as afflicted by a independent Gaussian measurement
- error with independent componentwise standard deviations of 
+We model each measurement by an independent Gaussian measurement error with
+ componentwise standard deviations of 
 \begin_inset Formula $10\%$
 \end_inset
 
- of their respective order of magnitude, estimated from the nominal solution
+ of their respective order of magnitude, estimated from the
+\emph on
+ nominal solution
+\emph default
  
-\begin_inset Formula $\phi^{nom}\left(t\right):=\phi\left(t;y_{0}^{\text{nom}},\theta^{\text{nom}}\right)$
-\end_inset
-
-:
 \begin_inset Formula 
-\[
-\sigma_{1}^{\text{meas}}=12,\,\sigma_{2}^{\text{meas}}=1,\,\sigma_{3}^{\text{meas}}=40,\,\sigma_{4}^{\text{meas}}=1.5.
-\]
+\begin{equation}
+\Phi^{nom}\left(t\right):=\Phi\left(t;y_{0}^{\text{nom}},\theta^{\text{nom}}\right),\label{eq:nom}
+\end{equation}
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-We end up with the following likelihood function for the parameters 
+giving rise to the likelihood function for the parameters 
 \begin_inset Formula $x$
 \end_inset
 
@@ -3753,18 +3745,22 @@ We end up with the following likelihood function for the parameters
 \begin_inset Formula $z_{m}$
 \end_inset
 
-:
+,
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-L\left(x\mid z^{m}\right)=L\left(\theta,y_{0},\tau\mid z^{m}\right)=\prod_{\left(t,i\right)\in I_{z}^{m,\tau}}\left(2\pi\right)^{-\frac{1}{2}}\left(\sigma_{i}^{\text{meas}}\right)^{-2}\exp\left(-\frac{1}{2}\left(\frac{\phi\left(t;\theta,y_{0}\right)_{i}-z_{t,i}^{m,\tau}}{\sigma_{i}^{\text{meas}}}\right)^{2}\right).
+L\left(x\mid z^{m}\right)=L\left(\theta,y_{0},\tau\mid z^{m}\right)=\prod_{\left(t,i\right)\in I_{z}^{m,\tau}}\left(2\pi\sigma_{i}^{\text{meas}}{}^{2}\right)^{-\frac{1}{2}}\left(\right)^{-2}\exp\left(-\frac{1}{2}\left(\frac{\Phi\left(t;\theta,y_{0}\right)_{i}-z_{t,i}^{m,\tau}}{\sigma_{i}^{\text{meas}}}\right)^{2}\right),
 \]
 
 \end_inset
 
+with 
+\begin_inset Formula $\sigma_{1}^{\text{meas}}=12,\,\sigma_{2}^{\text{meas}}=1,\,\sigma_{3}^{\text{meas}}=40,\,\sigma_{4}^{\text{meas}}=1.5$
+\end_inset
 
+.
 \end_layout
 
 \begin_layout Remark
@@ -3805,13 +3801,25 @@ reference "thm:addmeastheo"
  still applies.
 \end_layout
 
-\begin_layout Standard
-For the initial Bayesian sampling procedure, necessary for arrival at a
- discretization of 
+\begin_layout Remark
+We now aim at a individual posterior sampling for each person, which we
+ will later use as a basis for constructing the discretization of the state
+ space 
 \begin_inset Formula $\mathcal{X}$
 \end_inset
 
-, we furthermore need to specify an initial prior 
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:discretization"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Therefore we need to specify an initial prior
 \begin_inset Formula $\pi_{0}$
 \end_inset
 
@@ -3820,67 +3828,66 @@ For the initial Bayesian sampling procedure, necessary for arrival at a
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-Since we did not want to imply any knowledge on 
-\begin_inset Formula $\theta$
+ Since the prior estimation routines, based on a fixed discretization, do
+ not add new samples to the discretization sampling, it is important that
+ our initial prior covers all domains of interest.
+ Thus we choose an the uniform prior for each 
+\begin_inset Formula $\Theta_{i}$
 \end_inset
 
- but their order of magnitude we chose the uniform prior bounded by 
+, bounded above by 
 \begin_inset Formula $\alpha:=5$
 \end_inset
 
- times the multiple of its corresponding nominal parameter value
+ times the multiple of its corresponding nominal parameter value,
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\Theta_{i}\mid\pi_{0}=\mathcal{U}\left(0,\alpha\theta_{i}^{\text{nom}}\right),\quad i=1,...,82.
+\Theta_{i}\mid\pi_{0}\sim\mathcal{U}\left(0,\alpha\theta_{i}^{\text{nom}}\right),\quad i=1,...,82.
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 The prior for the initial conditions 
 \begin_inset Formula $y_{0,i}=\theta_{82+i},\,i=1,...,33$
 \end_inset
 
- is constructed as a mixture of Gaussians centered at the trajectories of
- the nominal solution
+ is constructed as a mixture of multivariate Gaussians centered at the trajector
+ies of the nominal solution 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:nom"
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
-Y_{0}\mid\pi_{0}:=\frac{1}{31}\sum_{t=0}^{30}\mathcal{N}\left(\phi^{\text{nom}}\left(t\right),\,\Sigma\right),\quad i=1,...,33,
+Y_{0}\mid\pi_{0}\sim\frac{1}{31}\sum_{t=0}^{30}\mathcal{N}\left(\Phi^{nom}\left(t\right),\Sigma^{Y_{0}}\right)
 \]
 
 \end_inset
 
-and the covariance 
-\begin_inset Formula $\Sigma$
+ with the diagonal covariance matrix
+\begin_inset Formula $\Sigma^{Y_{0}}$
 \end_inset
 
- being a diagonal matrix with the component-wise covariance estimates
+ being estimated from the nominal solution by
 \begin_inset Formula 
 \[
-\Sigma_{ii}:=\text{Cov}\left(\left(\phi_{i}^{\text{nom}}\left(t\right)\right)_{t=0}^{30}\right),\quad i=1,...,33.
+\Sigma_{ii}^{Y_{0}}:=\text{Cov}\left(\left(\Phi_{i}^{\text{nom}}\left(t\right)\right)_{t=0}^{30}\right),\quad i=1,...,33.
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 The prior for the period length 
-\begin_inset Formula $\theta_{116}$
+\begin_inset Formula $T$
 \end_inset
 
  was chosen to be Gaussian with mean 28.9 days and a standard deviation of
- 3.4 days (c.f.
+ 3.4 days (cf.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -3891,7 +3898,7 @@ key "fehring2006variability"
 ), 
 \begin_inset Formula 
 \[
-T\mid\pi_{0}:=\mathcal{N}\left(28.9,3.4^{2}\right).
+T\mid\pi_{0}\sim\mathcal{N}\left(28.9,3.4^{2}\right).
 \]
 
 \end_inset
@@ -3989,11 +3996,18 @@ In the first runs the initial covariance matrix
 
  of the proposal density for the AM sampler was chosen to be small value
  uniform in each direction.
- Upon later runs we reused the covariance structure 
+ Upon later runs we reused the covariance 
 \begin_inset Formula $\Sigma_{N}$
 \end_inset
 
- of present samplings according to
+ of present samplings according to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "roberts1997weak"
+
+\end_inset
+
+ via
 \begin_inset Formula 
 \[
 \Sigma_{0}:=\frac{2.38^{2}}{d}\Sigma_{N},
@@ -4030,7 +4044,7 @@ We computed
 \end_layout
 
 \begin_layout Standard
-We applied the convergence diagnostics by Gelman and Rubin
+We applied the convergence diagnostics by Gelman and Rubin 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "gelman1992inference"
@@ -4038,8 +4052,8 @@ key "gelman1992inference"
 \end_inset
 
  and concluded convergence of a parameter if the potential scale reduction
- factors 0.975 quantiles were estimated below 1.2.
- This lead to on average 74 converged parameters (varying per subject).
+ factors 0.975-quantiles were estimated below 1.2.
+ This lead to an average 74 of converged parameters (varying per subject).
  The Heidelberger and Welch diagnostic 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -4062,7 +4076,7 @@ Since the MCMC sampling, consuming most of the computational time of the
  here proposed prior estimation procedure, is easily parallelizable over
  the individual measurements, the proposed scheme is well suited for the
  use in e.g.
- clinical studies, where lots of data is available (c.f.
+ clinical studies, where lots of data is available (cf.
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -4149,7 +4163,7 @@ In case of the DS-MLE model we smoothed each data point
 \begin_inset Formula $\Sigma^{K}$
 \end_inset
 
-, computed by Silverman's rule of thumb
+, computed by Silverman's rule of thumb 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Silverm1982"
@@ -4182,7 +4196,7 @@ key "svanberg2002class"
 \begin_inset Formula $\sum_{k=1}^{K}w_{k}=1$
 \end_inset
 
- we used the built in Augmented Lagrangian algorithm.
+ we used the built-in Augmented Lagrangian algorithm.
  This basically amends a penalty to the objective, whose impact is scaled
  based on the current misfit of the constraint.
  We furthermore set the upper bounds for each component to 
@@ -4201,9 +4215,10 @@ The penalty constant
 \begin_inset Formula $\gamma$
 \end_inset
 
- is chosen by trial and error, until achieving desired smoothing results.
+ is chosen by trial and error, until desired smoothing results have been
+ achieved.
  It would be interesting to find a rule for its choice, e.g.
- by information theoretic reasons or cross validation.
+ by information-theoretic reasons or cross validation.
 \end_layout
 
 \begin_layout Subsection
@@ -4250,8 +4265,7 @@ reference "fig:paperplot"
 
  posteriors.
  It furthermore illustrates the prior respectively posterior predictive
- distribution as density plots with the cohort- respectively individual
- data.
+ distribution as density plots with the cohort respectively individual data.
 \end_layout
 
 \begin_layout Standard
@@ -4320,7 +4334,7 @@ For the prior
 \end_inset
 
  and then reweighted this sampling with the inverse of a KDE (with the bandwidth
-s chosen according to Silverman's rule of thumb
+s chosen according to Silverman's rule of thumb 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Silverm1982"
@@ -4331,8 +4345,8 @@ key "Silverm1982"
 \begin_inset Formula $\pi_{0}$
 \end_inset
 
-, which itself did not lead to any interesting plots for the given, relative
- low sample size.
+, which itself did not lead to any interesting plots for the relatively
+ low given sample size.
  The first row can therefore only be seen as an approximation to 
 \begin_inset Formula $\pi_{0}$
 \end_inset
@@ -4413,12 +4427,12 @@ We have shown that the MPLE with the information penalty
 \end_inset
 
  is an attractive approach to the empirical Bayes method.
- It bases on natural, information-theoretic considerations and admits the
- desirable property of transformation invariance, generalizing the notion
+ It is based on natural, information-theoretic considerations and admits
+ the desirable property of transformation invariance, generalizing the notion
  of the reference priors to the empirical Bayes framework.
  Due to its concavity the objective is computationally feasible and its
- Monte Carlo approximation enables it's application to high-dimensional
- problems eluding the curse of dimensionality.
+ Monte Carlo approximation enables its application to high-dimensional problems
+ eluding the curse of dimensionality.
 \end_layout
 
 \begin_layout Standard
@@ -4642,7 +4656,7 @@ texttt{zs}
 \begin_inset Formula $\mathcal{Z}$
 \end_inset
 
--entropy computation (c.f.
+-entropy computation (cf.
  Section 4.1)
 \end_layout
 
@@ -5012,7 +5026,7 @@ Sample
 \begin_inset Formula $\texttt{iters}$
 \end_inset
 
- samples using the the AMM sampler from the Mamba.jl package
+ samples using the AMM sampler from the Mamba.jl package
 \end_layout
 
 \begin_layout Standard
