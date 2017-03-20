@@ -11,6 +11,7 @@
 \pagestyle{fancyplain}
 \usepackage[backend=bibtex,maxbibnames=4,firstinits=true]{biblatex}
 \addbibresource{refs.bib}
+\usepackage{changepage}
 \fancyhf{}
 \end_preamble
 \use_default_options true
@@ -4558,7 +4559,12 @@ It also provides a series of Jupyter-notebooks, containing the code which
 \begin_layout Standard
 In the following we will give a short overview over the core components
  and methods of the software and mention some implementation details.
- 
+ Further help to the methods and types can be accessed by the Julia help
+ function, prefixing the name in question by an 
+\begin_inset Formula $\texttt{?}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -4582,6 +4588,19 @@ status open
 \begin_layout Plain Layout
 
 LikelihoodModel(xs, ys, zs, datas, measerr, zsampledistr)
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
 \end_layout
 
 \end_inset
@@ -4723,6 +4742,22 @@ texttt{zsampledistr}
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Based on this type the following convenience functions are available
 \end_layout
 
@@ -4734,6 +4769,19 @@ status open
 \begin_layout Plain Layout
 
 em(m::LikelihoodModel, w0, niter)
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
 \end_layout
 
 \end_inset
@@ -4760,6 +4808,21 @@ texttt{niter}
 \end_inset
 
 .
+ Note that a single EM iteration with a single datapoint corresponds to
+ the usual Bayes posterior computation.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4770,6 +4833,19 @@ status open
 \begin_layout Plain Layout
 
 mple(m::LikelihoodModel, w0, niter, reg, h)
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
 \end_layout
 
 \end_inset
@@ -4791,6 +4867,19 @@ Perform a constraint gradient ascent search to optimize the MPLE with
 \end_inset
 
  iterations.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4805,6 +4894,19 @@ optimmple(m, reg, w0)
 
 \end_inset
 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
+\end_layout
+
+\end_inset
+
 Perform a constraint optimization using the Method of Moving Asymptotes
  algorithm 
 \begin_inset CommandInset citation
@@ -4814,6 +4916,19 @@ key "svanberg2002class"
 \end_inset
 
 .
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4824,6 +4939,19 @@ status open
 \begin_layout Plain Layout
 
 hz(m,w), dhz(m,w), logl(m,w), dlogl(m,w)
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
 \end_layout
 
 \end_inset
@@ -4841,6 +4969,19 @@ Compute the log-likelihood,
 \end_inset
 
 .
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4855,7 +4996,33 @@ smoothedmodel(m, mult)
 
 \end_inset
 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
+\end_layout
+
+\end_inset
+
 Perform the smoothing of the data and likelihood functions for the DS-MLE.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4870,18 +5037,48 @@ likelihoodmat(xs::Vector,ys::Vector,d::Distribution)
 
 \end_inset
 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
+\end_layout
+
+\end_inset
+
 Compute the pairwise likelihoods based for a distribution 
 \begin_inset Formula $\texttt{d}$
 \end_inset
 
 .
  In the case that 
-\begin_inset Formula $\texttt{d::MatrixNormalCentered}$
+\begin_inset Formula $\texttt{d}$
 \end_inset
 
- an optimized version making use of the binomial decomposition and renormalizati
-on of the likelihoods for stability is implemented.
+ is of the type 
+\begin_inset Formula $\texttt{MatrixNormalCentered}$
+\end_inset
+
+, an optimized version making use of the binomial decomposition and renormalizat
+ion of the likelihoods for stability is implemented.
  It also handles incomplete data by excluding NaNs of the computations.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4896,11 +5093,37 @@ gyncmodel(n)
 
 \end_inset
 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
+\end_layout
+
+\end_inset
+
 Generate a GynC-likelihoodmodel with 
 \begin_inset Formula $\texttt{n}$
 \end_inset
 
  presampled x-samples.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4911,6 +5134,19 @@ status open
 \begin_layout Plain Layout
 
 gyncmodel(xs, datas; zmult, sigma)
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
 \end_layout
 
 \end_inset
@@ -4933,6 +5169,19 @@ Generate a GynC-likelihoodmodel for the given samples
 \end_inset
 
  times the components magnitude.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4947,9 +5196,35 @@ samplepi0(m), samplepi1(m), subsample(m)
 
 \end_inset
 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
+\end_layout
+
+\end_inset
+
 Convenience functions for generating respectively loading (precomputed)
  samples corresponding to the prior and posterior distributions, as well
  as for subsampling.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection*
@@ -4977,6 +5252,19 @@ Config
 
 \end_inset
 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
+\end_layout
+
+\end_inset
+
 Base-type managing the configuration for the MCMC sampling (measurement,
  measurement error, initial proposal variance for MCMC, adaptivity of MCMC,
  thinning, initial values and priors).
@@ -4985,6 +5273,19 @@ Base-type managing the configuration for the MCMC sampling (measurement,
 \end_inset
 
  .
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4999,6 +5300,19 @@ logprior(c, x), logpost(c, x), llh(c,x)
 
 \end_inset
 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
+\end_layout
+
+\end_inset
+
 Log prior, posterior and likelihood values for given config 
 \begin_inset Formula $\texttt{c}$
 \end_inset
@@ -5008,6 +5322,19 @@ Log prior, posterior and likelihood values for given config
 \end_inset
 
 .
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5022,11 +5349,37 @@ sample(config, iters)
 
 \end_inset
 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
+\end_layout
+
+\end_inset
+
 Sample 
 \begin_inset Formula $\texttt{iters}$
 \end_inset
 
  samples using the AMM sampler from the Mamba.jl package
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5037,6 +5390,19 @@ status open
 \begin_layout Plain Layout
 
 batch(configs, iters; dir)
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
 \end_layout
 
 \end_inset
@@ -5054,6 +5420,19 @@ Sample the given vector of
 \end_inset
 
  is reached.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5068,11 +5447,37 @@ alldatas()
 
 \end_inset
 
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
+\end_layout
+
+\end_inset
+
 Return all present cohort-data 
 \begin_inset Formula $\bm{z}^{M}$
 \end_inset
 
 .
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5091,6 +5496,18 @@ gync(y0, p, ts)
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth}{1cm}{1cm}
+\end_layout
+
+\end_inset
+
 Compute a trajectory for given initial values 
 \begin_inset Formula $\texttt{y0}$
 \end_inset
@@ -5128,6 +5545,19 @@ Compute a trajectory for given initial values
 \noun default
 \color inherit
  using the Sundials CVode solver.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
